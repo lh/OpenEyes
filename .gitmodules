@@ -1,0 +1,3 @@
+[submodule "protected/modules/OECaseSearch"]
+	path = protected/modules/OECaseSearch
+	url = https://github.com/FiviumAustralia/OECaseSearch.git
