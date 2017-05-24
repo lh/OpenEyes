@@ -54,9 +54,13 @@ return array(
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'openeyes',
-            'ipFilters' => array('127.0.0.1'),
+            'ipFilters' => array('172.16.0.1')
         ),
         'oldadmin',
+        'OECaseSearch' => array(
+            'parameters' => array('PatientAge'),
+            'searchClass' => 'DBProvider'
+        )
     ),
 
     // Application components

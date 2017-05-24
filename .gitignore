@@ -89,3 +89,4 @@ bin/validate-json
 bin/yiic
 
 build/logs
+!/protected/modules/OECaseSearch/assets/css/QueryBuilder.css
