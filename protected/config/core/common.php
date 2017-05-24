@@ -60,7 +60,8 @@ return array(
         'OECaseSearch' => array(
             'parameters' => array('PatientAge'),
             'searchClass' => 'DBProvider'
-        )
+        ),
+        'Genetics'
     ),
 
     // Application components
@@ -354,6 +355,12 @@ return array(
                         'uri' => 'patient/create',
                         'position' => 9,
                         'restricted' => array('TaskAddPatient'),
+                    ),
+                    'casesearch' => array(
+                        'title' => 'Case Search',
+                        'uri' => 'OECaseSearch/caseSearch',
+                        'position' => 10,
+                        'restricted' => array('admin'),
                     ),
 
                 ),
