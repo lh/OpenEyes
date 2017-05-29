@@ -11,12 +11,13 @@ class CaseSearchParameterCode extends CCodeModel
     public $className;
     public $alias;
     public $name;
+    public $attributeList;
 
     public function rules()
     {
         return array_merge(parent::rules(), array(
             array('className, name, alias', 'required'),
-            array('className, alias', 'match', 'pattern' => '/^\w+$/'),
+            array('className, alias, attributeList', 'match', 'pattern' => '/^\w+$/'),
         ));
     }
 
@@ -25,13 +26,14 @@ class CaseSearchParameterCode extends CCodeModel
         return array_merge(parent::attributeLabels(), array(
             'className' => 'Parameter Class Name',
             'name' => 'Parameter Name',
-            'alias' => 'SQL alias prefix'
+            'alias' => 'SQL alias prefix',
+            'attributeList' => 'Attributes'
         ));
     }
 
     public function prepare()
     {
-        $path = Yii::getPathOfAlias('application.modules.OECaseSearch.models.' . $this->className) . '.php';
+        $path = Yii::getPathOfAlias('application.modules.OECaseSearch.models.' . $this->className) . 'Parameter.php';
         $code = $this->render($this->templatePath.'/case_search_parameter.php');
         $this->files[] = new CCodeFile($path, $code);
     }

@@ -58,7 +58,7 @@ return array(
         ),
         'oldadmin',
         'OECaseSearch' => array(
-            'parameters' => array('PatientAge'),
+            'parameters' => array('PatientAge', 'PatientDiagnosis'),
             'providers' => array('mysql' => 'DBProvider')
         ),
         'Genetics'

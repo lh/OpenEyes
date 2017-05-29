@@ -2,11 +2,18 @@
 
 class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
 {
-    private $id;
+<?php foreach (explode(',', $this->attributeList) as $attribute):?>
+    public $<?php echo $attribute; ?>;
+<?php endforeach; ?>
 
-    public function __construct($id)
+    /**
+    * CaseSearchParameter constructor. This overrides the parent constructor so that the name can be immediately set.
+    * @param string $scenario
+    */
+    public function __construct($scenario = '')
     {
-        $this->id = $id;
+        parent::__construct($scenario);
+        $this->name = '<?php echo strtolower($this->name); ?>';
     }
 
     public function getKey()
@@ -21,7 +28,12 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
     */
     public function attributeNames()
     {
-        return parent::attributeNames();
+        return array_merge(parent::attributeNames(), array(
+<?php foreach (explode(',', $this->attributeList) as $attribute):?>
+                '<?php echo $attribute; ?>',
+<?php endforeach; ?>
+            )
+        );
     }
 
     /**
@@ -33,7 +45,7 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
         return parent::rules();
     }
 
-    abstract public function renderParameter($id)
+    public function renderParameter($id)
     {
         // Place screen-rendering code here.
     }
@@ -43,7 +55,7 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
     * @param $searchProvider The search provider. This is used to determine whether or not the search provider is using SQL syntax.
     * @return mixed The constructed query string.
     */
-    abstract public function query($searchProvider)
+    public function query($searchProvider)
     {
         // Construct your SQL query here.
         return null;
@@ -53,10 +65,14 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
     * Get the list of bind values for use in the SQL query.
     * @return array An array of bind values. The keys correspond to the named binds in the query string.
     */
-    abstract public function bindValues()
+    public function bindValues()
     {
-        // Construct your list of bind values here. Use the format ":bind" => "value".
-        return array();
+        // Construct your list of bind values here. Use the format "bind" => "value".
+        return array(
+<?php foreach (explode(',', $this->attributeList) as $attribute):?>
+            '<?php echo $attribute; ?>' => $this-><?php echo $attribute; ?>,
+<?php endforeach; ?>
+        );
     }
 
     /**
