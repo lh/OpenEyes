@@ -70,7 +70,7 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
         // Construct your list of bind values here. Use the format "bind" => "value".
         return array(
 <?php foreach (explode(',', $this->attributeList) as $attribute):?>
-            '<?php echo $attribute; ?>' => $this-><?php echo $attribute; ?>,
+            '<?php echo $this->alias ?>_<?php echo $attribute; ?>_$this->id' => $this-><?php echo $attribute; ?>,
 <?php endforeach; ?>
         );
     }
