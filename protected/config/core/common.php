@@ -57,9 +57,18 @@ return array(
             'ipFilters' => array('127.0.0.1')
         ),
         'oldadmin',
+        'OETrial',
         'OECaseSearch' => array(
-            'parameters' => array('PatientAge', 'PatientDiagnosis', 'PatientMedication'),
-            'providers' => array('mysql' => 'DBProvider')
+            'parameters' => array(
+                'PatientAge',
+                'PatientDiagnosis',
+                'PatientMedication',
+                'PreviousTrial',
+                'PatientAllergy'
+            ),
+            'providers' => array(
+                'mysql' => 'DBProvider'
+            )
         ),
         'Genetics'
     ),

@@ -2,9 +2,10 @@
 
 class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
 {
-<?php foreach (explode(',', $this->attributeList) as $attribute):?>
+<?php if (!empty($this->attributeList)):
+  foreach (explode(',', $this->attributeList) as $attribute):?>
     public $<?php echo $attribute; ?>;
-<?php endforeach; ?>
+<?php endforeach; endif; ?>
 
     /**
     * CaseSearchParameter constructor. This overrides the parent constructor so that the name can be immediately set.
@@ -13,7 +14,7 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
     public function __construct($scenario = '')
     {
         parent::__construct($scenario);
-        $this->name = '<?php echo strtolower($this->name); ?>';
+        $this->name = '<?php echo str_replace(' ', '_', strtolower($this->name)); ?>';
     }
 
     public function getKey()
@@ -29,9 +30,10 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
     public function attributeNames()
     {
         return array_merge(parent::attributeNames(), array(
-<?php foreach (explode(',', $this->attributeList) as $attribute):?>
+<?php if (!empty($this->attributeList)):
+foreach (explode(',', $this->attributeList) as $attribute):?>
                 '<?php echo $attribute; ?>',
-<?php endforeach; ?>
+<?php endforeach; endif; ?>
             )
         );
     }
@@ -69,9 +71,10 @@ class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
     {
         // Construct your list of bind values here. Use the format "bind" => "value".
         return array(
-<?php foreach (explode(',', $this->attributeList) as $attribute):?>
-            '<?php echo $this->alias ?>_<?php echo $attribute; ?>_$this->id' => $this-><?php echo $attribute; ?>,
-<?php endforeach; ?>
+<?php if (!empty($this->attributeList)):
+foreach (explode(',', $this->attributeList) as $attribute):?>
+            "<?php echo $this->alias ?>_<?php echo $attribute; ?>_$this->id" => $this-><?php echo $attribute; ?>,
+<?php endforeach; endif;?>
         );
     }
 
