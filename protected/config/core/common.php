@@ -64,7 +64,8 @@ return array(
                 'PatientDiagnosis',
                 'PatientMedication',
                 'PreviousTrial',
-                'PatientAllergy'
+                'PatientAllergy',
+                'FamilyHistory'
             ),
             'providers' => array(
                 'mysql' => 'DBProvider'

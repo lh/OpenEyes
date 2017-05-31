@@ -1,4 +1,5 @@
-<?php echo '<?php'; ?>
+<?php
+echo '<?php'; ?>
 
 class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
 {

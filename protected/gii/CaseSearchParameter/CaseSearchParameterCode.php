@@ -17,7 +17,8 @@ class CaseSearchParameterCode extends CCodeModel
     {
         return array_merge(parent::rules(), array(
             array('className, name, alias', 'required'),
-            array('className, alias, attributeList', 'match', 'pattern' => '/^\w+$/'),
+            array('className, alias', 'match', 'pattern' => '/^\w+$/'),
+            array('className, name, alias, attributeList', 'sticky')
         ));
     }
 
