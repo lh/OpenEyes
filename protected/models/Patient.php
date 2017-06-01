@@ -48,7 +48,9 @@
  * @property Address[] $addresses
  * @property Address $address Primary address
  * @property Contact[] $contactAssignments
+ * @property Contact $contact
  * @property Gp $gp
+ * @property Medication[] $medications
  * @property Practice $practice
  * @property Allergy[] $allergies
  * @property EthnicGroup $ethnic_group
