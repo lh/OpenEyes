@@ -205,6 +205,9 @@ class PatientViewNewDiagnosis extends OpenEyesPage {
 			'removeOpthalmicDiagnosisLink' => array (
 					'xpath' => "//*[@class='removeDiagnosis']" 
 			),
+            'confirmOpthalmicDiagnosisLink' => array (
+                'xpath' => "//*[@class='confirmDiagnosis']"
+            ),
 			'removeOpthalmicDiagnosisConfirm' => array (
 					'xpath' => "//*[@id='delete_diagnosis']//*[contains(text(),'Remove diagnosis')]" 
 			),

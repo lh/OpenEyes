@@ -65,7 +65,7 @@ class PatientController extends BaseController
                 'roles' => array('OprnEditAllergy'),
             ),
             array('allow',
-                'actions' => array('adddiagnosis', 'validateAddDiagnosis', 'removediagnosis'),
+                'actions' => array('adddiagnosis', 'validateAddDiagnosis', 'removediagnosis', 'confirmdiagnosis'),
                 'roles' => array('OprnEditOtherOphDiagnosis'),
             ),
             array('allow',
@@ -791,6 +791,10 @@ class PatientController extends BaseController
         $sd->disorder_id = @$disorder_id;
         $sd->eye_id = @$_POST['diagnosis_eye'];
 
+        // If the patient came  from a referral or self registration, then the diagnosis is unconfirmed
+        $sd->is_confirmed = $patient->patient_source == Patient::PATIENT_SOURCE_REFERRAL
+                         || $patient->patient_source == Patient::PATIENT_SOURCE_SELF_REGISTER ? 0 : null;
+
         $errors = array();
 
         if (!$sd->validate()) {
@@ -831,6 +835,17 @@ class PatientController extends BaseController
         }
 
         $patient->removeDiagnosis(@$_GET['diagnosis_id']);
+
+        echo 'success';
+    }
+
+    public function actionConfirmdiagnosis()
+    {
+        if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
+            throw new Exception('Unable to find patient: '.@$_GET['patient_id']);
+        }
+
+        $patient->confirmDiagnosis(@$_GET['diagnosis_id']);
 
         echo 'success';
     }

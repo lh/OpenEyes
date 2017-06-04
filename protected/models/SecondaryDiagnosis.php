@@ -25,6 +25,7 @@
  * @property int $id
  * @property int $disorder_id
  * @property int $eye_id
+ * @property boolean $is_confirmed
  * @property int $patient_id
  * @property int $episode_id
  *
@@ -63,7 +64,7 @@ class SecondaryDiagnosis extends BaseActiveRecordVersioned
         // will receive user inputs.
         return array(
             array('disorder_id, patient_id', 'required'),
-            array('disorder_id, eye_id, patient_id', 'safe'),
+            array('disorder_id, eye_id, patient_id, is_confirmed', 'safe'),
             array('date', 'OEFuzzyDateValidator'),
         );
     }

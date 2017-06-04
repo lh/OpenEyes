@@ -1459,6 +1459,38 @@ class Patient extends BaseActiveRecordVersioned
     }
 
     /**
+     * @param integer $diagnosis_id
+     * @throws Exception
+     */
+    public function confirmDiagnosis($diagnosis_id)
+    {
+        if (!$sd = SecondaryDiagnosis::model()->findByPk($diagnosis_id)) {
+            throw new Exception('Unable to find secondary_diagnosis: '.$diagnosis_id);
+        }
+
+        if (!$disorder = Disorder::model()->findByPk($sd->disorder_id)) {
+            throw new Exception('Unable to find disorder: '.$sd->disorder_id);
+        }
+
+        $patient = $sd->patient;
+
+        if ($disorder->specialty_id) {
+            $type = strtolower(Specialty::model()->findByPk($disorder->specialty_id)->code);
+        } else {
+            $type = 'sys';
+        }
+
+        $sd->is_confirmed = 1;
+        if (!$sd->save()) {
+            throw new Exception('Unable to confirm diagnosis: '.print_r($sd->getErrors(), true));
+        }
+
+        Yii::app()->event->dispatch('patient_confirm_diagnosis', array('patient'=>$patient, 'diagnosis' => $sd));
+
+        $this->audit('patient', "confirm-$type-diagnosis");
+    }
+
+    /**
      * update the patient's ophthalmic information.
      *
      * @param PatientOphInfoCviStatus $cvi_status

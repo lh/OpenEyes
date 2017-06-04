@@ -44,10 +44,21 @@
 			<?php foreach ($this->patient->systemicDiagnoses as $diagnosis) {?>
 				<tr>
 					<td><?php echo $diagnosis->dateText?></td>
-					<td><?php echo $diagnosis->eye ? $diagnosis->eye->adjective : ''?> <?php echo $diagnosis->disorder->term?></td>
+					<td>
+                        <?php echo $diagnosis->eye ? $diagnosis->eye->adjective : ''?>
+                        <?php echo $diagnosis->disorder->term?>
+                        <?php echo $diagnosis->is_confirmed == 0 ? '(Unconfirmed)' : ''; ?>
+                    </td>
 					<?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?>
-						<td><a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a></td>
-					<?php } ?>
+						<td>
+                            <a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a>
+                        </td>
+                        <?php if ($diagnosis->is_confirmed == 0): ?>
+                        <td>
+                            <a href="#" class="confirmDiagnosis" rel="<?php echo $diagnosis->id?>">Confirm</a>
+                        </td>
+                        <?php endif; ?>
+                    <?php } ?>
 				</tr>
 			<?php }?>
 			</tbody>
