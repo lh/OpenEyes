@@ -40,7 +40,7 @@ class PatientController extends BaseController
     {
         return array(
             array('allow',
-                'actions' => array('search', 'ajaxSearch', 'view', 'parentEvent', 'gpList', 'practiceList' ),
+                'actions' => array('search', 'ajaxSearch', 'view', 'parentEvent', 'gpList', 'practiceList', 'downloadReferral' ),
                 'users' => array('@'),
             ),
             array('allow',
@@ -1556,7 +1556,8 @@ class PatientController extends BaseController
     * @param Contact $contact
     * @param Patient $patient
     * @param Address $address
-    * @return array on validation error returns the 3 objects otherwise redirects to the patient view page
+    * @param PatientReferral $referral
+    * @return array on validation error returns the 4 objects otherwise redirects to the patient view page
     */
    private function performPatientSave(Contact $contact, Patient $patient, Address $address, PatientReferral $referral)
    {
@@ -1574,8 +1575,12 @@ class PatientController extends BaseController
                 if($patient->save() && $address->save()){
                     if (isset($referral))
                     {
-                        $referral->patient_id = $patient->getPrimaryKey();
+                        if (!isset($referral->patient_id)) {
+                            $referral->patient_id = $patient->id;
+                        }
+
                         if ($referral->save()) {
+
                             $transaction->commit();
                             if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
                                 $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
@@ -1589,7 +1594,11 @@ class PatientController extends BaseController
                             $transaction->rollback();
 
                             // to show validation error messages to the user
-                            $referral->validate();
+                            $patient->validate();
+                            $address->validate();
+                            if (isset($referral)) {
+                                $referral->validate();
+                            }
                         }
                     }
                     else {
@@ -1650,7 +1659,7 @@ class PatientController extends BaseController
         $this->renderPatientPanel = false;
 
         $patient = $this->loadModel($id);
-        $patient->scenario = 'manual';
+        $referral = isset($patient->referral) ? $patient->referral : new PatientReferral();
         
         //only local patient can be edited
         if($patient->is_local == 0){
@@ -1660,6 +1669,34 @@ class PatientController extends BaseController
         
         $contact = $patient->contact ? $patient->contact : new Contact();
         $address = $patient->contact->address ? $patient->contact->address : new Address();
+
+        switch ($patient->patient_source)
+        {
+            case Patient::PATIENT_SOURCE_OTHER:
+                $contact->setScenario('other_register');
+                $patient->setScenario('other_register');
+                $address->setScenario('other_register');
+                $referral->setScenario('other_register');
+                break;
+            case Patient::PATIENT_SOURCE_REFERRAL:
+                $contact->setScenario('referral');
+                $patient->setScenario('referral');
+                $address->setScenario('referral');
+                $referral->setScenario('referral');
+                break;
+            case Patient::PATIENT_SOURCE_SELF_REGISTER:
+                $contact->setScenario('self_register');
+                $patient->setScenario('self_register');
+                $address->setScenario('self_register');
+                $referral->setScenario('self_register');
+                break;
+            default:
+                $contact->setScenario('manual');
+                $patient->setScenario('manual');
+                $address->setScenario('manual');
+                $referral->setScenario('manual');
+                break;
+        }
         
         $this->performAjaxValidation(array($patient, $contact, $address));
 
@@ -1668,17 +1705,22 @@ class PatientController extends BaseController
             $contact->attributes = $_POST['Contact'];
             $patient->attributes = $_POST['Patient'];
             $address->attributes = $_POST['Address'];
+            if (isset($_POST['PatientReferral'])) {
+
+                $referral->attributes = $_POST['PatientReferral'];
+            }
 
             // not to be sync with PAS
             $patient->is_local = 1;
 
-            list($contact, $patient, $address) = $this->performPatientSave($contact, $patient, $address);
+            list($contact, $patient, $address, $referral) = $this->performPatientSave($contact, $patient, $address, $referral);
         }
 
         $this->render('crud/update',array(
                         'patient' => $patient,
                         'contact' => $contact,
                         'address' => $address,
+                        'referral' => $referral
         ));
     }
     
@@ -1749,6 +1791,13 @@ class PatientController extends BaseController
         echo CJSON::encode($output);
         
         Yii::app()->end();
+    }
+
+    public function actionDownloadReferral($id)
+    {
+        $model = PatientReferral::model()->findByPk($id);
+
+        Yii::app()->request->sendFile($model->file_name, $model->file_content, $model->file_type, true);
     }
     
 }

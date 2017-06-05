@@ -4,8 +4,7 @@
  * This is the model class for table "patient_referral".
  *
  * The followings are the available columns in table 'patient_referral':
- * @property integer $id
- * @property string $patient_id
+ * @property integer $patient_id
  * @property string $file_content
  * @property string $file_type
  * @property string $file_size
@@ -20,7 +19,7 @@
  * @property User $lastModifiedUser
  * @property User $createdUser
  */
-class PatientReferral extends CActiveRecord
+class PatientReferral extends BaseActiveRecord
 {
     public $uploadedFile;
     /**
@@ -42,6 +41,7 @@ class PatientReferral extends CActiveRecord
             array('uploadedFile', 'file', 'allowEmpty' => true, 'on' => 'self_register'),
             array('uploadedFile', 'file', 'allowEmpty' => true, 'on' => 'other_register'),
             array('uploadedFile', 'file', 'allowEmpty' => false, 'on' => 'referral'),
+            array('patient_id, uploadedFile, file_name, file_size, file_content, file_type', 'safe')
         );
     }
 
@@ -53,7 +53,7 @@ class PatientReferral extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'patient' => array(self::BELONGS_TO, 'Patient', 'patient_id'),
+            'patient' => array(self::BELONGS_TO, 'Patient', 'id'),
             'lastModifiedUser' => array(self::BELONGS_TO, 'User', 'last_modified_user_id'),
             'createdUser' => array(self::BELONGS_TO, 'User', 'created_user_id'),
         );
@@ -69,6 +69,10 @@ class PatientReferral extends CActiveRecord
         );
     }
 
+    /**
+     * Populate the model with the main attributes from $FILE.
+     * @return bool The beforeSave event.
+     */
     public function beforeSave()
     {
         if ($file = CUploadedFile::getInstance($this, 'uploadedFile')) {

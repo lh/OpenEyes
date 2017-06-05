@@ -67,5 +67,15 @@
 				<div class="data-value"><?php echo ($this->patient->practice && $this->patient->practice->phone) ? $this->patient->practice->phone : 'Unknown'; ?></div>
 			</div>
 		</div>
+    <?php if (isset($this->patient->referral)):?>
+        <div class="row data-row">
+          <div class="large-4 column">
+            <div class="data-label">Referral:</div>
+          </div>
+          <div class="large-8 column">
+            <div class="data-value"><?php echo CHtml::link($this->patient->referral->file_name, array('downloadReferral', 'id' => $this->patient->referral->patient_id));?></div>
+          </div>
+        </div>
+    <?php endif;?>
 	</div>
 </section>

@@ -51,7 +51,7 @@
  * @property Contact[] $contactAssignments
  * @property Contact $contact
  * @property Gp $gp
- * @property PatientReferral[] $referrals
+ * @property PatientReferral $referral
  * @property Medication[] $medications
  * @property Practice $practice
  * @property Allergy[] $allergies
@@ -159,7 +159,7 @@ class Patient extends BaseActiveRecordVersioned
                 'alias' => 'patient_allergies',
                 'order' => 'patient_allergies.name', ),
             'allergyAssignments' => array(self::HAS_MANY, 'PatientAllergyAssignment', 'patient_id'),
-            'referrals' => array(self::HAS_MANY, 'PatientReferral', 'patient_id'),
+            'referral' => array(self::HAS_ONE, 'PatientReferral', 'patient_id'),
             'risks' => array(
                 self::MANY_MANY,
                 'Risk',
@@ -277,6 +277,23 @@ class Patient extends BaseActiveRecordVersioned
             self::PATIENT_SOURCE_SELF_REGISTER => 'Self-Registration',
             self::PATIENT_SOURCE_OTHER => 'Other'
         );
+    }
+
+    /**
+     * @return string Human-readable patient source for read-only display.
+     */
+    public function getPatientSource()
+    {
+        switch ($this->patient_source)
+        {
+            case self::PATIENT_SOURCE_REFERRAL:
+                return 'Referral';
+            case self::PATIENT_SOURCE_SELF_REGISTER:
+                return 'Self-Registration';
+            case self::PATIENT_SOURCE_OTHER:
+                return 'Other';
+        }
+        return 'None';
     }
 
     public function search_nr($params)
