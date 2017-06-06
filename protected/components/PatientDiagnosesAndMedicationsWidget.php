@@ -17,6 +17,6 @@ class PatientDiagnosesAndMedicationsWidget extends CWidget
 
     public function run()
     {
-        $this->render('PatientDiagnosesAndMedicationsWidget');
+        $this->render('patientDiagnosesAndMedicationsWidget');
     }
 }
