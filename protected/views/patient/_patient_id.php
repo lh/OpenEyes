@@ -73,7 +73,7 @@
 			<!-- NHS number -->
 			<div class="nhs-number warning">
 				<span class="hide-text print-only">
-					NHS number:
+					Medicare number:
 				</span>
 				<?php echo $this->patient->nhsnum?>
 				<?php if ($this->patient->nhsNumberStatus && $this->patient->nhsNumberStatus->isAnnotatedStatus()):?>

@@ -46,7 +46,7 @@ $logoHelper = new LogoHelper();
 
 		<tr>
 			<th>
-				NHS Number
+				Medicare Number
 			</th>
 			<td>
 				<?php echo $patient->nhsnum?>
