@@ -1492,7 +1492,7 @@ class PatientController extends BaseController
         //Don't render patient summary box on top as we have no selected patient
         $this->renderPatientPanel = false;
        
-        $patient = new Patient('manual');
+        $patient = new Patient('other_register');
         $patient->noPas();
         $contact = new Contact('manualAddPatient');
         $address = new Address();
