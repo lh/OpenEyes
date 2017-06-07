@@ -1,5 +1,4 @@
 <?php
-
 echo '<?php'; ?>
 
 class <?php echo $this->className; ?>ParameterTest extends CTestCase
@@ -57,7 +56,7 @@ class <?php echo $this->className; ?>ParameterTest extends CTestCase
         $expected = array(
 <?php if (!empty($this->attributeList)):
     foreach (explode(',', $this->attributeList) as $attribute):?>
-        "<?php echo $this->alias ?>_<?php echo $attribute; ?>_0" => $this-><?php echo $attribute; ?>,
+        "<?php echo $this->alias; ?>_<?php echo $attribute; ?>_0" => $this-><?php echo $attribute; ?>,
 <?php endforeach; endif;?>
         );
 
@@ -85,7 +84,7 @@ class <?php echo $this->className; ?>ParameterTest extends CTestCase
 
         // Ensure that the JOIN string is correct.
         //$expected = "RENDER_JOIN_HERE";
-        //$this->assertEquals($expected, $this->parameter->join('p_al_1', array('id' => 'id'), $this->searchProvider));
+        //$this->assertEquals($expected, $this->parameter->join('<?php echo $this->alias; ?>_1', array('id' => 'id'), $this->searchProvider));
         $this->markTestIncomplete('TODO');
     }
 }
