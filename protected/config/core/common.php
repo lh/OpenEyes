@@ -65,7 +65,10 @@ return array(
                 'PatientMedication',
                 'PreviousTrial',
                 'PatientAllergy',
-                'FamilyHistory'
+                'FamilyHistory',
+            ),
+            'fixedParameters' => array(
+                'PatientDeceased'
             ),
             'providers' => array(
                 'mysql' => 'DBProvider'
