@@ -56,6 +56,7 @@
  * @property EthnicGroup $ethnic_group
  * @property CommissioningBody[] $commissioningbodies
  * @property SocialHistory $socialhistory
+ * @property TrialPatient[] trials
  *
  */
 class Patient extends BaseActiveRecordVersioned
@@ -2047,5 +2048,28 @@ class Patient extends BaseActiveRecordVersioned
         }
 
         return $patient->episodes[0]->id;
+    }
+
+    /**
+     * Gets whether this patient is currently in an open Intervention trial (other than the given trial)
+     *
+     * @param integer $trial_id If set, this function will ignore trials with this ID
+     *
+     * @return bool Returns true if this patient is currently in an open Intervention trial, otherwise false
+     */
+    public function isCurrentlyInInterventionTrial($trial_id = null)
+    {
+        foreach ($this->trials as $trialPatient) {
+            if ($trialPatient->patient_status == TrialPatient::STATUS_ACCEPTED &&
+                $trialPatient->trial->trial_type == Trial::TRIAL_TYPE_INTERVENTION &&
+                $trialPatient->trial->status = Trial::STATUS_CLOSED &&
+                $trialPatient->trial->status != Trial::STATUS_CANCELLED &&
+                ($trial_id == null || $trialPatient->trial_id != $trial_id)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
