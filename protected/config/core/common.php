@@ -58,22 +58,7 @@ return array(
         ),
         'oldadmin',
         'OETrial',
-        'OECaseSearch' => array(
-            'parameters' => array(
-                'PatientAge',
-                'PatientDiagnosis',
-                'PatientMedication',
-                'PreviousTrial',
-                'PatientAllergy',
-                'FamilyHistory',
-            ),
-            'fixedParameters' => array(
-                'PatientDeceased'
-            ),
-            'providers' => array(
-                'mysql' => 'DBProvider'
-            )
-        ),
+        'OECaseSearch',
         'Genetics'
     ),
 
