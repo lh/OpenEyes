@@ -437,7 +437,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
   function findDuplicates() {
     if ($("#fname").val() && $('#surname').val() && $('#patient_dob').val()) {
       $.ajax({
-          url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>" + "?firstName=" + $('#fname').val() + "&surname=" + $('#surname').val() + "&dob=" + $('#patient_dob').val(),
+          url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>",
+          data: {firstName: $('#fname').val(), surname: $('#surname').val(), dob: $('#patient_dob').val()},
           type: 'GET',
           success: function(response) {
             $('#conflicts').remove();
