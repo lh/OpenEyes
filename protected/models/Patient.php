@@ -653,6 +653,23 @@ class Patient extends BaseActiveRecordVersioned
         return $this->no_risks_date || $this->risks;
     }
 
+    public function hasUnconfirmedDiagnoses()
+    {
+        $confirmed = false;
+        $diagnoses = $this->secondarydiagnoses;
+
+        foreach ($diagnoses as $diagnosis)
+        {
+            if (!$diagnosis->is_confirmed)
+            {
+                $confirmed = true;
+                break;
+            }
+        }
+
+        return $confirmed;
+    }
+
     /**
      * @return bool Is patient deceased?
      */
