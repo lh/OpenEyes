@@ -14,6 +14,7 @@
             'contact' => $contact,
             'address' => $address,
             'referral' => $referral,
+            'gpcontact' => $contact,
             'context' => 'create'
         )); ?>
     </div>
