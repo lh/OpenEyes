@@ -1805,7 +1805,7 @@ class PatientController extends BaseController
     public function actionFindDuplicates($firstName, $surname, $dob)
     {
         $sql = "
-        SELECT *
+        SELECT p.*
         FROM patient p
         JOIN contact c
           ON c.id = p.contact_id
