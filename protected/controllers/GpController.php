@@ -22,7 +22,6 @@ class GpController extends BaseController
     }
     public function actionCreate()
     {
-
         $gp = new Gp();
         $contact = new Contact();
 
@@ -31,7 +30,6 @@ class GpController extends BaseController
 
        echo CJSON::encode(array('label'=> $contact->getFullName()
        ,'value'=> $gp->getPrimaryKey()));
-
     }
 
     private function performGpSave(Contact $contact, Gp $gp)
@@ -42,9 +40,6 @@ class GpController extends BaseController
                 $gp->contact_id = $contact->getPrimaryKey();
                 $gp->nat_id = 0;
                 $gp->obj_prof = 0;
-
-
-
                 if($gp->save() ) {
                     $transaction->commit();
                 }
@@ -55,17 +50,10 @@ class GpController extends BaseController
             else {
                 $transaction->rollback();
             }
-
-
-
-
         } catch (Exception $ex) {
             OELog::logException($ex);
             $transaction->rollback();
         }
-
-
         return array($contact, $gp);
     }
-
 }

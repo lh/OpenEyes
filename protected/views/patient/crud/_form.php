@@ -313,14 +313,14 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <div id="no_gp_result" class="row field-row hide">
         <div class="large-offset-4 large-8 column selected_gp end">No result
             <div class="row buttons">
+                <p>
                 <?php echo CHtml::link('Add Referrer', '#', array(
                 'onclick'=>'$("#gpdialog").dialog("open"); return false;',
                 ));?>
-
+                </p>
             </div>
         </div>
     </div>
-        
     </div>
   </div>
 

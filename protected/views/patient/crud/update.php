@@ -14,7 +14,8 @@
             'contact' => $contact,
             'address' => $address,
             'referral' => $referral,
-            'context' => 'update'
+            'context' => 'update',
+            'gpcontact' => $gpcontact
         )); ?>
     </div>
   </div>
