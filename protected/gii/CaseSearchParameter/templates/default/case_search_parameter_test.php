@@ -5,11 +5,13 @@ class <?php echo $this->className; ?>ParameterTest extends CTestCase
 {
     protected $parameter;
     protected $searchProvider;
+    protected $invalidProvider;
 
     protected function setUp()
     {
         $this->parameter = new <?php echo $this->className; ?>Parameter();
         $this->searchProvider = new DBProvider('mysql');
+        $this->invalidProvider = new DBProvider('invalid');
         $this->parameter->id = 0;
     }
 
@@ -17,6 +19,7 @@ class <?php echo $this->className; ?>ParameterTest extends CTestCase
     {
         unset($this->parameter); // start from scratch for each test.
         unset($this->searchProvider);
+        unset($this->invalidProvider);
     }
 
     /**
@@ -85,6 +88,22 @@ class <?php echo $this->className; ?>ParameterTest extends CTestCase
         // Ensure that the JOIN string is correct.
         //$expected = "RENDER_JOIN_HERE";
         //$this->assertEquals($expected, $this->parameter->join('<?php echo $this->alias; ?>_1', array('id' => 'id'), $this->searchProvider));
+        $this->markTestIncomplete('TODO');
+    }
+
+    /**
+     * @covers DBProvider::search()
+     * @covers DBProvider::executeSearch()
+     * @covers <?php echo $this->className; ?>Parameter::query()
+     */
+    public function testSearch()
+    {
+        // TODO: Use fixtures to populate the relevant database tables with dummy data.
+        // $parameters = array();
+
+        // TODO: Populate the case search parameter attributes here.
+        // $results = $this->searchProvider->search($parameters);
+
         $this->markTestIncomplete('TODO');
     }
 }
