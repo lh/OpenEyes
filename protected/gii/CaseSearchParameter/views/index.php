@@ -9,31 +9,32 @@
 
 <?php $form = $this->beginWidget('CCodeForm', array('model' => $model)); ?>
 
-<div class="row">
-    <?php echo $form->labelEx($model, 'className'); ?>
-    <?php echo $form->textField($model, 'className', array('size' => 65, 'id' => 'class-name')); ?>
+  <div class="row">
+      <?php echo $form->labelEx($model, 'className'); ?>
+      <?php echo $form->textField($model, 'className', array('size' => 65, 'id' => 'class-name')); ?>
     <div class="tooltip">
-        Parameter class name must only contain word characters.
+      Parameter class name must only contain word characters.
     </div>
-    <?php echo $form->error($model, 'className'); ?>
-</div>
-<div class="row">
-    <?php echo $form->labelEx($model, 'name'); ?>
-    <?php echo $form->textField($model, 'name', array('size' => 65, 'id' => 'name')); ?>
+      <?php echo $form->error($model, 'className'); ?>
+  </div>
+  <div class="row">
+      <?php echo $form->labelEx($model, 'name'); ?>
+      <?php echo $form->textField($model, 'name', array('size' => 65, 'id' => 'name')); ?>
     <div class="tooltip">
-        This value is displayed on-screen.
+      This value is displayed on-screen.
     </div>
-    <?php echo $form->error($model, 'name'); ?>
-</div>
+      <?php echo $form->error($model, 'name'); ?>
+  </div>
 
-<div class="row">
-    <?php echo $form->labelEx($model, 'alias'); ?>
-    <?php echo $form->textField($model, 'alias', array('size' => 20, 'id' => 'alias')); ?>
+  <div class="row">
+      <?php echo $form->labelEx($model, 'alias'); ?>
+      <?php echo $form->textField($model, 'alias', array('size' => 20, 'id' => 'alias')); ?>
     <div class="tooltip">
-        SQL alias prefix must only contain word characters and underscores. This should be unique to all other parameter aliases.
+      SQL alias prefix must only contain word characters and underscores. This should be unique to all other parameter
+      aliases.
     </div>
-    <?php echo $form->error($model, 'alias'); ?>
-</div>
+      <?php echo $form->error($model, 'alias'); ?>
+  </div>
 
   <div class="row">
       <?php echo $form->labelEx($model, 'attributeList'); ?>
@@ -42,6 +43,15 @@
       Separate each attribute name with a comma. Attribute names must only consist of word characters.
     </div>
       <?php echo $form->error($model, 'attributeList'); ?>
+  </div>
+
+  <div class="row">
+      <?php echo $form->labelEx($model, 'searchProviders'); ?>
+      <?php echo $form->textField($model, 'searchProviders', array('size' => 65)); ?>
+    <div class="tooltip">
+      At least one search provider must be listed here. Separate each search provider with a comma.
+    </div>
+      <?php echo $form->error($model, 'searchProviders'); ?>
   </div>
 
 <?php $this->endWidget(); ?>

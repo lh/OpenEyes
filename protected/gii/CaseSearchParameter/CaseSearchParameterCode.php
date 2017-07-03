@@ -12,14 +12,15 @@ class CaseSearchParameterCode extends CCodeModel
     public $alias;
     public $name;
     public $attributeList;
+    public $searchProviders;
 
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('className, name, alias', 'required'),
+            array('className, name, alias, searchProviders', 'required'),
             array('className, alias', 'match', 'pattern' => '/^\w+$/'),
-            array('attributeList', 'match', 'pattern' => '/^[\w,]+$/'),
-            array('className, name, alias, attributeList', 'sticky')
+            array('attributeList, searchProviders', 'match', 'pattern' => '/^[\w,]+$/'),
+            array('className, name, alias, attributeList, searchProviders', 'sticky')
         ));
     }
 
@@ -29,7 +30,8 @@ class CaseSearchParameterCode extends CCodeModel
             'className' => 'Parameter Class Name',
             'name' => 'Parameter Name',
             'alias' => 'SQL alias prefix',
-            'attributeList' => 'Attributes'
+            'attributeList' => 'Attributes',
+            'searchProviders' => 'Supported Search Providers'
         ));
     }
 

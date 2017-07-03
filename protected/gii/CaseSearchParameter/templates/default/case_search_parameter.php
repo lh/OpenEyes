@@ -1,7 +1,8 @@
 <?php
 echo '<?php'; ?>
 
-class <?php echo $this->className; ?>Parameter extends CaseSearchParameter
+class <?php echo $this->className; ?>Parameter extends CaseSearchParameter implements <?php echo str_replace(',', 'Interface, ', $this->searchProviders) . 'Interface'; ?>
+
 {
 <?php if (!empty($this->attributeList)):
   foreach (explode(',', $this->attributeList) as $attribute):?>
@@ -58,6 +59,8 @@ foreach (explode(',', $this->attributeList) as $attribute):?>
 
     }
 
+<?php foreach(explode(',', $this->searchProviders) as $searchProvider):?>
+<?php if ($searchProvider === 'DBProvider'):?>
     /**
     * Generate a SQL fragment representing the subquery of a FROM condition.
     * @param $searchProvider SearchProvider The search provider. This is used to determine whether or not the search provider is using SQL syntax.
@@ -105,4 +108,6 @@ foreach (explode(',', $this->attributeList) as $attribute):?>
     {
         return "<?php echo $this->alias; ?>_$this->id";
     }
+<?php endif;?>
+<?php endforeach;?>
 }
