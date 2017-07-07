@@ -1,6 +1,9 @@
 <?php
 echo '<?php'; ?>
 
+/**
+ * Class <?php echo $this->className; ?>Parameter
+ */
 class <?php echo $this->className; ?>Parameter extends CaseSearchParameter implements <?php echo str_replace(',', 'Interface, ', $this->searchProviders) . 'Interface'; ?>
 
 {

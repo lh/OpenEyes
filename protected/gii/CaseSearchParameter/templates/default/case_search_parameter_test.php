@@ -1,6 +1,9 @@
 <?php
 echo '<?php'; ?>
 
+/**
+* Class <?php echo $this->className; ?>ParameterTest
+*/
 class <?php echo $this->className; ?>ParameterTest extends CDbTestCase
 {
     protected $parameter;
