@@ -31,7 +31,7 @@
                   <tr>
                     <td>
                         <?php echo CHtml::link($patient->getFullName(),
-                            Yii::app()->controller->createUrl('patient/view', array('id' => $patient->id))); ?>
+                            Yii::app()->controller->createUrl('patient/view', array('id' => $patient->id)), array('target' => '_blank')); ?>
                     </td>
                   </tr>
                 <?php endforeach; ?>
