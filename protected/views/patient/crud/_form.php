@@ -128,6 +128,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 'options' => array(
                     'showAnim' => 'fold',
                     'dateFormat' => Helper::NHS_DATE_FORMAT_JS,
+                    'minDate' => "-100Y",
+                    'maxDate' => "0D",
                 ),
                 'value' => $patient->NHSDate('dob', $patient->dob),
                 'htmlOptions' => array(

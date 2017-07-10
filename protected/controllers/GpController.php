@@ -32,7 +32,7 @@ class GpController extends BaseController
        ,'value'=> $gp->getPrimaryKey()));
     }
 
-    private function performGpSave(Contact $contact, Gp $gp)
+    public function performGpSave(Contact $contact, Gp $gp)
     {
         $transaction = Yii::app()->db->beginTransaction();
       try {

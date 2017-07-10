@@ -90,3 +90,4 @@ bin/yiic
 
 build/logs
 !/protected/modules/OECaseSearch/assets/css/QueryBuilder.css
+protected/tests/coverage/
