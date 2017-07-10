@@ -1,4 +1,5 @@
 <?php
+$counter = 0;
 echo '<?php'; ?>
 
 /**
@@ -7,22 +8,24 @@ echo '<?php'; ?>
 class <?php echo $this->className; ?>ParameterTest extends CDbTestCase
 {
     protected $parameter;
-    protected $searchProvider;
+    protected $searchProviders;
     protected $invalidProvider;
 
     protected function setUp()
     {
+        parent::setUp();
+        $this->searchProviders = array();
         $this->parameter = new <?php echo $this->className; ?>Parameter();
-        // $this->searchProvider = new SearchProvider('#add_provider_id_here#');
-        // $this->invalidProvider = new DBProvider('invalid');
+<?php foreach (explode(',', $this->searchProviders) as $provider):?>
+        $this->searchProviders[] = new <?php echo $provider; ?>('provider<?php echo $counter++;?>')
+<?php endforeach;?>
         $this->parameter->id = 0;
     }
 
     protected function tearDown()
     {
-        unset($this->parameter); // start from scratch for each test.
-        // unset($this->searchProvider);
-        // unset($this->invalidProvider);
+        parent::tearDown();
+        unset($this->parameter, $this->searchProviders);
     }
 
     /**
@@ -32,10 +35,10 @@ class <?php echo $this->className; ?>ParameterTest extends CDbTestCase
     public function testSearch()
     {
         // TODO: Use fixtures to populate the relevant database tables with dummy data.
-        // $parameters = array();
+        $parameters = array();
 
         // TODO: Populate the case search parameter attributes here.
-        // $results = $this->searchProvider->search($parameters);
+        $results = $this->searchProviders[0]->search($parameters);
 
         $this->markTestIncomplete('TODO');
     }
