@@ -24,7 +24,7 @@
                             <?php foreach ($this->patient->secondarydiagnoses as $diagnosis): ?>
                                 <tr>
                                     <td><?php echo $diagnosis->disorder->fully_specified_name; ?></td>
-                                    <td><?php echo ($diagnosis->is_confirmed !== null and (int)$diagnosis->is_confirmed === 0) ? 'Unconfirmed' : 'Confirmed'; ?></td>
+                                    <td><?php echo $diagnosis->isConfirmed() ? 'Confirmed' : 'Unconfirmed'; ?></td>
                                     <td><?php echo $diagnosis->dateText; ?></td>
                                 </tr>
                             <?php endforeach; ?>

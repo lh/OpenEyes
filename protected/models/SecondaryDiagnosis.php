@@ -117,4 +117,24 @@ class SecondaryDiagnosis extends BaseActiveRecordVersioned
     {
         return Helper::formatFuzzyDate($this->date);
     }
+
+    /**
+     * Gets a value indicating whether this diagnosis is confirmed
+     *
+     * @return bool True if the diagnosis is confirmed, otherwise false
+     */
+    public function isConfirmed()
+    {
+        return $this->is_confirmed === null || (int)$this->is_confirmed === 1;
+    }
+
+    /**
+     * Gets a value indicating whether this diagnosis is unconfirmed
+     *
+     * @return bool True if the diagnosis is unconfirmed, otherwise false
+     */
+    public function isUnconfirmed()
+    {
+        return $this->is_confirmed !== null && (int)$this->is_confirmed === 0;
+    }
 }

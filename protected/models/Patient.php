@@ -658,7 +658,7 @@ class Patient extends BaseActiveRecordVersioned
     public function hasUnconfirmedDiagnoses()
     {
         foreach ($this->secondarydiagnoses as $diagnosis) {
-            if ($diagnosis->is_confirmed !== null and (int)$diagnosis->is_confirmed === 0) {
+            if ($diagnosis->isUnconfirmed()) {
                 return true;
             }
         }

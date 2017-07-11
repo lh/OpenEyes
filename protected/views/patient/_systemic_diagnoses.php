@@ -47,13 +47,13 @@
 					<td>
                         <?php echo $diagnosis->eye ? $diagnosis->eye->adjective : ''?>
                         <?php echo $diagnosis->disorder->term?>
-                        <?php echo $diagnosis->is_confirmed == 0 ? '(Unconfirmed)' : ''; ?>
+                        <?php echo $diagnosis->isUnconfirmed() ? '(Unconfirmed)' : ''; ?>
                     </td>
 					<?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?>
 						<td>
                             <a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a>
                         </td>
-                        <?php if ($diagnosis->is_confirmed == 0): ?>
+                        <?php if ($diagnosis->isUnconfirmed()): ?>
                         <td>
                             <a href="#" class="confirmDiagnosis" rel="<?php echo $diagnosis->id?>">Confirm</a>
                         </td>
