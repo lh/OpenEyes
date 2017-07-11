@@ -760,12 +760,16 @@ class PatientController extends BaseController
 
         $date = $this->processFuzzyDate();
 
+        // If the patient came  from a referral or self registration, then the diagnosis is unconfirmed
+        $is_confirmed = ($patient->patient_source == Patient::PATIENT_SOURCE_REFERRAL
+            || $patient->patient_source == Patient::PATIENT_SOURCE_SELF_REGISTER) ? 0 : null;
+
         if (!$_POST['diagnosis_eye']) {
             if (!SecondaryDiagnosis::model()->find('patient_id=? and disorder_id=? and date=?', array($patient->id, $disorder->id, $date))) {
-                $patient->addDiagnosis($disorder->id, null, $date);
+                $patient->addDiagnosis($disorder->id, null, $date, $is_confirmed);
             }
         } elseif (!SecondaryDiagnosis::model()->find('patient_id=? and disorder_id=? and eye_id=? and date=?', array($patient->id, $disorder->id, $_POST['diagnosis_eye'], $date))) {
-            $patient->addDiagnosis($disorder->id, $_POST['diagnosis_eye'], $date);
+            $patient->addDiagnosis($disorder->id, $_POST['diagnosis_eye'], $date, $is_confirmed);
         }
 
         $this->redirect(array('patient/view/'.$patient->id));
@@ -790,10 +794,6 @@ class PatientController extends BaseController
         $sd->date = $this->processFuzzyDate();
         $sd->disorder_id = @$disorder_id;
         $sd->eye_id = @$_POST['diagnosis_eye'];
-
-        // If the patient came  from a referral or self registration, then the diagnosis is unconfirmed
-        $sd->is_confirmed = $patient->patient_source == Patient::PATIENT_SOURCE_REFERRAL
-                         || $patient->patient_source == Patient::PATIENT_SOURCE_SELF_REGISTER ? 0 : null;
 
         $errors = array();
 

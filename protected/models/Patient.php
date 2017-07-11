@@ -1427,7 +1427,7 @@ class Patient extends BaseActiveRecordVersioned
         return $codes;
     }
 
-    public function addDiagnosis($disorder_id, $eye_id = false, $date = false)
+    public function addDiagnosis($disorder_id, $eye_id = false, $date = false, $is_confirmed = null)
     {
         if (!$date) {
             $date = date('Y-m-d');
@@ -1450,6 +1450,7 @@ class Patient extends BaseActiveRecordVersioned
             $sd->disorder_id = $disorder_id;
             $sd->eye_id = $eye_id;
             $sd->date = $date;
+            $sd->is_confirmed = $is_confirmed;
 
             // If the patient came  from a referral or self registration, then the diagnosis is unconfirmed
             $sd->is_confirmed = $this->patient_source == Patient::PATIENT_SOURCE_REFERRAL
