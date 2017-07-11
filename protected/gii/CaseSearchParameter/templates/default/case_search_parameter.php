@@ -89,28 +89,6 @@ foreach (explode(',', $this->attributeList) as $attribute):?>
 <?php endforeach; endif;?>
         );
     }
-
-    /**
-    * Generate a SQL fragment representing a JOIN condition to a subquery.
-    * @param $joinAlias string The alias of the table being joined to.
-    * @param $criteria array An array of join conditions. The ID for each element is the column name from the aliased table.
-    * @param $searchProvider <?php echo $searchProvider; ?> The search provider. This is used for an internal query invocation for subqueries.
-    * @return string A SQL string representing a complete join condition. Join type is specified within the subclass definition.
-    */
-    public function join($joinAlias, $criteria, $searchProvider)
-    {
-        // Construct your JOIN condition here. Generally this involves wrapping the query in a JOIN condition.
-        return null;
-    }
-
-    /**
-    * Get the alias of the database table being used by this parameter instance.
-    * @return string The alias of the table for use in the SQL query.
-    */
-    public function alias()
-    {
-        return "<?php echo $this->alias; ?>_$this->id";
-    }
 <?php endif;?>
 <?php endforeach;?>
 }
