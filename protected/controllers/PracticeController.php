@@ -29,13 +29,13 @@ class PracticeController extends BaseController
         $contact->attributes = $_POST['Contact'];
         $address->attributes = $_POST['Address'];
         $practice->attributes = $_POST['Practice'];
-        list($contact,$practice,$address) = $this->performGpSave($contact, $practice,$address);
+        list($contact,$practice,$address) = $this->performPracticeSave($contact, $practice,$address);
 
         echo CJSON::encode(array('label'=> $practice->getAddressLines()
         ,'value'=> $practice->getPrimaryKey()));
     }
 
-    public function performGpSave(Contact $contact, Practice $practice,Address $address)
+    public function performPracticeSave(Contact $contact, Practice $practice,Address $address)
     {
         $transaction = Yii::app()->db->beginTransaction();
         try {
