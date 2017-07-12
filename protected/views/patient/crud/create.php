@@ -14,7 +14,10 @@
             'contact' => $contact,
             'address' => $address,
             'referral' => $referral,
-            'gpcontact' => $contact,
+            'gpcontact' => $gpcontact,
+            'practicecontact' => $practicecontact,
+            'practiceaddress' => $practiceaddress,
+            'practice' => $practice,
             'context' => 'create'
         )); ?>
     </div>

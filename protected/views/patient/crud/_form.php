@@ -368,9 +368,17 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <?php echo CHtml::hiddenField('Patient[practice_id]', $patient->practice_id, array('class'=>'hidden_id')); ?>
     </div>
     <div id="no_practice_result" class="row field-row hide">
-        <div class="large-offset-4 large-8 column selected_practice end">No result</div>
+        <div class="large-offset-4 large-8 column selected_practice end">No result
+            <div class="row buttons">
+                <p>
+                    <?php echo CHtml::link('Add Practice', '#', array(
+                        'onclick'=>'$("#practicedialog").dialog("open"); return false;',
+                    ));?>
+                </p>
+            </div>
+        </div>
     </div>
-        
+
     </div>
   </div>
   <div class="row field-row">
@@ -433,6 +441,48 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       $this->endWidget('zii.widgets.jui.CJuiDialog');
      ?>
 
+    <!-- practice form-->
+
+    <?php
+    $this->beginWidget('zii.widgets.jui.CJuiDialog',array(
+        'id'=>'practicedialog',
+        // additional javascript options for the dialog plugin
+        'options'=>array(
+            'title'=>'Add Practice',
+            'autoOpen'=>false,
+        ),
+    ));
+
+    echo CHtml::beginForm(Yii::app()->controller->createUrl('practice/create'),'post',array('id'=>'practice_form'));
+    echo CHtml::activeLabelEx($practicecontact, 'title');
+    echo CHtml::activeTextField($practicecontact, 'title', array('size' => 30, 'maxlength' => 30));
+    echo CHtml::activeLabelEx($practicecontact, 'first_name');
+    echo CHtml::activeTextField($practicecontact, 'first_name', array('size' => 30, 'maxlength' => 30));
+    echo CHtml::activeLabelEx($practicecontact, 'last_name');
+    echo CHtml::activeTextField($practicecontact, 'last_name', array('size' => 30, 'maxlength' => 30));
+    echo CHtml::activeLabelEx($practice, 'code');
+    echo CHtml::activeTextField($practice, 'code', array('size' => 30, 'maxlength' => 30));
+    echo CHtml::activeLabelEx($practice, 'phone');
+    echo CHtml::activeTextField($practice, 'phone', array('size' => 30, 'maxlength' => 30));
+    echo "<br>";
+    echo $this->renderPartial('_form_address', array('form' => $form, 'address' => $practiceaddress, 'countries' => $countries, 'address_type_ids' => $address_type_ids));
+    echo CHtml::ajaxButton( 'Add',
+        Yii::app()->controller->createUrl('practice/create'),
+        [
+            'type'=>'POST',
+            'error'=>'js:function(){
+      alert("error");
+      }',
+            'success'=>'js:function(event){
+       removeSelectedPractice();
+       addGpItem("selected_practice_wrapper",event);
+       $("#practicedialog").closest(".ui-dialog-content").dialog("close");
+      }',
+        ]
+    );
+    echo CHtml::endForm();
+    $this->endWidget('zii.widgets.jui.CJuiDialog');
+    ?>
 </div><!-- form -->
 
 <script type="text/javascript">

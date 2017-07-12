@@ -15,7 +15,10 @@
             'address' => $address,
             'referral' => $referral,
             'context' => 'update',
-            'gpcontact' => $gpcontact
+            'gpcontact' => $gpcontact,
+            'practicecontact' => $practicecontact,
+            'practiceaddress' => $practiceaddress,
+            'practice' => $practice
         )); ?>
     </div>
   </div>

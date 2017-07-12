@@ -1497,8 +1497,11 @@ class PatientController extends BaseController
         $contact = new Contact('manualAddPatient');
         $address = new Address();
         $referral = null;
-        $gpcontact = null;
-        
+        $gpcontact = new Contact();
+        $practicecontact = new Contact();
+        $practiceaddress = new Address();
+        $practice = new Practice();
+
         $this->performAjaxValidation(array($patient, $contact, $address));
         
         if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
@@ -1548,7 +1551,10 @@ class PatientController extends BaseController
                         'contact' => $contact,
                         'address' => $address,
                         'referral' => isset($referral) ? $referral : new PatientReferral('other_register'),
-                        'gpcontact' => $gpcontact
+                        'gpcontact' => $gpcontact,
+                        'practicecontact' => $practicecontact,
+                        'practiceaddress' => $practiceaddress,
+                        'practice' => $practice
         ));
    }
    
@@ -1663,7 +1669,10 @@ class PatientController extends BaseController
         $patient = $this->loadModel($id);
         $referral = isset($patient->referral) ? $patient->referral : new PatientReferral();
         $gpcontact = isset($patient->gp) ? $patient-> gp->contact : new Contact();
-        
+        $practice = isset($patient->practice) ? $patient->practice : new Practice();
+        $practicecontact = isset($patient->practice) ? $patient-> practice->contact : new Contact();
+        $practiceaddress = $practice->contact->address ? $practice->contact->address : new Address();
+
         //only local patient can be edited
         if($patient->is_local == 0){
             Yii::app()->user->setFlash('warning.update-patient', 'Only local patients can be edited.');
@@ -1724,7 +1733,11 @@ class PatientController extends BaseController
                         'contact' => $contact,
                         'address' => $address,
                         'referral' => $referral,
-                        'gpcontact' => $gpcontact
+                        'gpcontact' => $gpcontact,
+                        'practicecontact' => $practicecontact,
+                        'practiceaddress' => $practiceaddress,
+                        'practice' => $practice
+
         ));
     }
     
