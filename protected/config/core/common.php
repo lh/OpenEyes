@@ -298,11 +298,6 @@ return array(
                 'uri' => '',
                 'position' => 1,
             ),
-            'casesearch' => array(
-                'title' => 'Case Search',
-                'uri' => 'OECaseSearch/caseSearch',
-                'position' => 4,
-            ),
             'admin' => array(
                 'title' => 'More',
                 'uri' => '#',
