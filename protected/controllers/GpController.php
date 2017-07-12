@@ -149,7 +149,12 @@ class GpController extends BaseController
      */
     public function actionIndex()
     {
-        $dataProvider = new CActiveDataProvider('Gp');
+        $dataProvider = new CActiveDataProvider('Gp', array(
+            'criteria' => array(
+                'with' => array('contact'),
+                'order' => 'last_name, first_name',
+            ),
+        ));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
         ));

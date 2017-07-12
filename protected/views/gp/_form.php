@@ -24,14 +24,14 @@
       <div class="row field-row">
         <div class="large-3 column"><?php echo $form->labelEx($model, 'title'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->textField($model, 'title', array('size' => 30, 'maxlength' => 30)); ?>
+            <?php echo $form->textField($model, 'title', array('size' => 30, 'maxlength' => 20)); ?>
             <?php echo $form->error($model, 'title'); ?>
         </div>
       </div>
       <div class="row field-row">
         <div class="large-3 column"><?php echo $form->labelEx($model, 'first_name'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->textField($model, 'first_name', array('size' => 30, 'maxlength' => 30)); ?>
+            <?php echo $form->textField($model, 'first_name', array('size' => 30, 'maxlength' => 100)); ?>
             <?php echo $form->error($model, 'first_name'); ?>
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="row field-row">
         <div class="large-3 column"><?php echo $form->labelEx($model, 'last_name'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->textField($model, 'last_name', array('size' => 30, 'maxlength' => 30)); ?>
+            <?php echo $form->textField($model, 'last_name', array('size' => 30, 'maxlength' => 100)); ?>
             <?php echo $form->error($model, 'last_name'); ?>
         </div>
       </div>

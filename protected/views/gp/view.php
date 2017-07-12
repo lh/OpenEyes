@@ -22,7 +22,7 @@ $this->pageTitle = 'View Practitioner';
                 <?php echo CHtml::label('Name', null); ?>
             </div>
             <div class="large-4 column end">
-              <div class="data-value"><?php echo $model->getCorrespondenceName(); ?></div>
+              <div class="data-value"><?php echo CHtml::encode($model->getCorrespondenceName()); ?></div>
             </div>
           </div>
           <div class="row data-row">
@@ -31,7 +31,7 @@ $this->pageTitle = 'View Practitioner';
             </div>
             <div class="large-3 column end">
               <div
-                  class="data-value"><?php echo isset($model->contact->primary_phone) ? $model->contact->primary_phone : 'Unknown'; ?></div>
+                  class="data-value"><?php echo isset($model->contact->primary_phone) ? CHtml::encode($model->contact->primary_phone) : 'Unknown'; ?></div>
             </div>
           </div>
           <!--Add the address row here when GPs get tied directly to practices rather than through patient records.-->
