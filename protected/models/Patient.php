@@ -262,7 +262,7 @@ class Patient extends BaseActiveRecordVersioned
             'nhs_num' => 'Medicare Number',
             'deleted' => 'Is Deleted',
             'nhs_num_status_id' => 'Medicare Number Status',
-            'gp_id' => 'Referrer',
+            'gp_id' => 'Referring Practitioner',
             'practice_id' => 'Practice',
             'is_local' => 'Is local patient ?',
             'patient_source' => 'Patient Source'

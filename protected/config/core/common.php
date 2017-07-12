@@ -354,6 +354,12 @@ return array(
                         'position' => 9,
                         'restricted' => array('TaskAddPatient'),
                     ),
+                    'gps' => array(
+                        'title' => 'Practitioners',
+                        'uri' => 'gp/index',
+                        'position' => 10,
+                        'restricted' => array('TaskViewGp', 'TaskCreateGp'),
+                    )
                 ),
             ),
 // temporarily disabled

@@ -317,7 +317,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-offset-4 large-8 column selected_gp end">No result
             <div class="row buttons">
                 <p>
-                <?php echo CHtml::link('Add Referrer', '#', array(
+                <?php echo CHtml::link('Add Referring Practitioner', '#', array(
                 'onclick'=>'$("#gpdialog").dialog("open"); return false;',
                 ));?>
                 </p>
@@ -396,7 +396,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       'id'=>'gpdialog',
       // additional javascript options for the dialog plugin
       'options'=>array(
-      'title'=>'Add Referrer',
+      'title'=>'Add Referring Practitioner',
       'autoOpen'=>false,
 ),
       ));
@@ -411,7 +411,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       echo CHtml::activeLabelEx($gpcontact, 'primary_phone');
       echo CHtml::activeTelField($gpcontact, 'primary_phone', array('size' => 15, 'maxlength' => 20));
       echo CHtml::ajaxButton( 'Add',
-      Yii::app()->controller->createUrl('gp/create'),
+      Yii::app()->controller->createUrl('gp/create', array('context' => 'AJAX')),
       [
       'type'=>'POST',
       'error'=>'js:function(){
@@ -424,7 +424,6 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       }',
       'complete'=>'js:function(){
        
-   
        $("#gp_form")[0].reset(); 
       }'
       ]
