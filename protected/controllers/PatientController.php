@@ -85,7 +85,7 @@ class PatientController extends BaseController
                 'roles' => array('OprnEditSocialHistory'),
             ),
             array('allow',
-                'actions' => array('create', 'update'),
+                'actions' => array('create', 'update', 'findDuplicates'),
                 'roles' => array('TaskAddPatient'),
             )
         );
@@ -1800,6 +1800,32 @@ class PatientController extends BaseController
         $model = PatientReferral::model()->findByPk($id);
 
         Yii::app()->request->sendFile($model->file_name, $model->file_content, $model->file_type, true);
+    }
+
+    public function actionFindDuplicates($firstName, $surname, $dob)
+    {
+        $sql = "
+        SELECT *
+        FROM patient p
+        JOIN contact c
+          ON c.id = p.contact_id
+        WHERE p.dob = :dob
+          AND SOUNDEX(c.first_name) = SOUNDEX(:first_name)
+          AND SOUNDEX(c.last_name) = SOUNDEX(:surname)
+        ";
+        $patients = Patient::model()->findAllBySql($sql, array(':dob' => Helper::convertNHS2MySQL($dob), ':first_name' => $firstName, ':surname' => $surname));
+
+        if (count($patients) !== 0) {
+            $this->renderPartial('crud/_conflicts', array(
+                'patients' => $patients,
+                'name' => $firstName . ' ' . $surname
+            ));
+        }
+        else {
+            $this->renderPartial('crud/_conflicts', array(
+                'name' => $firstName . ' ' . $surname
+            ));
+        }
     }
     
 }

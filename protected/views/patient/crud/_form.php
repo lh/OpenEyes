@@ -56,7 +56,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <?php echo $form->errorSummary(array($contact, $patient, $address, $referral)); ?>
 
   <div class="row field-row">
-    <div class="large-6 column">
+    <div id="contact" class="large-6 column">
       <div class="row field-row">
 
         <div class="large-4 column"><?php echo $form->labelEx($patient, 'hos_num'); ?></div>
@@ -66,10 +66,6 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
           <?php echo $form->error($patient, 'hos_num'); ?>
       </div>
-    </div>
-  </div>
-  <div class="row field-row">
-    <div class="large-6 column">
       <div class="row field-row">
         <div class="large-4 column nhs-number-wrapper">
           <div class="nhs-number warning">
@@ -83,11 +79,6 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
           <?php echo $form->error($patient, 'nhs_num'); ?>
       </div>
-    </div>
-  </div>
-
-  <div class="row field-row">
-    <div class="large-6 column">
       <div class="row field-row nhs-num-status <?php echo(!$patient->nhs_num ? 'hide' : ''); ?>">
         <div class="large-4 column"><?php echo $form->labelEx($patient, 'nhs_num_status_id'); ?></div>
         <div class="large-7 column end">
@@ -95,53 +86,30 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             <?php echo $form->error($patient, 'nhs_num_status_id'); ?>
         </div>
       </div>
-    </div>
-  </div>
-
-  <hr>
-  <!-- -->
-  <div class="row field-row">
-    <div class="large-6 column">
       <div class="row field-row">
-        <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source');?></div>
-        <div class="large-4 column end">
-            <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList());?>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr/>
-
-  <div class="row field-row">
-    <div class="large-6 column">
-      <div class="row field-row">
-        <div class="large-3 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
         <div class="large-4 column end">
             <?php echo $form->textField($contact, 'title', array('size' => 40, 'maxlength' => 40)); ?>
             <?php echo $form->error($contact, 'title'); ?>
         </div>
       </div>
       <div class="row field-row">
-        <div class="large-3 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 40)); ?>
+            <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 40, 'id' => 'fname', 'onblur' => 'findDuplicates();')); ?>
             <?php echo $form->error($contact, 'first_name'); ?>
         </div>
       </div>
 
       <div class="row field-row">
-        <div class="large-3 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 40)); ?>
+            <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 40, 'id' => 'surname', 'onblur' => 'findDuplicates();')); ?>
             <?php echo $form->error($contact, 'last_name'); ?>
         </div>
       </div>
-
-      <!-- -->
-
       <div class="row field-row">
-        <div class="large-3 column"><?php echo $form->labelEx($patient, 'dob'); ?></div>
+        <div class="large-4 column"><?php echo $form->labelEx($patient, 'dob'); ?></div>
         <div class="large-4 column">
 
             <?php
@@ -164,12 +132,33 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 'value' => $patient->NHSDate('dob', $patient->dob),
                 'htmlOptions' => array(
                     'class' => 'small fixed-width',
+                    'onchange' => 'findDuplicates()'
                 ),
             ))*/ ?>
             <?php echo $form->error($patient, 'dob'); ?>
         </div>
           <div class="large-4 column end"><label><i>(dd/mm/yyyy)</i></label></div>
       </div>
+    </div>
+  </div>
+
+  <hr>
+  <!-- -->
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source');?></div>
+        <div class="large-4 column end">
+            <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList());?>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
+
+  <div class="row field-row">
+    <div class="large-6 column">
       <div class="row field-row">
         <div class="large-3 column"><?php echo $form->labelEx($patient, 'gender'); ?></div>
         <div class="large-4 column end">
@@ -443,3 +432,19 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
      ?>
 
 </div><!-- form -->
+
+<script type="text/javascript">
+  function findDuplicates() {
+    if ($("#fname").val() && $('#surname').val() && $('#patient_dob').val()) {
+      $.ajax({
+          url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>" + "?firstName=" + $('#fname').val() + "&surname=" + $('#surname').val() + "&dob=" + $('#patient_dob').val(),
+          type: 'GET',
+          success: function(response) {
+            $('#conflicts').remove();
+            $('#contact').after(response);
+          }
+        }
+      );
+    }
+  }
+</script>
