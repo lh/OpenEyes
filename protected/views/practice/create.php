@@ -8,7 +8,7 @@ $this->pageTitle = 'Create Practice';
   <div class="large-10 column content admin large-centered">
     <div class="box admin">
       <h1 class="text-center">Create Practice</h1>
-        <?php $this->renderPartial('_form', array('model' => $model, 'address' => $address,'contact' => $contact)); ?>
+        <?php $this->renderPartial('_form', array('model' => $model, 'address' => $address, 'contact' => $contact)); ?>
     </div>
   </div>
 </div>

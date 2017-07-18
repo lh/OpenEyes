@@ -38,22 +38,22 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
         <?php endforeach; ?>
         </tbody>
         <tfoot class="pagination-container">
-          <tr>
-            <td colspan="7">
-                <?php
-                $this->widget('LinkPager', array(
-                    'pages' => $dataProvider->getPagination(),
-                    'maxButtonCount' => 15,
-                    'cssFile' => false,
-                    'selectedPageCssClass' => 'current',
-                    'hiddenPageCssClass' => 'unavailable',
-                    'htmlOptions' => array(
-                        'class' => 'pagination',
-                    ),
-                ));
-                ?>
-            </td>
-          </tr>
+        <tr>
+          <td colspan="7">
+              <?php
+              $this->widget('LinkPager', array(
+                  'pages' => $dataProvider->getPagination(),
+                  'maxButtonCount' => 15,
+                  'cssFile' => false,
+                  'selectedPageCssClass' => 'current',
+                  'hiddenPageCssClass' => 'unavailable',
+                  'htmlOptions' => array(
+                      'class' => 'pagination',
+                  ),
+              ));
+              ?>
+          </td>
+        </tr>
         </tfoot>
       </table>
     </div>

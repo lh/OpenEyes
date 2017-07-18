@@ -17,16 +17,15 @@ $this->pageTitle = 'View Practice';
             </span>
         </a>
         <div class="js-toggle-body">
-           <div class="row data-row">
-                <div class="large-3 column">
-                    <?php echo CHtml::label('Practice Contact', null); ?>
-                </div>
-                <div class="large-3 column end">
-                    <div
-                      class="data-value"><?php echo CHtml::encode($model->contact->getFullName()); ?>
-                    </div>
-                </div>
-          </div>
+          <div class="row data-row">
+            <div class="large-3 column">
+                <?php echo CHtml::label('Practice Contact', null); ?>
+            </div>
+            <div class="large-3 column end">
+              <div
+                  class="data-value"><?php echo CHtml::encode($model->contact->getFullName()); ?>
+              </div>
+            </div>
           </div>
           <div class="row data-row">
             <div class="large-3 column">
@@ -37,14 +36,14 @@ $this->pageTitle = 'View Practice';
             </div>
           </div>
           <div class="row data-row">
-              <div class="large-3 column">
-                  <?php echo CHtml::label('Code', null); ?>
+            <div class="large-3 column">
+                <?php echo CHtml::label('Code', null); ?>
+            </div>
+            <div class="large-3 column end">
+              <div
+                  class="data-value"><?php echo CHtml::encode($model->code); ?>
               </div>
-              <div class="large-3 column end">
-                  <div
-                    class="data-value"><?php echo CHtml::encode($model->code); ?>
-                  </div>
-              </div>
+            </div>
           </div>
           <div class="row data-row">
             <div class="large-3 column">
