@@ -467,7 +467,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     echo "<br>";
     echo $this->renderPartial('_form_address', array('form' => $form, 'address' => $practiceaddress, 'countries' => $countries, 'address_type_ids' => $address_type_ids));
     echo CHtml::ajaxButton( 'Add',
-        Yii::app()->controller->createUrl('practice/create'),
+        Yii::app()->controller->createUrl('practice/create',array("context"=>'AJAX')),
         [
             'type'=>'POST',
             'error'=>'js:function(){

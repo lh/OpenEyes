@@ -359,6 +359,12 @@ return array(
                         'uri' => 'gp/index',
                         'position' => 10,
                         'restricted' => array('TaskViewGp', 'TaskCreateGp'),
+                    ),
+                    'practices' => array(
+                        'title' => 'Practices',
+                        'uri' => 'practice/index',
+                        'position' => 11,
+                        'restricted' => array('TaskViewPractice', 'TaskCreatePractice'),
                     )
                 ),
             ),

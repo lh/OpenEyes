@@ -1671,7 +1671,7 @@ class PatientController extends BaseController
         $gpcontact = isset($patient->gp) ? $patient-> gp->contact : new Contact();
         $practice = isset($patient->practice) ? $patient->practice : new Practice();
         $practicecontact = isset($patient->practice) ? $patient-> practice->contact : new Contact();
-        $practiceaddress = $practice->contact->address ? $practice->contact->address : new Address();
+        $practiceaddress = isset($practicecontact) && isset($practicecontact->address) ? $practicecontact->address : new Address();
 
         //only local patient can be edited
         if($patient->is_local == 0){
