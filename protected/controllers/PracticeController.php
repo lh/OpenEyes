@@ -2,8 +2,14 @@
 
 class PracticeController extends BaseController
 {
+    /**
+     * @var string
+     */
     public $layout = '//layouts/main';
 
+    /**
+     * @return array action filters
+     */
     public function filters()
     {
         return array(
@@ -11,6 +17,11 @@ class PracticeController extends BaseController
         );
     }
 
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
     public function accessRules()
     {
         return array(
@@ -49,6 +60,11 @@ class PracticeController extends BaseController
         ));
     }
 
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param $context string The context through which create action is invoked. Is either 'AJAX' or null.
+     */
     public function actionCreate($context = null)
     {
         $contact = new Contact();
@@ -79,11 +95,17 @@ class PracticeController extends BaseController
         }
     }
 
+    /**
+     * @param Contact $contact
+     * @param Practice $practice
+     * @param Address $address
+     * @param bool $isAjax
+     * @return array
+     */
     public function performPracticeSave(Contact $contact, Practice $practice, Address $address, $isAjax = false)
     {
         $transaction = Yii::app()->db->beginTransaction();
         try {
-
             if ($contact->save()) {
                 $practice->contact_id = $contact->getPrimaryKey();
                 $address->contact_id = $contact->id;
