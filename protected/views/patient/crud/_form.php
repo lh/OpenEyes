@@ -132,7 +132,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 'value' => $patient->NHSDate('dob', $patient->dob),
                 'htmlOptions' => array(
                     'class' => 'small fixed-width',
-                    'onchange' => 'findDuplicates()'
+                    'onchange' => 'findDuplicates()',
+                    'placeholder' => '01 Jan 1970'
                 ),
             ))*/ ?>
             <?php echo $form->error($patient, 'dob'); ?>
