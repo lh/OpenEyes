@@ -55,6 +55,7 @@
  * @property Medication[] $medications
  * @property Practice $practice
  * @property Allergy[] $allergies
+ * @property SecondaryDiagnosis[] $secondarydiagnoses
  * @property EthnicGroup $ethnic_group
  * @property CommissioningBody[] $commissioningbodies
  * @property SocialHistory $socialhistory
@@ -657,7 +658,7 @@ class Patient extends BaseActiveRecordVersioned
     public function hasUnconfirmedDiagnoses()
     {
         foreach ($this->secondarydiagnoses as $diagnosis) {
-            if ($diagnosis->is_confirmed == 0) {
+            if ($diagnosis->is_confirmed !== null and (int)$diagnosis->is_confirmed === 0) {
                 return true;
             }
         }
@@ -2161,8 +2162,9 @@ class Patient extends BaseActiveRecordVersioned
 
     public function checkdate($attribute,$params)
     {
-        $currentdate = date("j M Y");
-        if($this->dob > $currentdate || $this->getAge() > 100) {
+        $currentdate = new DateTime(date("j M Y"));
+        $date_of_birth = new DateTime($this->dob);
+        if($date_of_birth > $currentdate || $this->getAge() > 100) {
             $this->addError($attribute,"Date of Birth is not in the reasonable date range");
         }
 
