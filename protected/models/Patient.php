@@ -252,7 +252,7 @@ class Patient extends BaseActiveRecordVersioned
         return array(
             'id' => 'ID',
             'pas_key' => 'PAS Key',
-            'dob' => 'Date of Birth',
+            'dob' => 'Date of Birth <i style="color:grey">(01 Jan 1970)</i>',
             'date_of_death' => 'Date of Death',
             'gender' => 'Gender',
             'ethnic_group_id' => 'Ethnic Group',

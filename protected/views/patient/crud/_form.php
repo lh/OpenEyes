@@ -59,22 +59,22 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <div id="contact" class="large-6 column">
       <div class="row field-row">
 
-        <div class="large-4 column"><?php echo $form->labelEx($patient, 'hos_num'); ?></div>
-        <div class="large-4 column end">
+        <div class="large-5 column"><?php echo $form->labelEx($patient, 'hos_num'); ?></div>
+        <div class="large-5 column end">
             <?php echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40)); ?>
 
         </div>
           <?php echo $form->error($patient, 'hos_num'); ?>
       </div>
       <div class="row field-row">
-        <div class="large-4 column nhs-number-wrapper">
+        <div class="large-5 column nhs-number-wrapper">
           <div class="nhs-number warning">
             <span class="hide-text print-only">Medicare Number:</span>
           </div>
           <div>Number</div>
         </div>
 
-        <div class="large-4 column end">
+        <div class="large-5 column end">
             <?php echo $form->textField($patient, 'nhs_num', array('size' => 40, 'maxlength' => 40, 'data-child_row' => '.nhs-num-status')); ?>
         </div>
           <?php echo $form->error($patient, 'nhs_num'); ?>
@@ -87,23 +87,23 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
       </div>
       <div class="row field-row">
-        <div class="large-4 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
-        <div class="large-4 column end">
+        <div class="large-5 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
+        <div class="large-5 column end">
             <?php echo $form->textField($contact, 'title', array('size' => 40, 'maxlength' => 40)); ?>
             <?php echo $form->error($contact, 'title'); ?>
         </div>
       </div>
       <div class="row field-row">
-        <div class="large-4 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
-        <div class="large-4 column end">
+        <div class="large-5 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
+        <div class="large-5 column end">
             <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 40, 'id' => 'fname', 'onblur' => 'findDuplicates();')); ?>
             <?php echo $form->error($contact, 'first_name'); ?>
         </div>
       </div>
 
       <div class="row field-row">
-        <div class="large-4 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
-        <div class="large-4 column end">
+        <div class="large-5 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
+        <div class="large-5 column end">
             <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 40, 'id' => 'surname', 'onblur' => 'findDuplicates();')); ?>
             <?php echo $form->error($contact, 'last_name'); ?>
         </div>
