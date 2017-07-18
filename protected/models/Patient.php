@@ -120,7 +120,7 @@ class Patient extends BaseActiveRecordVersioned
     {
         return array(
             array('pas_key', 'length', 'max' => 10),
-            array('dob, patient_source, dob_with_example', 'required'),
+            array('dob, patient_source', 'required'),
             array('hos_num', 'required', 'on' => 'pas'),
             array('hos_num, nhs_num', 'length', 'max' => 40),
             array('hos_num', 'hosNumValidator'), // 'on' => 'manual'
@@ -253,7 +253,6 @@ class Patient extends BaseActiveRecordVersioned
             'id' => 'ID',
             'pas_key' => 'PAS Key',
             'dob' => 'Date of Birth',
-            'dob_with_example' => 'Date of Birth <i style="color:grey">(DD Mon YYYY)</i>',
             'date_of_death' => 'Date of Death',
             'gender' => 'Gender',
             'ethnic_group_id' => 'Ethnic Group',
