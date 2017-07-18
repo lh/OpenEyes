@@ -40,8 +40,9 @@
  * @property int $created_user_id
  * @property int $last_modified_user_id
  * @property datetime $no_allergies_date
- * @property tinyint $deleted
+ * @property int $deleted
  * @property int $ethnic_group_id
+ * @property int $patient_source
  *
  * The followings are the available model relations:
  * @property Episode[] $episodes
@@ -50,6 +51,7 @@
  * @property Contact[] $contactAssignments
  * @property Contact $contact
  * @property Gp $gp
+ * @property PatientReferral[] $referrals
  * @property Medication[] $medications
  * @property Practice $practice
  * @property Allergy[] $allergies
@@ -62,6 +64,10 @@
 class Patient extends BaseActiveRecordVersioned
 {
     const CHILD_AGE_LIMIT = 16;
+
+    const PATIENT_SOURCE_OTHER = 0;
+    const PATIENT_SOURCE_REFERRAL = 1;
+    const PATIENT_SOURCE_SELF_REGISTER = 2;
 
     public $use_pas = true;
     private $_orderedepisodes;
@@ -114,16 +120,18 @@ class Patient extends BaseActiveRecordVersioned
     {
         return array(
             array('pas_key', 'length', 'max' => 10),
+            array('dob, patient_source', 'required'),
             array('hos_num', 'required', 'on' => 'pas'),
             array('hos_num, nhs_num', 'length', 'max' => 40),
             array('hos_num', 'hosNumValidator'), // 'on' => 'manual'
             array('gender,is_local', 'length', 'max' => 1),
-            array('dob, is_deceased, date_of_death, ethnic_group_id, gp_id, practice_id, is_local,nhs_num_status_id', 'safe'),
-            array('gender, dob', 'required', 'on' => 'manual'),
+            array('dob, is_deceased, date_of_death, ethnic_group_id, gp_id, practice_id, is_local,nhs_num_status_id, patient_source', 'safe'),
+            array('gender', 'required', 'on' => 'self_register'),
+            array('gp_id', 'required', 'on' => 'referral'),
             array('deleted', 'safe'),
             array('dob', 'dateFormatValidator', 'on' => 'manual'),
             array('date_of_death', 'deathDateFormatValidator', 'on' => 'manual'),
-            array('dob, hos_num, nhs_num, date_of_death, deleted,is_local', 'safe', 'on' => 'search'),
+            array('dob, hos_num, nhs_num, date_of_death, deleted,is_local, patient_source', 'safe', 'on' => 'search'),
         );
     }
 
@@ -151,6 +159,7 @@ class Patient extends BaseActiveRecordVersioned
                 'alias' => 'patient_allergies',
                 'order' => 'patient_allergies.name', ),
             'allergyAssignments' => array(self::HAS_MANY, 'PatientAllergyAssignment', 'patient_id'),
+            'referrals' => array(self::HAS_MANY, 'PatientReferral', 'patient_id'),
             'risks' => array(
                 self::MANY_MANY,
                 'Risk',
@@ -166,7 +175,6 @@ class Patient extends BaseActiveRecordVersioned
             //'medications' => array(self::HAS_MANY, 'Medication', 'patient_id', 'order' => 'created_date', 'condition' => 'end_date is null'),
             //'previous_medications' => array(self::HAS_MANY, 'Medication', 'patient_id', 'order' => 'created_date', 'condition' => 'end_date is not null'),
             'commissioningbodies' => array(self::MANY_MANY, 'CommissioningBody', 'commissioning_body_patient_assignment(patient_id, commissioning_body_id)'),
-            'referrals' => array(self::HAS_MANY, 'Referral', 'patient_id'),
             'lastReferral' => array(self::HAS_ONE, 'Referral', 'patient_id', 'order' => 'received_date desc'),
             'socialhistory' => array(self::HAS_ONE, 'SocialHistory', 'patient_id'),
             'adherence' => array(self::HAS_ONE, 'MedicationAdherence', 'patient_id'),
@@ -248,13 +256,26 @@ class Patient extends BaseActiveRecordVersioned
             'date_of_death' => 'Date of Death',
             'gender' => 'Gender',
             'ethnic_group_id' => 'Ethnic Group',
-            'hos_num' => 'Hospital Number',
-            'nhs_num' => 'NHS Number',
+            'hos_num' => 'CERA Number',
+            'nhs_num' => 'Medicare Number',
             'deleted' => 'Is Deleted',
-            'nhs_num_status_id' => 'NHS Number Status',
+            'nhs_num_status_id' => 'Medicare Number Status',
             'gp_id' => 'General Practitioner',
             'practice_id' => 'Practice',
-            'is_local' => 'Is local patient ?'
+            'is_local' => 'Is local patient ?',
+            'patient_source' => 'Patient Source'
+        );
+    }
+
+    /**
+     * @return array List of sources for display in a drop-down list.
+     */
+    public function getSourcesList()
+    {
+        return array(
+            self::PATIENT_SOURCE_REFERRAL => 'Referral',
+            self::PATIENT_SOURCE_SELF_REGISTER => 'Self-Registration',
+            self::PATIENT_SOURCE_OTHER => 'Other'
         );
     }
 

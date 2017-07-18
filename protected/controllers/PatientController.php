@@ -1481,7 +1481,8 @@ class PatientController extends BaseController
         $patient->noPas();
         $contact = new Contact('manualAddPatient');
         $address = new Address();
-
+        $referral = null;
+        
         $this->performAjaxValidation(array($patient, $contact, $address));
         
         if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
@@ -1490,16 +1491,47 @@ class PatientController extends BaseController
             $patient->attributes = $_POST['Patient'];
             $address->attributes = $_POST['Address'];
 
+            if (isset($_POST['PatientReferral'])) {
+                $referral = new PatientReferral();
+                $referral->attributes = $_POST['PatientReferral'];
+            }
+
+            switch ($patient->patient_source)
+            {
+                case Patient::PATIENT_SOURCE_OTHER:
+                    $contact->setScenario('other_register');
+                    $patient->setScenario('other_register');
+                    $address->setScenario('other_register');
+                    $referral->setScenario('other_register');
+                    break;
+                case Patient::PATIENT_SOURCE_REFERRAL:
+                    $contact->setScenario('referral');
+                    $patient->setScenario('referral');
+                    $address->setScenario('referral');
+                    $referral->setScenario('referral');
+                    break;
+                case Patient::PATIENT_SOURCE_SELF_REGISTER:
+                    $contact->setScenario('self_register');
+                    $patient->setScenario('self_register');
+                    $address->setScenario('self_register');
+                    $referral->setScenario('self_register');
+                    break;
+                default:
+                    $contact->setScenario('manual');
+                    break;
+            }
+            
             // not to be sync with PAS
             $patient->is_local = 1;
             
-            list($contact, $patient, $address) = $this->performPatientSave($contact, $patient, $address);
+            list($contact, $patient, $address, $referral) = $this->performPatientSave($contact, $patient, $address, $referral);
         }
-        
+
         $this->render('crud/create',array(
                         'patient' => $patient,
                         'contact' => $contact,
                         'address' => $address,
+                        'referral' => isset($referral) ? $referral : new PatientReferral('other_register')
         ));
    }
    
@@ -1511,7 +1543,7 @@ class PatientController extends BaseController
     * @param Address $address
     * @return array on validation error returns the 3 objects otherwise redirects to the patient view page
     */
-   private function performPatientSave(Contact $contact, Patient $patient, Address $address)
+   private function performPatientSave(Contact $contact, Patient $patient, Address $address, PatientReferral $referral)
    {
         $transaction = Yii::app()->db->beginTransaction();
         try{
@@ -1525,15 +1557,35 @@ class PatientController extends BaseController
                 $issetGeneticsClinical = Yii::app()->user->checkAccess('Genetics Clinical');
 
                 if($patient->save() && $address->save()){
-                    $transaction->commit();
+                    if (isset($referral))
+                    {
+                        $referral->patient_id = $patient->getPrimaryKey();
+                        if ($referral->save()) {
+                            $transaction->commit();
+                            if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
+                                $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
+                            } else {
+                                Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                                $this->redirect(array('view', 'id' => $patient->id));
+                            }
+                        }
+                        else
+                        {
+                            $transaction->rollback();
 
-                    if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
-                        $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
-                    } else {
-                        Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
-                        $this->redirect(array('view', 'id' => $patient->id));
+                            // to show validation error messages to the user
+                            $referral->validate();
+                        }
                     }
-
+                    else {
+                        $transaction->commit();
+                        if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
+                            $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
+                        } else {
+                            Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                            $this->redirect(array('view', 'id' => $patient->id));
+                        }
+                    }
                 } else {
                     // patient or address failed to save
                     $transaction->rollback();
@@ -1541,11 +1593,18 @@ class PatientController extends BaseController
                     // to show validation error messages to the user
                     $patient->validate();
                     $address->validate();
+                    if (isset($referral)) {
+                        $referral->validate();
+                    }
+
                 }
             } else {
                 // to show validation error messages to the user
                 $patient->validate();
                 $address->validate();
+                if (isset($referral)) {
+                    $referral->validate();
+                }
 
                 // remove contact_id validation error
                 $patient->clearErrors('contact_id');
@@ -1560,7 +1619,7 @@ class PatientController extends BaseController
             $transaction->rollback();
         }
         
-        return array($contact, $patient, $address);
+        return array($contact, $patient, $address, $referral);
    }
    
     /**

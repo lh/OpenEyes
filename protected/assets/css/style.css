@@ -5550,13 +5550,13 @@ tfoot.pagination-container .pagination-view-all {
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
-  background-color: #107ebd;
-  background-image: url('../img/_elements/icons/nhs_tiny.png?1473759481');
+  background-color: #007A45;
+  background-image: url('../img/_elements/icons/medicare_tiny.png?1460033154');
   background-position: center left;
   background-repeat: no-repeat;
   color: white;
   display: inline-block;
-  padding: 2px 3px 1px 33px;
+  padding: 2px 3px 1px 60px;
 }
 @media print {
   /* line 158, ../sass/openeyes/components/panels/_patient.scss */

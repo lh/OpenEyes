@@ -13,6 +13,7 @@
             'patient' => $patient,
             'contact' => $contact,
             'address' => $address,
+            'referral' => $referral
         )); ?>
     </div>
   </div>

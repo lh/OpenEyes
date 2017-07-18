@@ -48,6 +48,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         // There is a call to performAjaxValidation() commented in generated controller code.
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => true,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
     )); ?>
 
   <p class="note text-right">Fields with <span class="required">*</span> are required.</p>
@@ -72,7 +73,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       <div class="row field-row">
         <div class="large-4 column nhs-number-wrapper">
           <div class="nhs-number warning">
-            <span class="hide-text print-only">NHS Number:</span>
+            <span class="hide-text print-only">Medicare Number:</span>
           </div>
           <div>Number</div>
         </div>
@@ -99,6 +100,18 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 
   <hr>
   <!-- -->
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source');?></div>
+        <div class="large-4 column end">
+          <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList());?>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr/>
 
   <div class="row field-row">
     <div class="large-6 column">
@@ -360,6 +373,18 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-offset-4 large-8 column selected_practice end">No result</div>
     </div>
         
+    </div>
+  </div>
+  <div class="row field-row">
+    <div class="large-12 column">
+      <div class="row field-row">
+        <div class="large-2 column">
+          <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
+        </div>
+        <div class="large-4 column end">
+          <?php echo $form->fileField($referral, 'uploadedFile'); ?>
+        </div>
+      </div>
     </div>
   </div>
 
