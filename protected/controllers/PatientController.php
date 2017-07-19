@@ -1828,7 +1828,10 @@ class PatientController extends BaseController
           AND SOUNDEX(c.first_name) = SOUNDEX(:first_name)
           AND SOUNDEX(c.last_name) = SOUNDEX(:surname)
         ";
-        $patients = Patient::model()->findAllBySql($sql, array(':dob' => Helper::convertNHS2MySQL($dob), ':first_name' => $firstName, ':surname' => $surname));
+
+        $mysqlDob = Helper::convertNHS2MySQL(date('d M Y', strtotime(str_replace('/', '-', $dob))));
+
+        $patients = Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':surname' => $surname));
 
         if (count($patients) !== 0) {
             $this->renderPartial('crud/_conflicts', array(
