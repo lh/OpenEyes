@@ -196,7 +196,7 @@ class Patient extends BaseActiveRecordVersioned
      */
     public function hosNumValidator($attribute, $params)
     {
-        if($this->scenario == 'manual'){
+        if (in_array($this->getScenario(), array('manual', 'referral', 'other_register', 'self_register'), true)) {
 
             $patient_search = new PatientSearch();
             if ($patient_search->getHospitalNumber($this->hos_num)) {
@@ -393,7 +393,7 @@ class Patient extends BaseActiveRecordVersioned
             $this->is_deceased = 1;
         }
 
-        if( $this->scenario == 'manual'){
+        if (in_array($this->getScenario(), array('manual', 'referral', 'other_register', 'self_register'), true)) {
             $this->dob = str_replace('/', '-', $this->dob);
             $this->date_of_death = str_replace('/', '-', $this->date_of_death);
         }
