@@ -120,7 +120,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                     $patient->dob = str_replace('-', '/', $patient->dob);
                 }
             ?>
-            <?php echo $form->textField($patient, 'dob'); ?>
+            <?php echo $form->textField($patient, 'dob', array('onblur' => 'findDuplicates();')); ?>
 
             <?php /*$this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'Patient[dob]',
@@ -487,10 +487,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 
 <script type="text/javascript">
   function findDuplicates() {
-    if ($("#fname").val() && $('#surname').val() && $('#patient_dob').val()) {
+    if ($("#fname").val() && $('#surname').val() && $('#Patient_dob').val()) {
       $.ajax({
           url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>",
-          data: {firstName: $('#fname').val(), surname: $('#surname').val(), dob: $('#patient_dob').val()},
+          data: {firstName: $('#fname').val(), surname: $('#surname').val(), dob: $('#Patient_dob').val()},
           type: 'GET',
           success: function(response) {
             $('#conflicts').remove();
