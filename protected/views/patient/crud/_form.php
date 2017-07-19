@@ -109,7 +109,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
       </div>
       <div class="row field-row">
-        <div class="large-4 column"><?php echo $form->labelEx($patient, 'dob'); ?></div>
+        <div class="large-5 column"><?php echo $form->labelEx($patient, 'dob'); ?></div>
         <div class="large-4 column">
 
             <?php
@@ -140,7 +140,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             ))*/ ?>
             <?php echo $form->error($patient, 'dob'); ?>
         </div>
-          <div class="large-4 column end"><label><i>(dd/mm/yyyy)</i></label></div>
+          <div class="large-3 column end"><label><i>(dd/mm/yyyy)</i></label></div>
       </div>
     </div>
   </div>
