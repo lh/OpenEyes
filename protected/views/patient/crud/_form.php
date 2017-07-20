@@ -63,8 +63,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-5 column end">
             <?php echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40)); ?>
 
+            <?php echo $form->error($patient, 'hos_num'); ?>
         </div>
-          <?php echo $form->error($patient, 'hos_num'); ?>
       </div>
       <div class="row field-row">
         <div class="large-5 column nhs-number-wrapper">
