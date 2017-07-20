@@ -33,7 +33,7 @@
 
         <div>
             <?php // echo $form->label($model, 'contact.first_name'); ?>
-            <?php echo $form->textField($model, 'patient_hos_num', ['placeholder' => 'Hospital number']); ?>
+            <?php echo $form->textField($model, 'patient_hos_num', ['placeholder' => 'CERA number']); ?>
         </div>
 
         <div>

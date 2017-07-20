@@ -204,10 +204,10 @@ class Patient extends BaseActiveRecordVersioned
 
                 $item_count = $dataProvider->totalItemCount;
                 if( $item_count && $item_count > 0 ){
-                    $this->addError($attribute, 'A patient already exists with this hospital number');
+                    $this->addError($attribute, 'A patient already exists with this CERA number');
                 }
             } elseif( !empty($this->hos_num)){
-                $this->addError($attribute, 'Not a valid Hospital Number');
+                $this->addError($attribute, 'Not a valid CERA Number');
             }
         }
     }

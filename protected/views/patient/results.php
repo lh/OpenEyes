@@ -26,7 +26,7 @@ if ($search_terms['first_name']) {
     $based_on[] = 'FIRST NAME: <strong>"' . $search_terms['first_name'] . '"</strong>';
 }
 if ($search_terms['hos_num']) {
-    $based_on[] = 'HOSPITAL NUMBER: <strong>' . $search_terms['hos_num'] . '</strong>';
+    $based_on[] = 'CERA NUMBER: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
 $based_on = implode(', ', $based_on);
 ?>
@@ -63,7 +63,7 @@ $based_on = implode(', ', $based_on);
             <table id="patient-grid" class="grid">
                 <thead>
                 <tr>
-                    <?php foreach (array('Hospital Number', 'Title', 'First name', 'Last name', 'Date of birth', 'Gender', 'Medicare number') as $i => $field) { ?>
+                    <?php foreach (array('CERA Number', 'Title', 'First name', 'Last name', 'Date of birth', 'Gender', 'Medicare number') as $i => $field) { ?>
                         <th id="patient-grid_c<?php echo $i; ?>">
                             <?php
                             $new_sort_dir = ($i == $sort_by) ? 1 - $sort_dir : 0;

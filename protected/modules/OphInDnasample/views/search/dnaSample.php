@@ -43,7 +43,7 @@
                                 <tr>
                                     <th>Sample Id</th>
                                     <th>Subject Id</th>
-                                    <th>Hospital Num:</th>
+                                    <th>CERA Num:</th>
                                     <th>First Name:</th>
                                     <th>Last Name:</th>
                                 </tr>
@@ -57,7 +57,7 @@
                                         <?php echo CHtml::textField('genetics_patient_id', @$_GET['genetics_patient_id'], array('placeholder' => 'Subject Id'))?>
                                     </td>
                                     <td>
-                                        <?php echo CHtml::textField('hos_num', @$_GET['hos_num'], array('placeholder' => 'Hospital Number'))?>
+                                        <?php echo CHtml::textField('hos_num', @$_GET['hos_num'], array('placeholder' => 'CERA Number'))?>
                                     </td>
                                     <td>
                                         <?php echo CHtml::textField('first_name', @$_GET['first_name'], array('placeholder' => 'First Name'))?>
@@ -196,7 +196,7 @@
                         <th><?php echo CHtml::link('Sample Id', $this->getUri(array('sortby' => 'sample_id')))?></th>
                         <th><?php echo CHtml::link('Subject Id', $this->getUri(array('sortby' => 'genetics_patient_id')))?></th>
                         <th><?php echo CHtml::link('Family Id', $this->getUri(array('sortby' => 'genetics_pedigree_id')))?></th>
-						<th><?php echo CHtml::link('Hospital No', $this->getUri(array('sortby' => 'hos_num')))?></th>
+						<th><?php echo CHtml::link('CERA No', $this->getUri(array('sortby' => 'hos_num')))?></th>
 						<th><?php echo CHtml::link('Patient Name', $this->getUri(array('sortby' => 'patient_name')))?></th>
 						<th><?php echo CHtml::link('Date Taken', $this->getUri(array('sortby' => 'date_taken')))?></th>
 						<th><?php echo CHtml::link('Sample Type', $this->getUri(array('sortby' => 'sample_type')))?></th>
