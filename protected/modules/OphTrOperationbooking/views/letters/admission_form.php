@@ -31,7 +31,7 @@ $logoHelper = new LogoHelper();
 	<table>
 		<tr>
 			<th>
-				Hospital Number
+				CERA Number
 			</th>
 			<td>
 				<?php echo $patient->hos_num?>

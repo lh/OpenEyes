@@ -403,9 +403,9 @@ class ReportsCommand extends CConsoleCommand
 
         $operations->addListItem(array(
                 'data_type_id' => $rimt_string->id,
-                'name' => 'Hospital no',
+                'name' => 'CERA no',
                 'data_field' => 'hos_num',
-                'subtitle' => 'Patient hospital number',
+                'subtitle' => 'Patient CERA number',
                 'display_order' => 2,
                 'link' => '/patient/episodes/{patient_id}',
             ));
@@ -604,9 +604,9 @@ class ReportsCommand extends CConsoleCommand
 
         $patients->addListItem(array(
                     'data_type_id' => $rimt_string->id,
-                    'name' => 'Hospital no',
+                    'name' => 'CERA no',
                     'data_field' => 'hos_num',
-                    'subtitle' => 'Patient hospital number',
+                    'subtitle' => 'Patient CERA number',
                     'display_order' => 2,
                     'link' => '/patient/episodes/{patient_id}',
                 ));

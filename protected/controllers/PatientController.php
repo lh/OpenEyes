@@ -186,7 +186,7 @@ class PatientController extends BaseController
 
             $message = 'Sorry, no results ';
             if ($search_terms['hos_num']) {
-                $message .= 'for Hospital Number <strong>"'.$search_terms['hos_num'].'"</strong>';
+                $message .= 'for CERA Number <strong>"'.$search_terms['hos_num'].'"</strong>';
 
                 // check if the record was merged into another record
                 $criteria = new CDbCriteria();
@@ -196,7 +196,7 @@ class PatientController extends BaseController
                 $patientMergeRequest = PatientMergeRequest::model()->find($criteria);
 
                 if ($patientMergeRequest) {
-                    $message = 'Hospital Number <strong>'.$search_terms['hos_num'].'</strong> was merged into <strong>'.$patientMergeRequest->primary_hos_num.'</strong>';
+                    $message = 'CERA Number <strong>'.$search_terms['hos_num'].'</strong> was merged into <strong>'.$patientMergeRequest->primary_hos_num.'</strong>';
                 }
             } elseif ($search_terms['nhs_num']) {
                 $message .= 'for Medicare Number <strong>"'.$search_terms['nhs_num'].'"</strong>';

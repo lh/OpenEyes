@@ -39,7 +39,7 @@
 			<td><?php echo $this->patient->NHSDate('dob')?></td>
 		</tr>
 		<tr>
-			<th>Hospital no</th>
+			<th>CERA no</th>
 			<td><?php echo $this->patient->hos_num?></td>
 		</tr>
 		<tr>

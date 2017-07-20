@@ -44,7 +44,7 @@ $logoHelper = new LogoHelper();
 			<p><strong><?php echo $consultant->contact->getFullName() ?></strong></p>
 			<?php }?>
 			<p>Service: <strong><?php echo $this->event->episode->firm->getSubspecialtyText() ?></strong></p>
-			<p>Hospital No: <strong><?php echo $this->patient->hos_num ?></strong>
+			<p>CERA No: <strong><?php echo $this->patient->hos_num ?></strong>
 			<br />
 			NHS No: <strong><?php echo $this->patient->nhsnum ?></strong>
 			<br />

@@ -34,7 +34,7 @@ $event_type = $event->eventType->name;
             ))?>
 			<br />
 			<br />
-			Hospital No: <strong><?php echo $this->patient->hos_num ?></strong>
+			CERA No: <strong><?php echo $this->patient->hos_num ?></strong>
 			<br />
 			NHS No: <strong><?php echo $this->patient->nhsnum ?></strong>
 			<br />
