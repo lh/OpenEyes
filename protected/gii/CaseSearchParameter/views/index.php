@@ -54,6 +54,18 @@
       <?php echo $form->error($model, 'searchProviders'); ?>
   </div>
 
+  <div class="row sticky">
+      <?php echo $form->labelEx($model, 'path'); ?>
+      <?php echo $form->textField($model, 'path', array('size' => 65)); ?>
+    <div class="tooltip">
+      This refers to the module that the new model class and test case should be generated under.
+      It should be specified in the form of a path alias, for example, <code>application.modules.OECaseSearch</code>.
+      Alternatively, you can specify <code>application</code> here to place the code at the application level.
+    </div>
+      <?php echo $form->error($model, 'path'); ?>
+
+  </div>
+
 <?php $this->endWidget(); ?>
 
 <?php

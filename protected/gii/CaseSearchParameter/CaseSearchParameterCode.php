@@ -12,12 +12,13 @@ class CaseSearchParameterCode extends CCodeModel
     public $alias;
     public $name;
     public $attributeList;
-    public $searchProviders;
+    public $searchProviders = 'DBProvider'; // default to DBProvider
+    public $path = 'application.modules.OECaseSearch';
 
     public function rules()
     {
         return array_merge(parent::rules(), array(
-            array('className, name, alias, searchProviders', 'required'),
+            array('className, name, alias, searchProviders, path', 'required'),
             array('className, alias', 'match', 'pattern' => '/^\w+$/'),
             array('attributeList, searchProviders', 'match', 'pattern' => '/^[\w,]+$/'),
             array('className, name, alias, attributeList, searchProviders', 'sticky')
@@ -31,15 +32,16 @@ class CaseSearchParameterCode extends CCodeModel
             'name' => 'Parameter Name',
             'alias' => 'SQL alias prefix',
             'attributeList' => 'Attributes',
-            'searchProviders' => 'Supported Search Providers'
+            'searchProviders' => 'Supported Search Providers',
+            'path' => 'Module Path',
         ));
     }
 
     public function prepare()
     {
-        $parameterPath = Yii::getPathOfAlias('application.modules.OECaseSearch.models.' . $this->className) . 'Parameter.php';
+        $parameterPath = Yii::getPathOfAlias($this->path . '.models.' . $this->className) . 'Parameter.php';
         $parameterCode = $this->render($this->templatePath.'/case_search_parameter.php');
-        $testPath = Yii::getPathOfAlias('application.modules.OECaseSearch.tests.unit.models.' . $this->className) . 'ParameterTest.php';
+        $testPath = Yii::getPathOfAlias($this->path . '.tests.unit.models.' . $this->className) . 'ParameterTest.php';
         $testCode = $this->render($this->templatePath.'/case_search_parameter_test.php');
         $this->files[] = new CCodeFile($parameterPath, $parameterCode);
         $this->files[] = new CCodeFile($testPath, $testCode);
