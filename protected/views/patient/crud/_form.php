@@ -406,6 +406,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       'options'=>array(
       'title'=>'Add Referring Practitioner',
       'autoOpen'=>false,
+      'resizable' => false,
+       'width'=>350,
 ),
       ));
 
@@ -450,6 +452,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         'options'=>array(
             'title'=>'Add Practice',
             'autoOpen'=>false,
+            'resizable' => false,
+            'width'=>400,
         ),
     ));
 
