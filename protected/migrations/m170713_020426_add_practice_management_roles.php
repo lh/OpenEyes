@@ -4,7 +4,7 @@ class m170713_020426_add_practice_management_roles extends CDbMigration
 {
 
 
-    const CREATE_PRACTICE_ROLE = 'Create Practice';
+    const CREATE_PRACTICE_ROLE = 'Manage Practice';
     const VIEW_PRACTICE_ROLE = 'View Practice';
     const CREATE_PRACTICE_TASK = 'TaskCreatePractice';
     const VIEW_PRACTICE_TASK = 'TaskViewPractice';

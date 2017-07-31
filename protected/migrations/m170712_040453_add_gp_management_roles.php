@@ -2,8 +2,8 @@
 
 class m170712_040453_add_gp_management_roles extends CDbMigration
 {
-    const CREATE_GPS_ROLE = 'Create GP';
-    const VIEW_GPS_ROLE = 'View GP';
+    const CREATE_GPS_ROLE = 'Manage Practitioner';
+    const VIEW_GPS_ROLE = 'View Practitioner';
     const CREATE_GPS_TASK = 'TaskCreateGp';
     const VIEW_GPS_TASK = 'TaskViewGp';
 
