@@ -2148,10 +2148,10 @@ class Patient extends BaseActiveRecordVersioned
     public function isCurrentlyInInterventionTrial($trial_id = null)
     {
         foreach ($this->trials as $trialPatient) {
-            if ($trialPatient->patient_status == TrialPatient::STATUS_ACCEPTED &&
-                $trialPatient->trial->trial_type == Trial::TRIAL_TYPE_INTERVENTION &&
-                $trialPatient->trial->status != Trial::STATUS_CLOSED &&
-                $trialPatient->trial->status != Trial::STATUS_CANCELLED &&
+            if ((int)$trialPatient->patient_status === TrialPatient::STATUS_ACCEPTED &&
+                (int)$trialPatient->trial->trial_type === Trial::TRIAL_TYPE_INTERVENTION &&
+                (int)$trialPatient->trial->status !== Trial::STATUS_CLOSED &&
+                (int)$trialPatient->trial->status !== Trial::STATUS_CANCELLED &&
                 ($trial_id === null || $trialPatient->trial_id !== $trial_id)
             ) {
                 return true;
