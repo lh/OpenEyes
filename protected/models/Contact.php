@@ -70,7 +70,7 @@ class Contact extends BaseActiveRecordVersioned
         return array(
             array('nick_name', 'length', 'max' => 80),
             array('title, first_name, last_name, nick_name, primary_phone, qualifications, maiden_name, contact_label_id', 'safe'),
-            array('first_name, last_name', 'required', 'on' => array('manualAddPatient','referral','self_register','other_register')),
+            array('first_name, last_name', 'required', 'on' => array('manualAddPatient','referral','self_register','other_register','manage_gp','manage_practice')),
             array('title', 'required', 'on' => 'self_register'),
             array('id, nick_name, primary_phone, title, first_name, last_name, qualifications', 'safe', 'on' => 'search'),
         );

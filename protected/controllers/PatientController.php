@@ -1497,10 +1497,10 @@ class PatientController extends BaseController
         $contact = new Contact('manualAddPatient');
         $address = new Address();
         $referral = null;
-        $gpcontact = new Contact();
-        $practicecontact = new Contact();
-        $practiceaddress = new Address();
-        $practice = new Practice();
+        $gpcontact = new Contact('manage_gp');
+        $practicecontact = new Contact('manage_practice');
+        $practiceaddress = new Address('manage_practice');
+        $practice = new Practice('manage_practice');
 
         $this->performAjaxValidation(array($patient, $contact, $address));
         

@@ -425,7 +425,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       [
       'type'=>'POST',
       'error'=>'js:function(){
-      alert("error");
+      alert("First name and Last name cannot be blank");
       }',
       'success'=>'js:function(event){
        removeSelectedGP();
@@ -475,7 +475,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         [
             'type'=>'POST',
             'error'=>'js:function(){
-      alert("error");
+      alert("Fill the mandatory fields");
       }',
             'success'=>'js:function(event){
        removeSelectedPractice();

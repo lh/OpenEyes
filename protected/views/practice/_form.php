@@ -20,7 +20,7 @@ $address_type_ids = CHtml::listData(AddressType::model()->findAll(), 'id', 'name
     )); ?>
 
   <p class="note text-right">Fields with <span class="required">*</span> are required.</p>
-    <?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary(array($contact, $model, $address)); ?>
   <div class="row field-row">
     <div class="large-6 column">
       <div class="row field-row">

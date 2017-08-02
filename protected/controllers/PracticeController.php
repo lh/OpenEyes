@@ -67,12 +67,10 @@ class PracticeController extends BaseController
      */
     public function actionCreate($context = null)
     {
-        $contact = new Contact();
-        $address = new Address();
-        $practice = new Practice();
-
-        $this->performAjaxValidation($contact);
-
+        $contact = new Contact('manage_practice');
+        $address = new Address('manage_practice');
+        $practice = new Practice('manage_practice');
+        $this->performAjaxValidation(array($practice, $contact, $address));
         if (isset($_POST['Contact'])) {
             $contact->attributes = $_POST['Contact'];
             $address->attributes = $_POST['Address'];
@@ -113,24 +111,35 @@ class PracticeController extends BaseController
                     if (isset($address)) {
                         if ($address->save()) {
                             $transaction->commit();
+                            if (!$isAjax) {
+                                $this->redirect(array('view', 'id' => $practice->id));
+                            }
+
                         } else {
+                            if ($isAjax) {
+                                throw new CHttpException(400,"Unable to save Practice contact");
+                            }
                             $transaction->rollback();
                         }
                     } else {
                         $transaction->commit();
                     }
-                    if (!$isAjax) {
-                        $this->redirect(array('view', 'id' => $practice->id));
-                    }
                 } else {
+                    if ($isAjax) {
+                        throw new CHttpException(400,"Unable to save Practice contact");
+                    }
                     $transaction->rollback();
                 }
             } else {
+                if ($isAjax) {
+                    throw new CHttpException(400,"Unable to save Practice contact");
+                }
                 $transaction->rollback();
             }
         } catch (Exception $ex) {
             OELog::logException($ex);
             $transaction->rollback();
+            throw new CHttpException(400,"Unable to save Practice contact");
         }
 
         return array($contact, $practice, $address);
@@ -146,6 +155,9 @@ class PracticeController extends BaseController
         $model = $this->loadModel($id);
         $contact = $model->contact;
         $address = isset($contact->address) ? $contact->address : new Address();
+        $contact->setScenario('manage_practice');
+        $address->setScenario('manage_practice');
+        $model->setScenario('manage_practice');
 
         $this->performAjaxValidation($contact);
 

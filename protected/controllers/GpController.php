@@ -63,12 +63,12 @@ class GpController extends BaseController
     public function actionCreate($context = null)
     {
         $gp = new Gp();
-        $contact = new Contact();
-        $this->performAjaxValidation($contact);
+        $contact = new Contact('manage_gp');
+
 
         if (isset($_POST['Contact'])) {
             $contact->attributes = $_POST['Contact'];
-
+            $this->performAjaxValidation($contact);
             list($contact, $gp) = $this->performGpSave($contact, $gp, $context === 'AJAX');
         }
 
@@ -108,14 +108,21 @@ class GpController extends BaseController
                         $this->redirect(array('view', 'id' => $gp->id));
                     }
                 } else {
+                    if ($isAjax) {
+                        throw new CHttpException(400,"Unable to save Gp contact");
+                    }
                     $transaction->rollback();
                 }
             } else {
+                if ($isAjax) {
+                    throw new CHttpException(400,"Unable to save Gp contact");
+                }
                 $transaction->rollback();
             }
         } catch (Exception $ex) {
             OELog::logException($ex);
             $transaction->rollback();
+            throw new CHttpException(400,"Unable to save Gp contact");
         }
 
         return array($contact, $gp);
@@ -130,6 +137,7 @@ class GpController extends BaseController
     {
         $model = $this->loadModel($id);
         $contact = $model->contact;
+        $contact->setScenario('manage_gp');
 
         $this->performAjaxValidation($contact);
 
