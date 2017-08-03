@@ -425,7 +425,9 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       [
       'type'=>'POST',
       'error'=>'js:function(){
-      alert("First name and Last name cannot be blank");
+           new OpenEyes.UI.Dialog.Alert({
+           content: "First name and Last name cannot be blank."
+          }).open();
       }',
       'success'=>'js:function(event){
        removeSelectedGP();
@@ -475,7 +477,9 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         [
             'type'=>'POST',
             'error'=>'js:function(){
-      alert("Fill the mandatory fields");
+               new OpenEyes.UI.Dialog.Alert({
+               content: "Please fill the mandatory fields."
+          }).open();
       }',
             'success'=>'js:function(event){
        removeSelectedPractice();

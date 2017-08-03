@@ -139,7 +139,9 @@ class PracticeController extends BaseController
         } catch (Exception $ex) {
             OELog::logException($ex);
             $transaction->rollback();
-            throw new CHttpException(400,"Unable to save Practice contact");
+            if ($isAjax) {
+                throw new CHttpException(400,"Unable to save Practice contact");
+            }
         }
 
         return array($contact, $practice, $address);

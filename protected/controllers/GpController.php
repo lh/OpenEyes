@@ -122,7 +122,9 @@ class GpController extends BaseController
         } catch (Exception $ex) {
             OELog::logException($ex);
             $transaction->rollback();
-            throw new CHttpException(400,"Unable to save Gp contact");
+            if ($isAjax) {
+                throw new CHttpException(400,"Unable to save Gp contact");
+            }
         }
 
         return array($contact, $gp);
