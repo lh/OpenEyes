@@ -760,9 +760,8 @@ class PatientController extends BaseController
 
         $date = $this->processFuzzyDate();
 
-        // If the patient came  from a referral or self registration, then the diagnosis is unconfirmed
-        $is_confirmed = ($patient->patient_source == Patient::PATIENT_SOURCE_REFERRAL
-            || $patient->patient_source == Patient::PATIENT_SOURCE_SELF_REGISTER) ? 0 : null;
+        // Mark diagnosis as unconfirmed, regardless of patient source.
+        $is_confirmed = 0;
 
         if (!$_POST['diagnosis_eye']) {
             if (!SecondaryDiagnosis::model()->find('patient_id=? and disorder_id=? and date=?', array($patient->id, $disorder->id, $date))) {

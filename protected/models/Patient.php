@@ -1452,10 +1452,6 @@ class Patient extends BaseActiveRecordVersioned
             $sd->date = $date;
             $sd->is_confirmed = $is_confirmed;
 
-            // If the patient came  from a referral or self registration, then the diagnosis is unconfirmed
-            $sd->is_confirmed = $this->patient_source == Patient::PATIENT_SOURCE_REFERRAL
-            || $this->patient_source == Patient::PATIENT_SOURCE_SELF_REGISTER ? 0 : null;
-
             if (!$sd->save()) {
                 throw new Exception('Unable to save secondary diagnosis: '.print_r($sd->getErrors(), true));
             }

@@ -40,6 +40,7 @@
 				<th>Diagnosis</th>
 				<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
 					<th>Actions</th>
+                    <th/>
 				<?php } ?>
 			</tr>
 			</thead>
@@ -54,13 +55,15 @@
 					}
 					?>
 					<td><?php echo $diagnosis->dateText?></td>
-					<td><?php echo $term . ($diagnosis->isConfirmed() ? ' (Unconfirmed)' : ''); ?></td>
+					<td><?php echo $term . ($diagnosis->isUnconfirmed() ? ' (Unconfirmed)' : ''); ?></td>
 					<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
 						<td><a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a></td>
-                        <?php if ($diagnosis->isUnconfirmed() === 0): ?>
+                        <?php if ($diagnosis->isUnconfirmed()): ?>
                             <td>
                                 <a href="#" class="confirmDiagnosis" rel="<?php echo $diagnosis->id?>">Confirm</a>
                             </td>
+                        <?php else: ?>
+                            <td/>
                         <?php endif; ?>
 					<?php } ?>
 				</tr>
