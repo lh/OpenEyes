@@ -1427,7 +1427,7 @@ class Patient extends BaseActiveRecordVersioned
         return $codes;
     }
 
-    public function addDiagnosis($disorder_id, $eye_id = false, $date = false, $is_confirmed = null)
+    public function addDiagnosis($disorder_id, $eye_id = false, $date = false)
     {
         if (!$date) {
             $date = date('Y-m-d');
@@ -1450,7 +1450,7 @@ class Patient extends BaseActiveRecordVersioned
             $sd->disorder_id = $disorder_id;
             $sd->eye_id = $eye_id;
             $sd->date = $date;
-            $sd->is_confirmed = $is_confirmed;
+            $sd->is_confirmed = 0;
 
             if (!$sd->save()) {
                 throw new Exception('Unable to save secondary diagnosis: '.print_r($sd->getErrors(), true));

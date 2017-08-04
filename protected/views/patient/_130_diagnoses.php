@@ -40,7 +40,7 @@
 				<th>Diagnosis</th>
 				<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
 					<th>Actions</th>
-                    <th/>
+                    <th></th>
 				<?php } ?>
 			</tr>
 			</thead>
@@ -63,7 +63,7 @@
                                 <a href="#" class="confirmDiagnosis" rel="<?php echo $diagnosis->id?>">Confirm</a>
                             </td>
                         <?php else: ?>
-                            <td/>
+                            <td></td>
                         <?php endif; ?>
 					<?php } ?>
 				</tr>

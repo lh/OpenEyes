@@ -760,15 +760,12 @@ class PatientController extends BaseController
 
         $date = $this->processFuzzyDate();
 
-        // Mark diagnosis as unconfirmed, regardless of patient source.
-        $is_confirmed = 0;
-
         if (!$_POST['diagnosis_eye']) {
             if (!SecondaryDiagnosis::model()->find('patient_id=? and disorder_id=? and date=?', array($patient->id, $disorder->id, $date))) {
-                $patient->addDiagnosis($disorder->id, null, $date, $is_confirmed);
+                $patient->addDiagnosis($disorder->id, null, $date);
             }
         } elseif (!SecondaryDiagnosis::model()->find('patient_id=? and disorder_id=? and eye_id=? and date=?', array($patient->id, $disorder->id, $_POST['diagnosis_eye'], $date))) {
-            $patient->addDiagnosis($disorder->id, $_POST['diagnosis_eye'], $date, $is_confirmed);
+            $patient->addDiagnosis($disorder->id, $_POST['diagnosis_eye'], $date);
         }
 
         $this->redirect(array('patient/view/'.$patient->id));
