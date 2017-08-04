@@ -401,12 +401,12 @@ class AdminController extends BaseAdminController
 
                 Audit::add('admin-User', 'add', $user->id);
 
-                if (!isset($userAtt['roles'])) {
-                    $userAtt['roles'] = array();
-                }
-
                 if (!array_key_exists('firms', $userAtt) || !is_array($userAtt['firms'])) {
                     $userAtt['firms'] = array();
+                }
+
+                if (!array_key_exists('roles', $userAtt) || !is_array($userAtt['roles']) || !isset($userAtt['roles'])) {
+                    $userAtt['roles'] = array();
                 }
 
                 $user->saveRoles($userAtt['roles']);
