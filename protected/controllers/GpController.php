@@ -2,8 +2,6 @@
 
 class GpController extends BaseController
 {
-    public $layout = '//layouts/main';
-
     /**
      * @return array action filters
      */
@@ -86,6 +84,7 @@ class GpController extends BaseController
 
     public function performGpSave(Contact $contact, Gp $gp, $isAjax = false)
     {
+        $action = $gp->isNewRecord ? 'add' : 'edit';
         $transaction = Yii::app()->db->beginTransaction();
         try {
             if ($contact->save()) {
@@ -104,18 +103,19 @@ class GpController extends BaseController
 
                 if ($gp->save()) {
                     $transaction->commit();
+                    Audit::add('Gp', $action . '-gp', "Practitioner manually [id: $gp->id] {$action}ed.");
                     if (!$isAjax) {
                         $this->redirect(array('view', 'id' => $gp->id));
                     }
                 } else {
                     if ($isAjax) {
-                        throw new CHttpException(400,"Unable to save Gp contact");
+                        throw new CHttpException(400,"Unable to save Practitioner contact");
                     }
                     $transaction->rollback();
                 }
             } else {
                 if ($isAjax) {
-                    throw new CHttpException(400,"Unable to save Gp contact");
+                    throw new CHttpException(400,"Unable to save Practitioner contact");
                 }
                 $transaction->rollback();
             }
@@ -123,7 +123,7 @@ class GpController extends BaseController
             OELog::logException($ex);
             $transaction->rollback();
             if ($isAjax) {
-                throw new CHttpException(400,"Unable to save Gp contact");
+                throw new CHttpException(400,"Unable to save Practitioner contact");
             }
         }
 

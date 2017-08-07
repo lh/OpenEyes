@@ -3,11 +3,6 @@
 class PracticeController extends BaseController
 {
     /**
-     * @var string
-     */
-    public $layout = '//layouts/main';
-
-    /**
      * @return array action filters
      */
     public function filters()
@@ -98,10 +93,12 @@ class PracticeController extends BaseController
      * @param Practice $practice
      * @param Address $address
      * @param bool $isAjax
+     * @throws CHttpException
      * @return array
      */
     public function performPracticeSave(Contact $contact, Practice $practice, Address $address, $isAjax = false)
     {
+        $action = $practice->isNewRecord ? 'add' : 'edit';
         $transaction = Yii::app()->db->beginTransaction();
         try {
             if ($contact->save()) {
@@ -111,28 +108,33 @@ class PracticeController extends BaseController
                     if (isset($address)) {
                         if ($address->save()) {
                             $transaction->commit();
+                            Audit::add('Practice', $action . '-practice', "Practice manually [id: $practice->id] {$action}ed.");
                             if (!$isAjax) {
                                 $this->redirect(array('view', 'id' => $practice->id));
                             }
 
                         } else {
                             if ($isAjax) {
-                                throw new CHttpException(400,"Unable to save Practice contact");
+                                throw new CHttpException(400, "Unable to save Practice contact");
                             }
                             $transaction->rollback();
                         }
                     } else {
                         $transaction->commit();
+                        Audit::add('Practice', $action . '-practice', "Practice manually [id: $practice->id] {$action}ed.");
+                        if (!$isAjax) {
+                            $this->redirect(array('view', 'id' => $practice->id));
+                        }
                     }
                 } else {
                     if ($isAjax) {
-                        throw new CHttpException(400,"Unable to save Practice contact");
+                        throw new CHttpException(400, "Unable to save Practice contact");
                     }
                     $transaction->rollback();
                 }
             } else {
                 if ($isAjax) {
-                    throw new CHttpException(400,"Unable to save Practice contact");
+                    throw new CHttpException(400, "Unable to save Practice contact");
                 }
                 $transaction->rollback();
             }
@@ -140,7 +142,7 @@ class PracticeController extends BaseController
             OELog::logException($ex);
             $transaction->rollback();
             if ($isAjax) {
-                throw new CHttpException(400,"Unable to save Practice contact");
+                throw new CHttpException(400, "Unable to save Practice contact");
             }
         }
 
@@ -198,7 +200,7 @@ class PracticeController extends BaseController
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
-     * @return Practice the loaded model
+     * @return Practice|CActiveRecord the loaded model
      * @throws CHttpException
      */
     public function loadModel($id)
@@ -214,7 +216,7 @@ class PracticeController extends BaseController
     /**
      * Performs the AJAX validation.
      *
-     * @param CModel $model the model to be validated
+     * @param CModel|array $model the model to be validated
      */
     protected function performAjaxValidation($model)
     {
