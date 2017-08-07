@@ -1815,19 +1815,20 @@ class PatientController extends BaseController
 
     public function actionFindDuplicates($firstName, $surname, $dob)
     {
-        $sql = "
+        $sql = '
         SELECT p.*
         FROM patient p
         JOIN contact c
           ON c.id = p.contact_id
         WHERE p.dob = :dob
-          AND SOUNDEX(c.first_name) = SOUNDEX(:first_name)
-          AND SOUNDEX(c.last_name) = SOUNDEX(:surname)
-        ";
+          AND (SOUNDEX(c.first_name) = SOUNDEX(:first_name) OR levenshtein_ratio(c.first_name, :first_name) >= 60)
+          AND (SOUNDEX(c.last_name) = SOUNDEX(:last_name) OR levenshtein_ratio(c.last_name, :last_name) >= 60)
+        ORDER BY c.first_name, c.last_name
+        ';
 
         $mysqlDob = Helper::convertNHS2MySQL(date('d M Y', strtotime(str_replace('/', '-', $dob))));
 
-        $patients = Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':surname' => $surname));
+        $patients = Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $surname));
 
         if (count($patients) !== 0) {
             $this->renderPartial('crud/_conflicts', array(
