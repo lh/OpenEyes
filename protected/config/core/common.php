@@ -59,7 +59,6 @@ return array(
         'oldadmin',
         'OETrial',
         'OECaseSearch',
-        'Genetics'
     ),
 
     // Application components
