@@ -56,7 +56,7 @@ $warnings = $this->patient->getWarnings($clinical);
 			<div class="row">
 				<div class="large-12 column">
 					<div id="no-practice-address" class="alert-box alert with-icon">
-						Patient has no GP practice address, please correct in PAS before printing GP letter.
+						Patient has no Practitioner practice address, please correct in PAS before printing Practitioner letter.
 					</div>
 				</div>
 			</div>
@@ -65,7 +65,7 @@ $warnings = $this->patient->getWarnings($clinical);
             <div class="row">
                 <div class="large-12 column">
                     <div id="has-unconfirmed-diagnosis" class="alert-box alert with-icon">
-                        Patient has unconfirmed diagnosis.
+                        Patient has at least one unconfirmed diagnosis.
                     </div>
                 </div>
             </div>
