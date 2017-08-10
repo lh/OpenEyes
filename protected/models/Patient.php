@@ -2171,7 +2171,7 @@ class Patient extends BaseActiveRecordVersioned
      * Find all patients with the same date of birth and similar-sounding names.
      * @param $firstName string First name.
      * @param $surname string Last name.
-     * @param $dob DateTime Date of Birth (DD/MM/YYYY).
+     * @param $dob string Date of Birth (DD/MM/YYYY).
      * @return array|Patient[] The list of patients who have similar names and the same date of birth.
      */
     public static function findDuplicates($firstName, $surname, $dob)
