@@ -2166,4 +2166,29 @@ class Patient extends BaseActiveRecordVersioned
         }
 
     }
+
+    /**
+     * Find all patients with the same date of birth and similar-sounding names.
+     * @param $firstName string First name.
+     * @param $surname string Last name.
+     * @param $dob DateTime Date of Birth (DD/MM/YYYY).
+     * @return array|Patient[] The list of patients who have similar names and the same date of birth.
+     */
+    public static function findDuplicates($firstName, $surname, $dob)
+    {
+        $sql = '
+        SELECT p.*
+        FROM patient p
+        JOIN contact c
+          ON c.id = p.contact_id
+        WHERE p.dob = :dob
+          AND (SOUNDEX(c.first_name) = SOUNDEX(:first_name) OR levenshtein_ratio(c.first_name, :first_name) >= 60)
+          AND (SOUNDEX(c.last_name) = SOUNDEX(:last_name) OR levenshtein_ratio(c.last_name, :last_name) >= 60)
+        ORDER BY c.first_name, c.last_name
+        ';
+
+        $mysqlDob = Helper::convertNHS2MySQL(date('d M Y', strtotime(str_replace('/', '-', $dob))));
+
+        return Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $surname));
+    }
 }
