@@ -5,6 +5,7 @@ $hasPrimaryDiagnoses = false;
 foreach ($this->patient->episodes as $episode) {
     if ($episode->diagnosis !== null) {
         $hasPrimaryDiagnoses = true;
+        break;
     }
 }
 
@@ -34,17 +35,17 @@ foreach ($this->patient->episodes as $episode) {
                             <?php foreach ($this->patient->episodes as $episode):
                                 if ($episode->diagnosis !== null): ?>
                                 <tr>
-                                    <td><?php echo $episode->diagnosis->fully_specified_name . ' (Principal)'; ?></td>
-                                    <td><?php echo $episode->firm->name; ?></td>
+                                    <td><?php echo CHtml::encode($episode->diagnosis->fully_specified_name) . ' (Principal)'; ?></td>
+                                    <td><?php echo CHtml::encode($episode->firm->name); ?></td>
                                     <td><?php echo $episode->NHSDate('start_date'); ?></td>
                                 </tr>
                             <?php endif;
                             endforeach; ?>
                             <?php foreach ($this->patient->secondarydiagnoses as $diagnosis): ?>
                                 <tr>
-                                    <td><?php echo $diagnosis->disorder->fully_specified_name . ' (Secondary)'; ?></td>
+                                    <td><?php echo CHtml::encode($diagnosis->disorder->fully_specified_name) . ' (Secondary)'; ?></td>
                                     <td>N/A</td>
-                                    <td><?php echo $diagnosis->dateText; ?></td>
+                                    <td><?php echo CHtml::encode($diagnosis->dateText); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
