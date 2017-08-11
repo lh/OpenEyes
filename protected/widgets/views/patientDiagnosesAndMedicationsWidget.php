@@ -1,6 +1,16 @@
+<?php
 
+$hasPrimaryDiagnoses = false;
 
-<?php if ($this->patient->secondarydiagnoses): ?>
+foreach ($this->patient->episodes as $episode) {
+    if ($episode->diagnosis !== null) {
+        $hasPrimaryDiagnoses = true;
+    }
+}
+
+?>
+
+<?php if ($this->patient->secondarydiagnoses || $hasPrimaryDiagnoses): ?>
     <div class="row data-row">
         <div class="large-12 column">
             <div>Diagnoses:
@@ -16,15 +26,24 @@
                             <thead>
                             <tr>
                                 <th>Diagnosis</th>
-                                <th>Confirmed/Unconfirmed</th>
+                                <th>Diagnosis Origin</th>
                                 <th>Date</th>
                             </tr>
                             </thead>
                             <tbody>
+                            <?php foreach ($this->patient->episodes as $episode):
+                                if ($episode->diagnosis !== null): ?>
+                                <tr>
+                                    <td><?php echo $episode->diagnosis->fully_specified_name . ' (Principal)'; ?></td>
+                                    <td><?php echo $episode->firm->name; ?></td>
+                                    <td><?php echo $episode->NHSDate('start_date'); ?></td>
+                                </tr>
+                            <?php endif;
+                            endforeach; ?>
                             <?php foreach ($this->patient->secondarydiagnoses as $diagnosis): ?>
                                 <tr>
-                                    <td><?php echo $diagnosis->disorder->fully_specified_name; ?></td>
-                                    <td><?php echo $diagnosis->isConfirmed() ? 'Confirmed' : 'Unconfirmed'; ?></td>
+                                    <td><?php echo $diagnosis->disorder->fully_specified_name . ' (Secondary)'; ?></td>
+                                    <td>N/A</td>
                                     <td><?php echo $diagnosis->dateText; ?></td>
                                 </tr>
                             <?php endforeach; ?>
