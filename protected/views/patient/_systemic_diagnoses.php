@@ -126,7 +126,7 @@
 						</div>
 					</fieldset>
 
-					<?php $this->renderPartial('_fuzzy_date', array('form' => $form, 'label' => 'Date diagnosed', 'empty' => true))?>
+					<?php $this->renderPartial('_fuzzy_date', array('form' => $form, 'label' => 'Date diagnosed', 'allow_empty_year' => true))?>
 
 					<div class="systemic_diagnoses_form_errors alert-box alert hide"></div>
 

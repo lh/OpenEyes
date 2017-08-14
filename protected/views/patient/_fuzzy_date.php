@@ -21,14 +21,14 @@
 /**
  * @var $form FormLayout
  * @var $label string
- * @var $empty bool
+ * @var $allow_empty_year bool
  */
 $label = @$label ?: 'Date';
 $labelColumns = @$form ? $form->columns('label') : 'large-3 column';
 $fieldColumns = @$form ? $form->columns('field') : 'large-9 column end';
 if (isset($date)) {
     list($sel_year, $sel_month, $sel_day) = explode('-', $date);
-} elseif (!isset($empty) || !$empty) {
+} elseif (!isset($allow_empty_year) || !$allow_empty_year) {
     $sel_day = $sel_month = null;
     $sel_year = date('Y');
 } else {
