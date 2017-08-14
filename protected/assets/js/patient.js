@@ -1,6 +1,5 @@
 function addItem(wrapper_id, ui){
     var $wrapper = $('#' + wrapper_id);
-    
     $wrapper.find('span.name').text(ui.item.label);
     $wrapper.show();
     $wrapper.find('.hidden_id').val(ui.item.value);
@@ -26,6 +25,11 @@ function removeSelectedPractice(){
     $('#selected_practice_wrapper').hide();
     $('#Patient_practice_id').val('');
         
+}
+function removeSelectedReferredto(){
+  $('#no_referred_to_result').hide();
+  $('.selected_referred_to span.name').text('');
+  $('#selected_referred_to_wrapper').hide();
 }
 
 $(document).ready(function(){
@@ -54,6 +58,10 @@ $(document).ready(function(){
     $('#selected_practice_wrapper').on('click', '.remove', function(){
         removeSelectedPractice();
     });
+
+  $('#selected_referred_to_wrapper').on('click', '.remove', function(){
+    removeSelectedReferredto();
+  });
     
     
 });

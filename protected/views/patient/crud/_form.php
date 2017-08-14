@@ -381,6 +381,63 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 
     </div>
   </div>
+
+  <!-- Referred to field -->
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($patientuserreferral ,'Referred to'); ?></div>
+        <div class="large-4 column end"><?php
+            echo $form->error($patientuserreferral, 'user_id');
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'user_id',
+                'id' => 'autocomplete_user_id',
+                'source' => "js:function(request, response) {
+                                    $.ajax({
+                                        'url': '" . Yii::app()->createUrl('/user/autocomplete') . "',
+                                        'type':'GET',
+                                        'data':{'term': request.term},
+                                        'success':function(data) {
+                                            data = $.parseJSON(data);
+                                            response(data);
+                                        }
+                                    });
+                                }",
+                'options' => array(
+                    'select' => "js:function(event, ui) {
+                                    removeSelectedReferredto();
+                                    addItem('selected_referred_to_wrapper', ui);
+                                    $('#autocomplete_user_id').val('');
+                                    return false;
+                    }",
+                    'response' => 'js:function(event, ui){
+                        if(ui.content.length === 0){
+                            $("#no_referred_to_result").show();
+                        } else {
+                            $("#no_referred_to_result").hide();
+                        }
+                    }'
+                ),
+                'htmlOptions' => array(
+                    'placeholder' => 'search Referred to',
+                ),
+
+            ));?>
+        </div>
+      </div>
+
+      <div id="selected_referred_to_wrapper" class="row field-row <?php echo !$patientuserreferral->user_id ? 'hide' : ''?>">
+        <div class="large-offset-4 large-8 column selected_referred_to end alert-box"><span class="name"><?php echo $patientuserreferral->user_id ? $patientuserreferral->getUserName() : ''?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
+          <?php echo CHtml::hiddenField('PatientUserReferral[user_id]', $patientuserreferral->user_id, array('class'=>'hidden_id')); ?>
+      </div>
+      <div id="no_referred_to_result" class="row field-row hide">
+        <div class="large-offset-4 large-8 column selected_referred_to end">No result
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end of referred to field-->
+
   <div class="row field-row">
     <div class="large-12 column">
       <div class="row field-row">

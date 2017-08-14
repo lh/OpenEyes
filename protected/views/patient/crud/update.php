@@ -18,7 +18,8 @@
             'gpcontact' => $gpcontact,
             'practicecontact' => $practicecontact,
             'practiceaddress' => $practiceaddress,
-            'practice' => $practice
+            'practice' => $practice,
+            'patientuserreferral' => $patientuserreferral
         )); ?>
     </div>
   </div>
