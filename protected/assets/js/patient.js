@@ -13,6 +13,13 @@ function addGpItem(wrapper_id, ui){
     $wrapper.find('.hidden_id').val(JsonObj.value);
 }
 
+function addReferredToItem(wrapper_id, ui){
+  var $wrapper = $('#' + wrapper_id);
+  $wrapper.find('span.name').text(ui.item.label);
+  $wrapper.show();
+  $wrapper.find('.hidden_id').val(ui.item.id);
+}
+
 function removeSelectedGP(){
     $('#no_gp_result').hide();
     $('.selected_gp span.name').text('');

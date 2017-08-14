@@ -406,7 +406,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 'options' => array(
                     'select' => "js:function(event, ui) {
                                     removeSelectedReferredto();
-                                    addItem('selected_referred_to_wrapper', ui);
+                                    addReferredToItem('selected_referred_to_wrapper', ui);
                                     $('#autocomplete_user_id').val('');
                                     return false;
                     }",
