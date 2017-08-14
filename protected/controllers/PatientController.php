@@ -1544,7 +1544,7 @@ class PatientController extends BaseController
             // not to be sync with PAS
             $patient->is_local = 1;
             
-            list($contact, $patient, $address, $referral, $patientuserreferral) = $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
+            list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
         }
 
         $this->render('crud/create',array(
@@ -1774,7 +1774,7 @@ class PatientController extends BaseController
                     $patient_user_referral->attributes = $_POST['PatientUserReferral'];
             }
 
-            list($contact, $patient, $address, $referral, $patientuserreferral) = $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
+            list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
         }
 
         $this->render('crud/update',array(
