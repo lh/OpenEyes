@@ -1516,9 +1516,6 @@ class PatientController extends BaseController
                 $patientuserreferral = new PatientUserReferral();
                 $patientuserreferral->attributes = $_POST['PatientUserReferral'];
             }
-
-            var_dump($_POST['PatientUserReferral']['user_id']);
-
             switch ($patient->patient_source)
             {
                 case Patient::PATIENT_SOURCE_OTHER:
