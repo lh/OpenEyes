@@ -364,7 +364,13 @@ return array(
                         'uri' => 'practice/index',
                         'position' => 11,
                         'restricted' => array('TaskViewPractice', 'TaskCreatePractice'),
-                    )
+                    ),
+                    'disorders' => array(
+                        'title' => 'Disorders',
+                        'uri' => 'disorder/index',
+                        'position' => 12,
+                        'restricted' => array('TaskViewDisorder'),
+                    ),
                 ),
             ),
 // temporarily disabled

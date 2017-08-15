@@ -26,6 +26,7 @@
  * @property string $fully_specified_name
  * @property string $term
  * @property int $systemic
+ * @property int $specialty_id
  *
  * The followings are the available model relations:
  * @property CommonOphthalmicDisorder[] $commonOphthalmicDisorders
@@ -49,6 +50,8 @@ class Disorder extends BaseActiveRecordVersioned
     public static $SNOMED_DIABETES_SET = array(73211009, 74627003);
     public static $SNOMED_DIABETES_TYPE_I_SET = array(46635009, 420868002);
     public static $SNOMED_DIABETES_TYPE_II_SET = array(44054006, 422014003);
+
+    public $is_ophthalmic;
 
     /**
      * Returns the static model of the specified AR class.
@@ -86,12 +89,12 @@ class Disorder extends BaseActiveRecordVersioned
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('id, fully_specified_name, term', 'required'),
+            array('fully_specified_name, term', 'required'),
             array('id', 'length', 'max' => 10),
             array('fully_specified_name, term', 'length', 'max' => 255),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('id, fully_specified_name, term, systemic', 'safe', 'on' => 'search'),
+            array('id, fully_specified_name, term, specialty_id, systemic, is_ophthalmic, active', 'safe'),
         );
     }
 
@@ -141,6 +144,8 @@ class Disorder extends BaseActiveRecordVersioned
             'fully_specified_name' => 'Fully Specified Name',
             'term' => 'Term',
             'systemic' => 'Systemic',
+            'is_ophthalmic' => 'Is Ophthalmic',
+            'specialty_id' => 'Specialty',
         );
     }
 

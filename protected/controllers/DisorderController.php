@@ -1,4 +1,5 @@
 <?php
+
 /**
  * OpenEyes.
  *
@@ -21,10 +22,142 @@ class DisorderController extends BaseController
     public function accessRules()
     {
         return array(
-            array('allow',
+            array(
+                'allow',
+                'actions' => array('autoComplete', 'details', 'isCommonOphthalmic'),
                 'roles' => array('OprnViewClinical'),
             ),
+            array(
+                'allow',
+                'actions' => array('index', 'view'),
+                'roles' => array('TaskViewDisorder'),
+            ),
+            array(
+                'allow',
+                'actions' => array('create', 'update'),
+                'roles' => array('TaskManageDisorder'),
+            ),
+            array(
+                'deny',  // deny all other users
+                'users' => array('*'),
+            ),
+
         );
+    }
+
+    /**
+     * Returns the data model based on the primary key given in the GET variable.
+     * If the data model is not found, an HTTP exception will be raised.
+     * @param integer $id the ID of the model to be loaded
+     * @return Disorder the loaded model
+     * @throws CHttpException
+     */
+    public function loadModel($id)
+    {
+        /* @var Disorder $model */
+        $model = Disorder::model()->findByPk($id);
+        if ($model === null) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
+
+        return $model;
+    }
+
+    /**
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
+     */
+    public function actionView($id)
+    {
+        $this->render('view', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
+
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+    public function actionCreate()
+    {
+        $disorder = new Disorder();
+        $disorder->is_ophthalmic = true;
+        $this->performAjaxValidation(array($disorder));
+
+        if (isset($_POST['Disorder'])) {
+            $disorder->attributes = $_POST['Disorder'];
+
+            if ($disorder->save()) {
+                $this->redirect($this->createUrl('view', array('id' => $disorder->id)));
+            }
+        }
+
+        $this->render('create', array(
+            'model' => $disorder,
+        ));
+    }
+
+    /**
+     * Performs the AJAX validation.
+     *
+     * @param CModel|array $model the model to be validated
+     */
+    protected function performAjaxValidation($model)
+    {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'patient-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdate($id)
+    {
+        $disorder = $this->loadModel($id);
+        // The disorder is ophthalmic if the specialty is set to "Ophthalmology"
+        $disorder->is_ophthalmic = $disorder->specialty != null && $disorder->specialty->code == 130;
+
+        $this->performAjaxValidation($disorder);
+
+        if (isset($_POST['Disorder'])) {
+            $disorder->attributes = $_POST['Disorder'];
+
+            if ($disorder->is_ophthalmic) {
+                $disorder->specialty_id = Specialty::model()->find('code = :code', array(':code' => 130))->id;
+            }
+
+            if (!$disorder->hasErrors() && $disorder->validate() && $disorder->save()) {
+                $this->redirect($this->createUrl('/disorder/view', array('id' => $disorder->id)));
+            }
+        }
+
+        $this->render('update', array(
+            'model' => $disorder,
+        ));
+    }
+
+    /**
+     * Lists all models.
+     */
+    public function actionIndex()
+    {
+        $criteria = new CDbCriteria();
+        $criteria->order = 'term';
+
+        if (isset($_POST['search-term'])) {
+            $criteria->addSearchCondition('LOWER(term)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(fully_specified_name)', strtolower($_POST['search-term']), true, 'OR');
+        }
+
+        $dataProvider = new CActiveDataProvider('Disorder', array('criteria' => $criteria));
+
+        $this->render('index', array(
+            'dataProvider' => $dataProvider,
+        ));
     }
 
     /**
