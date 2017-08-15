@@ -312,22 +312,15 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : ''?>">
         <div class="large-offset-4 large-8 column selected_gp end alert-box"><span class="name"><?php echo $patient->gp_id ? $patient->gp->CorrespondenceName : '' ?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
         <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class'=>'hidden_id')); ?>
-        <div class="right">
-            <?php echo CHtml::link('Add Referring Practitioner', '#', array(
-                'onclick'=>'$("#gpdialog").dialog("open"); return false;',
-            ));?>
-        </div>
     </div>
     <div id="no_gp_result" class="row field-row hide">
         <div class="large-offset-4 large-8 column selected_gp end">No result
-            <div class="row buttons">
-                <p>
-                <?php echo CHtml::link('Add Referring Practitioner', '#', array(
-                'onclick'=>'$("#gpdialog").dialog("open"); return false;',
-                ));?>
-                </p>
-            </div>
         </div>
+    </div>
+    <div class="right">
+        <?php echo CHtml::link('Add Referring Practitioner', '#', array(
+            'onclick'=>'$("#gpdialog").dialog("open"); return false;',
+        ));?>
     </div>
     </div>
   </div>
@@ -371,24 +364,16 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <div id="selected_practice_wrapper" class="row field-row <?php echo !$patient->practice_id ? 'hide' : ''?>">
         <div class="large-offset-4 large-8 column selected_practice end alert-box"><span class="name"><?php echo $patient->practice_id ? $patient->practice->getAddressLines() : ''?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
         <?php echo CHtml::hiddenField('Patient[practice_id]', $patient->practice_id, array('class'=>'hidden_id')); ?>
-        <div class="right">
-          <?php echo CHtml::link('Add Practice', '#', array(
-              'onclick'=>'$("#practicedialog").dialog("open"); return false;',
-          ));?>
-        </div>
     </div>
     <div id="no_practice_result" class="row field-row hide">
         <div class="large-offset-4 large-8 column selected_practice end">No result
-            <div class="row buttons">
-                <p>
-                    <?php echo CHtml::link('Add Practice', '#', array(
-                        'onclick'=>'$("#practicedialog").dialog("open"); return false;',
-                    ));?>
-                </p>
-            </div>
         </div>
     </div>
-
+    <div class="right">
+        <?php echo CHtml::link('Add Practice', '#', array(
+            'onclick'=>'$("#practicedialog").dialog("open"); return false;',
+        ));?>
+    </div>
     </div>
   </div>
 
