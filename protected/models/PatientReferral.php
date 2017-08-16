@@ -38,8 +38,7 @@ class PatientReferral extends BaseActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('uploadedFile', 'file', 'allowEmpty' => true, 'on' => 'self_register'),
-            array('uploadedFile', 'file', 'allowEmpty' => true, 'on' => 'other_register'),
+            array('uploadedFile', 'file', 'allowEmpty' => true, 'on' => array('edit_patient', 'self_register', 'other_register')),
             array('uploadedFile', 'file', 'allowEmpty' => false, 'on' => 'referral'),
             array('patient_id, uploadedFile, file_name, file_size, file_content, file_type', 'safe')
         );
@@ -67,6 +66,15 @@ class PatientReferral extends BaseActiveRecord
         return array(
             'uploadedFile' => 'Referral'
         );
+    }
+
+    public function beforeValidate()
+    {
+        if (!$this->isNewRecord)
+        {
+            $this->setScenario('edit_patient');
+        }
+        return parent::beforeValidate();
     }
 
     /**

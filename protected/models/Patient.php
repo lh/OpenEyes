@@ -361,6 +361,7 @@ class Patient extends BaseActiveRecordVersioned
 
     public function beforeSave()
     {
+
         foreach (array('first_name', 'last_name', 'dob', 'title', 'primary_phone') as $property) {
             if ($randomised = $this->randomData($property)) {
                 $this->$property = $randomised;

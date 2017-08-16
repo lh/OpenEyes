@@ -432,19 +432,20 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     </div>
   </div>
   <!-- end of referred to field-->
-
-  <div class="row field-row">
-    <div class="large-12 column">
+    <?php if ($patient->isNewRecord) : ?>
       <div class="row field-row">
-        <div class="large-2 column">
-          <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
-        </div>
-        <div class="large-4 column end">
-          <?php echo $form->fileField($referral, 'uploadedFile'); ?>
+        <div class="large-12 column">
+          <div class="row field-row">
+            <div class="large-2 column">
+                <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
+            </div>
+            <div class="large-4 column end">
+                <?php echo $form->fileField($referral, 'uploadedFile'); ?>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    <?php endif; ?>
 
   <div class="row buttons text-right">
       <?php echo CHtml::submitButton($patient->isNewRecord ? 'Create' : 'Save'); ?>
