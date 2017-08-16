@@ -44,12 +44,12 @@ $warnings = $this->patient->getWarnings($clinical);
 
 	<?php if (!$operation->has_gp) {?>
 		<div class="alert-box alert with-icon">
-			Patient has no GP practice address, please correct in PAS before printing GP letter.
+			Patient has no Practitioner practice address, please correct by clicking the edit link in the patient summary before printing Practitioner letter.
 		</div>
 	<?php } ?>
 	<?php if (!$operation->has_address) { ?>
 		<div class="alert-box alert with-icon">
-			Patient has no address, please correct in PAS before printing letter.
+			Patient has no address, please correct by clicking the edit link in the patient summary before printing letter.
 		</div>
 	<?php } ?>
 

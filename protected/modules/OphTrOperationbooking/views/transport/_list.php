@@ -18,7 +18,7 @@
  */
 ?>
 <div id="no_gp_warning" class="alert-box alert with-icon hide">
-	One or more patients has no GP practice, please correct in PAS before printing GP letter.
+	One or more patients has no Practitioner practice, please correct by clicking the edit link in the patient summary before printing Practitioner letter.
 </div>
 <div id="transportList">
 	<table class="grid transport">

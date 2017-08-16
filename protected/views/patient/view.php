@@ -56,7 +56,7 @@ $warnings = $this->patient->getWarnings($clinical);
 			<div class="row">
 				<div class="large-12 column">
 					<div id="no-practice-address" class="alert-box alert with-icon">
-						Patient has no Practitioner practice address, please correct in PAS before printing Practitioner letter.
+						Patient has no Practitioner practice address, please correct by clicking the edit link in the patient summary before printing Practitioner letter.
 					</div>
 				</div>
 			</div>
