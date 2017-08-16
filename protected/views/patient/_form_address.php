@@ -27,7 +27,7 @@
 <div class="row field-row">
     <div class="large-3 column"><?php echo $form->labelEx($address,'address1'); ?></div>
     <div class="large-4 column end">
-        <?php echo $form->textField($address,'address1',array('size'=>15)); ?>
+        <?php echo $form->textField($address,'address1',array('size'=>15, 'maxlength'=>255)); ?>
         <?php echo $form->error($address,'address1'); ?>
     </div>
 </div>
@@ -35,7 +35,7 @@
 <div class="row field-row">
     <div class="large-3 column"><?php echo $form->labelEx($address,'address2'); ?></div>
     <div class="large-4 column end">
-        <?php echo $form->textField($address,'address2',array('size'=>15)); ?>
+        <?php echo $form->textField($address,'address2',array('size'=>15, 'maxlength'=>255)); ?>
         <?php echo $form->error($address,'address2'); ?>
     </div>
 </div>
@@ -43,7 +43,7 @@
 <div class="row field-row">
     <div class="large-3 column"><?php echo $form->labelEx($address,'city'); ?></div>
     <div class="large-4 column end">
-        <?php echo $form->textField($address,'city',array('size'=>15)); ?>
+        <?php echo $form->textField($address,'city',array('size'=>15, 'maxlength'=>255)); ?>
         <?php echo $form->error($address,'city'); ?>
     </div>
 </div>
@@ -51,7 +51,7 @@
 <div class="row field-row">
     <div class="large-3 column"><?php echo $form->labelEx($address,'postcode'); ?></div>
     <div class="large-4 column end">
-        <?php echo $form->textField($address,'postcode',array('size'=>15)); ?>
+        <?php echo $form->textField($address,'postcode',array('size'=>10, 'maxlength'=>10)); ?>
         <?php echo $form->error($address,'postcode'); ?>
     </div>
 </div>
@@ -59,7 +59,7 @@
 <div class="row field-row">
     <div class="large-3 column"><?php echo $form->labelEx($address,'county'); ?></div>
     <div class="large-4 column end">
-        <?php echo $form->textField($address,'county',array('size'=>15)); ?>
+        <?php echo $form->textField($address,'county',array('size'=>15, 'maxlength'=>255)); ?>
         <?php echo $form->error($address,'county'); ?>
     </div>
 </div>
