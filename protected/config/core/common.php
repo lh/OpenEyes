@@ -280,6 +280,7 @@ return array(
         'local_users' => array(),
         'log_events' => true,
         'default_site_code' => '',
+        'institution_code_source' => 5,
         'institution_code' => 'CERA',
         'erod_lead_time_weeks' => 3,
         // specifies which specialties are available in patient summary for diagnoses etc (use specialty codes)
