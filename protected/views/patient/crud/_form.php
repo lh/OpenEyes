@@ -303,7 +303,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                     }'
                 ),
                 'htmlOptions' => array(
-                    'placeholder' => 'search GP',
+                    'placeholder' => 'search Practitioner',
                 ),
                 
             ));?>
@@ -414,7 +414,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                     }'
                 ),
                 'htmlOptions' => array(
-                    'placeholder' => 'search Referred to',
+                    'placeholder' => 'search User',
                 ),
 
             ));?>
