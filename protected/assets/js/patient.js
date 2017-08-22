@@ -2,7 +2,7 @@ function addItem(wrapper_id, ui){
     var $wrapper = $('#' + wrapper_id);
     $wrapper.find('span.name').text(ui.item.label);
     $wrapper.show();
-    $wrapper.find('.hidden_id').val(ui.item.value);
+    $wrapper.find('.hidden_id').val(ui.item.id);
 }
 
 function addGpItem(wrapper_id, ui){
@@ -10,7 +10,7 @@ function addGpItem(wrapper_id, ui){
     var JsonObj = JSON.parse(ui);
     $wrapper.find('span.name').text(JsonObj.label);
     $wrapper.show();
-    $wrapper.find('.hidden_id').val(JsonObj.value);
+    $wrapper.find('.hidden_id').val(JsonObj.id);
 }
 
 function addReferredToItem(wrapper_id, ui){

@@ -310,7 +310,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
       </div>
     <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : ''?>">
-        <div class="large-offset-4 large-8 column selected_gp end alert-box"><span class="name"><?php echo $patient->gp_id ? $patient->gp->CorrespondenceName : '' ?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
+        <div class="large-offset-4 large-8 column selected_gp end alert-box"><span class="name"><?php echo $patient->gp_id ? $patient->gp->correspondenceName : '' ?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
         <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class'=>'hidden_id')); ?>
     </div>
     <div id="no_gp_result" class="row field-row hide">

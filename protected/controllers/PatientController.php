@@ -1826,7 +1826,8 @@ class PatientController extends BaseController
         foreach($gps as $gp){
             $output[] = array(
                 'label' => $gp->correspondenceName,
-                'value' => $gp->id
+                'value' => $gp->correspondenceName,
+                'id' => $gp->id
             );
         }
         
@@ -1852,7 +1853,8 @@ class PatientController extends BaseController
         foreach($practices as $practice){
             $output[] = array(
                 'label' => $practice->getAddressLines(),
-                'value' => $practice->id
+                'value' => $practice->getAddressLines(),
+                'id'    => $practice->id
             );
         }
         

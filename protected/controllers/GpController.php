@@ -73,7 +73,8 @@ class GpController extends BaseController
         if ($context === 'AJAX') {
             echo CJSON::encode(array(
                 'label' => $contact->getFullName(),
-                'value' => $gp->getPrimaryKey(),
+                'value' => $gp->getFullName(),
+                'id'    => $gp->getPrimaryKey(),
             ));
         } else {
             $this->render('create', array(

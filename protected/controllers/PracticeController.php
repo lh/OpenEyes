@@ -75,9 +75,9 @@ class PracticeController extends BaseController
         }
         if ($context === 'AJAX') {
             echo CJSON::encode(array(
-                'label' => $practice->getAddressLines()
-            ,
-                'value' => $practice->getPrimaryKey(),
+                'label' => $practice->getAddressLines(),
+                'value' => $practice->getAddressLines(),
+                'id'    => $practice->getPrimaryKey(),
             ));
         } else {
             $this->render('create', array(
