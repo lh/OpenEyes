@@ -1,6 +1,6 @@
 <?php
 
-class m170821_053800_cera_clean extends CDbMigration
+class m170821_053800_cera_clean extends OEMigration
 {
 //	public function up()
 //	{
@@ -39,6 +39,7 @@ class m170821_053800_cera_clean extends CDbMigration
 	    $site->institution_id = $institution->id;
 	    $site->contact_id = $contact->id;
 	    $site->source_id = $source->id;
+	    $site->save();
 
 	}
 
