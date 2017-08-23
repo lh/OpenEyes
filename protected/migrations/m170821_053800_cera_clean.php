@@ -41,6 +41,15 @@ class m170821_053800_cera_clean extends OEMigration
 	    $site->source_id = $source->id;
 	    $site->save();
 
+	    $address = new Address;
+	    $address->address1 = 'Level 7';
+	    $address->address2 = '32 Gisborne St';
+	    $address->city = 'East Melbourne';
+	    $address->county = 'VIC';
+	    $address->country_id = 15;
+	    $address->contact_id = $contact->id;
+	    $address->date_end = null;
+	    $address->save();
 	}
 
 	public function safeDown()
