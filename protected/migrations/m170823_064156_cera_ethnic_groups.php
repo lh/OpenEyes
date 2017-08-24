@@ -2,37 +2,39 @@
 
 class m170823_064156_cera_ethnic_groups extends OEMigration
 {
-	public function safeUp()
-	{
+    public function safeUp()
+    {
         /**
          * @var $ethnicity EthnicGroup
          * @var $patient Patient
          */
-	    // Save all ethnic groups so the original values can be versioned.
+        // Save all ethnic groups so the original values can be versioned.
         $ethnicGroups = EthnicGroup::model()->findAll();
         foreach ($ethnicGroups as $ethnicity) {
             $ethnicity->save();
         }
 
-	    // Mark all patients whose ethnic group is being removed as having Other ethnicity.
-	    $patients = Patient::model()->findAll();
-	    foreach ($patients as $patient) {
-	        $patient->ethnic_group_id = 16;
-	        if (!$patient->save()) {
-	            throw new CDbException('Unable to save patient data.');
+        // Mark all patients whose ethnic group is being removed as having Other ethnicity.
+        $patients = Patient::model()->findAll();
+        foreach ($patients as $patient) {
+            $patient->ethnic_group_id = 16;
+            if (!$patient->save()) {
+                throw new CDbException("Unable to save patient $patient->id");
             }
         }
 
         // Remove the unused ethnic groups.
-        $removedEthnicGroups = EthnicGroup::model()->findAllBySql('SELECT * FROM ethnic_group WHERE id BETWEEN 8 and 15');
-	    foreach ($removedEthnicGroups as $ethnicity) {
-            $ethnicity->delete();
+        $removedEthnicGroups = EthnicGroup::model()->findAll('id BETWEEN 8 AND 15');
+        foreach ($removedEthnicGroups as $ethnicity) {
+            if (!$ethnicity->delete()) {
+                throw new CDbException("Unable to delete ethnic group $ethnicity->id");
+            }
         }
 
         // Change the text of the remaining ethnic groups.
         $ethnicGroups = EthnicGroup::model()->findAll();
-	    foreach ($ethnicGroups as $ethnicity) {
-	        switch ($ethnicity->id) {
+        foreach ($ethnicGroups as $ethnicity) {
+            switch ($ethnicity->id) {
                 case 1:
                     $ethnicity->name = 'Australia';
                     break;
@@ -61,11 +63,15 @@ class m170823_064156_cera_ethnic_groups extends OEMigration
                     $ethnicity->name = 'Don\'t know';
                     break;
                 default:
-                    throw new UnexpectedValueException('Invalid ethnic group value.');
+                    throw new UnexpectedValueException('Invalid ethnic group ID detected.');
             }
             $ethnicity->save();
         }
-	}
+    }
 
-	// This migration cannot be migrated down without losing data integrity.
+    // This migration cannot be migrated down without losing data integrity.
+    public function down()
+    {
+        return false;
+    }
 }
