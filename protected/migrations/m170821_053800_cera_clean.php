@@ -19,17 +19,32 @@ class m170821_053800_cera_clean extends OEMigration
 	{
 	    $source = new ImportSource;
 	    $source->name = 'Fivium Australia';
-	    $source->save();
+        if (!$source->save()) {
+            throw new CDbException("Unable to save source $source->name");
+        }
+        else {
+            $source->save();
+        }
 
 	    $contact = new Contact;
-	    $contact->save();
+        if (!$contact->save()) {
+            throw new CDbException("Unable to save contact");
+        }
+        else {
+            $contact->save();
+        }
 
 	    $institution = new Institution;
 	    $institution->name = 'Center for Eye Research Australia';
 	    $institution->remote_id = 'CERA';
 	    $institution->contact = $contact->id;
 	    $institution->source_id = $source->id;
-	    $institution->save();
+        if (!$institution->save()) {
+            throw new CDbException("Unable to save institution");
+        }
+        else {
+            $institution->save();
+        }
 
 	    $site = new Site;
 	    $site->name = 'Center for Eye Research Australia';
@@ -39,7 +54,12 @@ class m170821_053800_cera_clean extends OEMigration
 	    $site->institution_id = $institution->id;
 	    $site->contact_id = $contact->id;
 	    $site->source_id = $source->id;
-	    $site->save();
+        if (!$site->save()) {
+            throw new CDbException("Unable to save site");
+        }
+        else {
+            $site->save();
+        }
 
 	    $address = new Address;
 	    $address->address1 = 'Level 7';
@@ -49,7 +69,12 @@ class m170821_053800_cera_clean extends OEMigration
 	    $address->country_id = 15;
 	    $address->contact_id = $contact->id;
 	    $address->date_end = null;
-	    $address->save();
+        if (!$address->save()) {
+            throw new CDbException("Unable to save address");
+        }
+        else {
+            $address->save();
+        }
 	}
 
 	public function safeDown()
