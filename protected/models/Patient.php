@@ -2174,9 +2174,10 @@ class Patient extends BaseActiveRecordVersioned
      * @param $firstName string First name.
      * @param $surname string Last name.
      * @param $dob string Date of Birth (DD/MM/YYYY).
+     * @param $id int ID of the current patient record.
      * @return array|Patient[] The list of patients who have similar names and the same date of birth.
      */
-    public static function findDuplicates($firstName, $surname, $dob)
+    public static function findDuplicates($firstName, $surname, $dob, $id)
     {
         $sql = '
         SELECT p.*
@@ -2186,11 +2187,12 @@ class Patient extends BaseActiveRecordVersioned
         WHERE p.dob = :dob
           AND (SOUNDEX(c.first_name) = SOUNDEX(:first_name) OR levenshtein_ratio(c.first_name, :first_name) >= 60)
           AND (SOUNDEX(c.last_name) = SOUNDEX(:last_name) OR levenshtein_ratio(c.last_name, :last_name) >= 60)
+          AND (:id IS NULL OR p.id != :id)
         ORDER BY c.first_name, c.last_name
         ';
 
         $mysqlDob = Helper::convertNHS2MySQL(date('d M Y', strtotime(str_replace('/', '-', $dob))));
 
-        return Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $surname));
+        return Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $surname, ':id' => $id));
     }
 }

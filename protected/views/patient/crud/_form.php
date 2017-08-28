@@ -96,7 +96,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       <div class="row field-row">
         <div class="large-5 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
         <div class="large-4 column end">
-          <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 40, 'id' => 'fname', 'onblur' => 'findDuplicates();')); ?>
+          <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 40, 'id' => 'fname', 'onblur' => "findDuplicates($patient->id);")); ?>
           <?php echo $form->error($contact, 'first_name'); ?>
         </div>
       </div>
@@ -104,7 +104,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       <div class="row field-row">
         <div class="large-5 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
         <div class="large-4 column end">
-          <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 40, 'id' => 'surname', 'onblur' => 'findDuplicates();')); ?>
+          <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 40, 'id' => 'surname', 'onblur' => "findDuplicates($patient->id);")); ?>
           <?php echo $form->error($contact, 'last_name'); ?>
         </div>
       </div>
@@ -120,7 +120,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                     $patient->dob = str_replace('-', '/', $patient->dob);
                 }
             ?>
-            <?php echo $form->textField($patient, 'dob', array('onblur' => 'findDuplicates();')); ?>
+            <?php echo $form->textField($patient, 'dob', array('onblur' => "findDuplicates($patient->id);")); ?>
 
             <?php /*$this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'Patient[dob]',
@@ -310,7 +310,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
       </div>
     <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : ''?>">
-        <div class="large-offset-4 large-8 column selected_gp end alert-box"><span class="name"><?php echo $patient->gp_id ? $patient->gp->correspondenceName : '' ?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
+        <div class="large-offset-4 large-8 column selected_gp end alert-box">
+            <span class="name"><?php echo $patient->gp_id ? $patient->gp->correspondenceName : '' ?></span>
+            <a href="javascript:void(0)" class="remove right">remove</a>
+        </div>
         <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class'=>'hidden_id')); ?>
     </div>
     <div id="no_gp_result" class="row field-row hide">
@@ -318,9 +321,9 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
     </div>
     <div class="right">
-        <?php echo CHtml::link('Add Referring Practitioner', '#', array(
-            'onclick'=>'$("#gpdialog").dialog("open"); return false;',
-        ));?>
+        <p><?php echo CHtml::link('Add Referring Practitioner', '#', array(
+                'onclick'=>'$("#gpdialog").dialog("open"); return false;',
+            ));?></p>
     </div>
     </div>
   </div>
@@ -362,7 +365,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
       </div>
     <div id="selected_practice_wrapper" class="row field-row <?php echo !$patient->practice_id ? 'hide' : ''?>">
-        <div class="large-offset-4 large-8 column selected_practice end alert-box"><span class="name"><?php echo $patient->practice_id ? $patient->practice->getAddressLines() : ''?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
+        <div class="large-offset-4 large-8 column selected_practice end alert-box">
+            <span class="name"><?php echo $patient->practice_id ? $patient->practice->getAddressLines() : ''?></span>
+            <a href="javascript:void(0)" class="remove right">remove</a>
+        </div>
         <?php echo CHtml::hiddenField('Patient[practice_id]', $patient->practice_id, array('class'=>'hidden_id')); ?>
     </div>
     <div id="no_practice_result" class="row field-row hide">
@@ -370,9 +376,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         </div>
     </div>
     <div class="right">
-        <?php echo CHtml::link('Add Practice', '#', array(
+        <p><?php echo CHtml::link('Add Practice', '#', array(
             'onclick'=>'$("#practicedialog").dialog("open"); return false;',
         ));?>
+        </p>
     </div>
     </div>
   </div>
@@ -422,7 +429,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       </div>
 
       <div id="selected_referred_to_wrapper" class="row field-row <?php echo !$patientuserreferral->user_id ? 'hide' : ''?>">
-        <div class="large-offset-4 large-8 column selected_referred_to end alert-box"><span class="name"><?php echo $patientuserreferral->user_id ? $patientuserreferral->getUserName() : ''?></span><a href="javascript:void(0)" class="remove right">remove</a></div>
+        <div class="large-offset-4 large-8 column selected_referred_to end alert-box">
+            <span class="name"><?php echo $patientuserreferral->user_id ? $patientuserreferral->getUserName() : ''?></span>
+            <a href="javascript:void(0)" class="remove right">remove</a>
+        </div>
           <?php echo CHtml::hiddenField('PatientUserReferral[user_id]', $patientuserreferral->user_id, array('class'=>'hidden_id')); ?>
       </div>
       <div id="no_referred_to_result" class="row field-row hide">
@@ -547,11 +557,11 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 </div><!-- form -->
 
 <script type="text/javascript">
-  function findDuplicates() {
+  function findDuplicates(id) {
     if ($("#fname").val() && $('#surname').val() && $('#Patient_dob').val()) {
       $.ajax({
           url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>",
-          data: {firstName: $('#fname').val(), surname: $('#surname').val(), dob: $('#Patient_dob').val()},
+          data: {firstName: $('#fname').val(), surname: $('#surname').val(), dob: $('#Patient_dob').val(), id: id},
           type: 'GET',
           success: function(response) {
             $('#conflicts').remove();
