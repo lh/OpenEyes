@@ -303,7 +303,7 @@ return array(
                 'uri' => '#',
                 'position' => 2,
                 'userrule' => 'isSurgeon',
-                'restricted' => array('admin', 'Report', 'NOD Export', 'Add patient', 'Patient Merge', 'Patient Merge Request', 'Optom co-ordinator', 'View Practitioner', 'Manage Practitioner', 'View Practice', 'Manage Practice'),
+                'restricted' => array('admin', 'Report', 'NOD Export', 'Add patient', 'Patient Merge', 'Patient Merge Request', 'Optom co-ordinator', 'View Practitioner', 'Manage Practitioner', 'View Practice', 'Manage Practice', 'Manage Disorder', 'View Disorder'),
                 'sub' => array(
                     'admin' => array(
                         'title' => 'Admin',
