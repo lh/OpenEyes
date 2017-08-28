@@ -1493,6 +1493,7 @@ class PatientController extends BaseController
         $contact = new Contact('manualAddPatient');
         $address = new Address();
         $referral = null;
+        $gp = null;
         $gp_contact = new Contact('manage_gp');
         $practice_contact = new Contact('manage_practice');
         $practice_address = new Address('manage_practice');
@@ -1547,12 +1548,16 @@ class PatientController extends BaseController
             list($contact, $patient, $address, $referral, $patient_user_referral) =
                 $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
         }
+        if (isset($patient->gp_id)){
+            $gp = Gp::model()->findByPk($patient->gp_id);
+        }
 
         $this->render('crud/create',array(
                         'patient' => $patient,
                         'contact' => $contact,
                         'address' => $address,
                         'referral' => isset($referral) ? $referral : new PatientReferral('other_register'),
+                        'gp' => $gp,
                         'gpcontact' => $gp_contact,
                         'practicecontact' => $practice_contact,
                         'practiceaddress' => $practice_address,
@@ -1713,7 +1718,8 @@ class PatientController extends BaseController
 
         $patient = $this->loadModel($id);
         $referral = isset($patient->referral) ? $patient->referral : new PatientReferral();
-        $gp_contact = isset($patient->gp) ? $patient-> gp->contact : new Contact();
+        $gp = isset($patient->gp) ? $patient->gp : null;
+        $gp_contact = isset($gp) ? $gp->contact : new Contact();
         $practice = isset($patient->practice) ? $patient->practice : new Practice();
         $practice_contact = isset($patient->practice) ? $patient-> practice->contact : new Contact();
         $practice_address = isset($practice_contact) && isset($practice_contact->address) ? $practice_contact->address : new Address();
@@ -1777,6 +1783,9 @@ class PatientController extends BaseController
 
             list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
         }
+        if (isset($patient->gp_id)){
+            $gp = Gp::model()->findByPk($patient->gp_id);
+        }
 
         $this->render('crud/update',array(
                         'patient' => $patient,
@@ -1788,6 +1797,7 @@ class PatientController extends BaseController
                         'practiceaddress' => $practice_address,
                         'practice' => $practice,
                         'patientuserreferral' => $patient_user_referral,
+                        'gp' => $gp,
 
         ));
     }

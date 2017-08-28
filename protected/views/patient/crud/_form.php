@@ -25,10 +25,10 @@
 $nhs_num_statuses = CHtml::listData(NhsNumberVerificationStatus::model()->findAll(), 'id', 'description');
 $countries = CHtml::listData(Country::model()->findAll(), 'id', 'name');
 $address_type_ids = CHtml::listData(AddressType::model()->findAll(), 'id', 'name');
-$gp = new Gp();
-$practice = new Practice();
-$general_practitioners = CHtml::listData($gp->gpCorrespondences(), 'id', 'correspondenceName');
-$practices = CHtml::listData($practice->practiceAddresses(), 'id', 'letterLine');
+$gp_dummy = new Gp();
+$general_practitioners = CHtml::listData($gp_dummy->gpCorrespondences(), 'id', 'correspondenceName');
+$practice_dummy = new Practice();
+$practices = CHtml::listData($practice_dummy->practiceAddresses(), 'id', 'letterLine');
 
 $gender_models = Gender::model()->findAll();
 $genders = CHtml::listData($gender_models, function ($gender_model) {
@@ -311,8 +311,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       </div>
     <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : ''?>">
         <div class="large-offset-4 large-8 column selected_gp end alert-box">
-            <span class="name"><?php echo $patient->gp_id ? $patient->gp->correspondenceName : '' ?></span>
-            <a href="javascript:void(0)" class="remove right">remove</a>
+          <span class="name">
+            <?php echo ($gp !== null ?  $gp->correspondenceName : '');?>
+          </span>
+          <a href="javascript:void(0)" class="remove right">remove</a>
         </div>
         <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class'=>'hidden_id')); ?>
     </div>
@@ -360,15 +362,16 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 'htmlOptions' => array(
                     'placeholder' => 'search Practice',
                 ),
-                
+
             ));?>
         </div>
       </div>
     <div id="selected_practice_wrapper" class="row field-row <?php echo !$patient->practice_id ? 'hide' : ''?>">
         <div class="large-offset-4 large-8 column selected_practice end alert-box">
-            <span class="name"><?php echo $patient->practice_id ? $patient->practice->getAddressLines() : ''?></span>
-            <a href="javascript:void(0)" class="remove right">remove</a>
-        </div>
+          <span class="name">
+              <?php echo $patient->practice ? $patient->practice->getAddressLines() : ''?>
+          </span>
+          <a href="javascript:void(0)" class="remove right">remove</a></div>
         <?php echo CHtml::hiddenField('Patient[practice_id]', $patient->practice_id, array('class'=>'hidden_id')); ?>
     </div>
     <div id="no_practice_result" class="row field-row hide">
