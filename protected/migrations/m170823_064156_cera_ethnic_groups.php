@@ -19,7 +19,7 @@ class m170823_064156_cera_ethnic_groups extends OEMigration
         foreach ($patients as $patient) {
             $patient->ethnic_group_id = 16;
             if (!$patient->save()) {
-                throw new CDbException("Unable to save patient $patient->id");
+                throw new CDbException("Unable to save patient $patient->id: " . print_r($patient->getErrors(),true));
             }
         }
 

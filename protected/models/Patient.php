@@ -130,10 +130,10 @@ class Patient extends BaseActiveRecordVersioned
             array('gender', 'required', 'on' => 'self_register'),
             array('gp_id', 'required', 'on' => 'referral'),
             array('deleted', 'safe'),
-            array('dob', 'dateFormatValidator', 'on' => 'manual'),
-            array('date_of_death', 'deathDateFormatValidator', 'on' => 'manual'),
+            array('dob', 'dateFormatValidator', 'on' => array('manual', 'self_register', 'referral', 'other_register')),
+            array('date_of_death', 'deathDateFormatValidator', 'on' => array('manual', 'self_register', 'referral', 'other_register')),
             array('dob, hos_num, nhs_num, date_of_death, deleted,is_local, patient_source', 'safe', 'on' => 'search'),
-            array('dob','checkdate'),
+            array('dob','dateOfBirthRangeValidator', 'on' => array('manual', 'self_register', 'referral', 'other_register')),
         );
     }
 
@@ -2159,12 +2159,17 @@ class Patient extends BaseActiveRecordVersioned
         return false;
     }
 
-    public function checkdate($attribute,$params)
+    public function dateOfBirthRangeValidator($attribute, $params)
     {
-        $currentdate = new DateTime(date("j M Y"));
+        if ($this->hasErrors('dob')) {
+            return;
+        }
+
+        $currentDate = new DateTime(date('j M Y'));
         $date_of_birth = new DateTime($this->dob);
-        if($date_of_birth > $currentdate || $this->getAge() > 100) {
-            $this->addError($attribute,"Date of Birth is not in the reasonable date range");
+
+        if ($date_of_birth > $currentDate || $this->getAge() > 100) {
+            $this->addError($attribute,'Date of Birth is not in the reasonable date range');
         }
 
     }
