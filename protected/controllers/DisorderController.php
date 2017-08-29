@@ -104,7 +104,7 @@ class DisorderController extends BaseController
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'patient-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'disorder-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
@@ -130,7 +130,7 @@ class DisorderController extends BaseController
                 $disorder->specialty_id = Specialty::model()->find('code = :code', array(':code' => 130))->id;
             }
 
-            if (!$disorder->hasErrors() && $disorder->validate() && $disorder->save()) {
+            if ($disorder->save()) {
                 $this->redirect($this->createUrl('/disorder/view', array('id' => $disorder->id)));
             }
         }
