@@ -54,6 +54,7 @@ class m170821_053800_cera_clean extends OEMigration
 	public function safeDown()
 	{
         echo "m170821_053800_cera_clean does not support migration down.\n";
+        return false;
 	}
 
 }
