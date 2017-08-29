@@ -9,25 +9,25 @@ class m170821_053800_cera_clean extends OEMigration
         $source = new ImportSource;
         $source->name = 'Fivium Australia';
         if (!$source->save()) {
-            throw new CDbException("Unable to save source: {$source->getErrors()}");
+            throw new CDbException('Unable to save source: ' . print_r($source->getErrors(), true));
         }
 
         $contact = new Contact;
         if (!$contact->save()) {
-            throw new CDbException("Unable to save contact: {$contact->getErrors()}");
+            throw new CDbException('Unable to save contact: ' . print_r($contact->getErrors(), true));
         }
 
         $institution = new Institution;
-        $institution->name = 'Center for Eye Research Australia';
+        $institution->name = 'Centre for Eye Research Australia';
         $institution->remote_id = 'CERA';
         $institution->contact_id = $contact->id;
         $institution->source_id = $source->id;
         if (!$institution->save()) {
-            throw new CDbException("Unable to save institution: {$institution->getErrors()}");
+            throw new CDbException('Unable to save institution: ' . print_r($institution->getErrors(), true));
         }
 
         $site = new Site;
-        $site->name = 'Center for Eye Research Australia';
+        $site->name = 'Centre for Eye Research Australia';
         $site->remote_id = 'CERA';
         $site->short_name = 'CERA';
         $site->telephone = '0399298360';
@@ -35,7 +35,7 @@ class m170821_053800_cera_clean extends OEMigration
         $site->contact_id = $contact->id;
         $site->source_id = $source->id;
         if (!$site->save()) {
-            throw new CDbException("Unable to save site");
+            throw new CDbException('Unable to save site: ' . print_r($site->getErrors(), true));
         }
 
         $address = new Address;
@@ -47,7 +47,7 @@ class m170821_053800_cera_clean extends OEMigration
         $address->contact_id = $contact->id;
         $address->date_end = null;
         if (!$address->save()) {
-            throw new CDbException("Unable to save address");
+            throw new CDbException('Unable to save address: ' . print_r($address->getErrors(), true));
         }
     }
 
