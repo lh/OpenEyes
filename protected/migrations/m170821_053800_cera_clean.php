@@ -2,17 +2,6 @@
 
 class m170821_053800_cera_clean extends OEMigration
 {
-//	public function up()
-//	{
-//
-//	}
-//
-//	public function down()
-//	{
-//		echo "m170821_053800_cera_clean does not support migration down.\n";
-//		return false;
-//	}
-
 
 	// Use safeUp/safeDown to do migration with transaction
 	public function safeUp()
@@ -22,16 +11,10 @@ class m170821_053800_cera_clean extends OEMigration
         if (!$source->save()) {
             throw new CDbException("Unable to save source $source->name");
         }
-        else {
-            $source->save();
-        }
 
 	    $contact = new Contact;
         if (!$contact->save()) {
             throw new CDbException("Unable to save contact");
-        }
-        else {
-            $contact->save();
         }
 
 	    $institution = new Institution;
@@ -41,9 +24,6 @@ class m170821_053800_cera_clean extends OEMigration
 	    $institution->source_id = $source->id;
         if (!$institution->save()) {
             throw new CDbException("Unable to save institution");
-        }
-        else {
-            $institution->save();
         }
 
 	    $site = new Site;
@@ -57,9 +37,6 @@ class m170821_053800_cera_clean extends OEMigration
         if (!$site->save()) {
             throw new CDbException("Unable to save site");
         }
-        else {
-            $site->save();
-        }
 
 	    $address = new Address;
 	    $address->address1 = 'Level 7';
@@ -72,14 +49,11 @@ class m170821_053800_cera_clean extends OEMigration
         if (!$address->save()) {
             throw new CDbException("Unable to save address");
         }
-        else {
-            $address->save();
-        }
 	}
 
 	public function safeDown()
 	{
-
+        echo "m170821_053800_cera_clean does not support migration down.\n";
 	}
 
 }
