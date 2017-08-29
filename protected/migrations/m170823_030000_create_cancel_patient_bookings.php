@@ -5,6 +5,7 @@ class m170823_030000_create_cancel_patient_bookings extends OEMigration
 	public function up()
 	{
         $storedProcedure = <<<EOL
+DROP PROCEDURE IF EXISTS cancel_patient_bookings;
 CREATE PROCEDURE cancel_patient_bookings(IN patientToCancel INT)
   BEGIN
     DECLARE cancel_status, cancel_reason, booking_type, stored_event_id, episode_id, booking_id, operation_id, episode_status_id, done, rows_affected, admin_user INT DEFAULT 0;
