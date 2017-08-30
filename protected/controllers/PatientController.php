@@ -1880,19 +1880,19 @@ class PatientController extends BaseController
         Yii::app()->request->sendFile($model->file_name, $model->file_content, $model->file_type, true);
     }
 
-    public function actionFindDuplicates($firstName, $surname, $dob, $id = null)
+    public function actionFindDuplicates($firstName, $last_name, $dob, $id = null)
     {
-        $patients = Patient::findDuplicates($firstName, $surname, $dob, $id);
+        $patients = Patient::findDuplicates($firstName, $last_name, $dob, $id);
 
         if (count($patients) !== 0) {
             $this->renderPartial('crud/_conflicts', array(
                 'patients' => $patients,
-                'name' => $firstName . ' ' . $surname
+                'name' => $firstName . ' ' . $last_name
             ));
         }
         else {
             $this->renderPartial('crud/_conflicts', array(
-                'name' => $firstName . ' ' . $surname
+                'name' => $firstName . ' ' . $last_name
             ));
         }
     }
