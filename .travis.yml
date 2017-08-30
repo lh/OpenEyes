@@ -1,0 +1,22 @@
+language: php
+sudo: required
+dist: trusty
+php:
+  - '5.4'
+  - '5.5'
+  - '5.6'
+install:
+  - composer install
+  - npm install
+  - cd openeyes/protected
+  - cp config/local.sample/common.php config/local/common.php
+  - cp config/local.sample/console.vagrant.php config/local/console.php
+  - php yiic migrate --interactive=0 --connectionID=testdb
+  - php yiic migratemodules --interactive=0 --connectionID=testdb
+  - php yiic generateuniquecode --interactive=0 --connectionID=testdb
+  - php yiic generatesessions --interactive=0 --connectionID=testdb
+script:
+  - cd openeyes/protected/tests
+  - phpunit ../modules/OECaseSearch/tests/unit
+  - phpunit ../modules/OETrial/tests/unit
+  
