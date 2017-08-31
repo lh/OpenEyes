@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/FiviumAustralia/OpenEyes.svg?branch=feature%2Fcera-phase-2)](https://travis-ci.org/FiviumAustralia/OpenEyes)
+
 OpenEyes
 ========
 
