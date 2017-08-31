@@ -75,16 +75,7 @@ class User extends BaseActiveRecordVersioned
     {
         $commonRules = array(
             // Added for uniqueness of username
-            array(
-                'username',
-                'unique',
-                'className' => 'User',
-                'attributeName' => 'username',
-                'criteria' => array( // Ignore the username of the existing row when updating a record
-                    'condition' => 'id != :new_id OR :new_id IS NULL',
-                    'params' => array(':new_id' => $this->id),
-                ),
-            ),
+            array('username', 'unique', 'className' => 'User', 'attributeName' => 'username'),
             array('id, username, first_name, last_name, email, active, global_firm_rights', 'safe', 'on' => 'search'),
             array(
                 'username, first_name, last_name, email, active, global_firm_rights, is_doctor, title, qualifications, role, salt, password, is_clinical, is_consultant, is_surgeon,
