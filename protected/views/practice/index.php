@@ -14,10 +14,22 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
 <div class="row data-row">
   <div class="large-8 column">
     <div class="box generic">
-      <h2>
-        Practices: viewing <?php echo $from ?> - <?php echo $to ?>
-        of <?php echo $dataProvider->totalItemCount ?>
-      </h2>
+      <div class="row">
+        <div class="large-6 column">
+          <h2>
+            Practices: viewing <?php echo $from ?> - <?php echo $to ?>
+            of <?php echo $dataProvider->totalItemCount ?>
+          </h2>
+        </div>
+        <div class="large-4 column">
+          <?php $form = $this->beginWidget('CActiveForm', array(
+              'id' => 'practice-search-form',
+          )); ?>
+          <?php echo CHtml::textField('search-term', @$_POST['search-term'],
+              array('placeholder' => 'Enter search query...')); ?>
+          <?php $this->endWidget(); ?>
+        </div>
+      </div>
       <table id="practice-grid" class="grid">
         <thead>
         <tr>

@@ -185,11 +185,19 @@ class PracticeController extends BaseController
      */
     public function actionIndex()
     {
+        $criteria = new CDbCriteria();
+        $criteria->together = true;
+        $criteria->with = array('contact');
+        $criteria->order = 'last_name';
+
+        if (isset($_POST['search-term'])) {
+            $criteria->addSearchCondition('LOWER(last_name)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(first_name)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(phone)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(code)', strtolower($_POST['search-term']), true, 'OR');
+        }
         $dataProvider = new CActiveDataProvider('Practice', array(
-            'criteria' => array(
-                'with' => array('contact'),
-                'order' => 'last_name, first_name',
-            ),
+              'criteria' => $criteria
         ));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
