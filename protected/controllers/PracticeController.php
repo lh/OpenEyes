@@ -187,7 +187,7 @@ class PracticeController extends BaseController
     {
         $criteria = new CDbCriteria();
         $criteria->together = true;
-        $criteria->with = array('contact');
+        $criteria->with = array('contact','contact.address');
         $criteria->order = 'last_name';
 
         if (isset($_POST['search-term'])) {
@@ -195,6 +195,11 @@ class PracticeController extends BaseController
             $criteria->addSearchCondition('LOWER(first_name)', strtolower($_POST['search-term']), true, 'OR');
             $criteria->addSearchCondition('LOWER(phone)', strtolower($_POST['search-term']), true, 'OR');
             $criteria->addSearchCondition('LOWER(code)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(address1)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(address2)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(city)', strtolower($_POST['search-term']), true, 'OR');
+            $criteria->addSearchCondition('LOWER(postcode)', strtolower($_POST['search-term']), true, 'OR');
+
         }
         $dataProvider = new CActiveDataProvider('Practice', array(
               'criteria' => $criteria
