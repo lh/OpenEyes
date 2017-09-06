@@ -298,82 +298,73 @@ return array(
         'profile_user_show_menu' => true,
         'profile_user_can_change_password' => true,
         'menu_bar_items' => array(
-                'admin' => array(
-                'title' => 'More',
-                'uri' => '#',
+            'admin' => array(
+                'title' => 'Admin',
+                'uri' => 'admin',
+                'position' => 1,
+                'restricted' => array('admin'),
+            ),
+            'audit' => array(
+                'title' => 'Audit',
+                'uri' => 'audit',
                 'position' => 2,
+                'restricted' => array('admin'),
+            ),
+            'reports' => array(
+                'title' => 'Reports',
+                'uri' => 'report',
+                'position' => 3,
+                'restricted' => array('Report'),
+            ),
+            'cataract' => array(
+                'title' => 'Cataract Audit',
+                'uri' => 'dashboard/cataract',
+                'position' => 4,
                 'userrule' => 'isSurgeon',
-                'restricted' => array('admin', 'Report', 'NOD Export', 'Add patient', 'Patient Merge', 'Patient Merge Request', 'Optom co-ordinator', 'View Practitioner', 'Manage Practitioner', 'View Practice', 'Manage Practice', 'Manage Disorder', 'View Disorder'),
-                'sub' => array(
-                    'admin' => array(
-                    'title' => 'Admin',
-                    'uri' => 'admin',
-                    'position' => 1,
-                    'restricted' => array('admin'),
-                ),
-                'audit' => array(
-                    'title' => 'Audit',
-                    'uri' => 'audit',
-                    'position' => 2,
-                    'restricted' => array('admin'),
-                ),
-                'reports' => array(
-                    'title' => 'Reports',
-                    'uri' => 'report',
-                    'position' => 3,
-                    'restricted' => array('Report'),
-                ),
-                'cataract' => array(
-                    'title' => 'Cataract Audit',
-                    'uri' => 'dashboard/cataract',
-                    'position' => 4,
-                    'userrule' => 'isSurgeon',
-                    'restricted' => array('admin'),
-                    'options' => array('target' => '_blank'), ),
-                'nodexport' => array(
-                    'title' => 'NOD Export',
-                    'uri' => 'NodExport',
-                    'position' => 5,
-                    'restricted' => array('NOD Export'),
-                ),
-                'cxldataset' => array(
-                    'title' => 'CXL Dataset',
-                    'uri' => 'CxlDataset',
-                    'position' => 6,
-                    'restricted' => array('CXL Dataset'),
-                ),
+                'restricted' => array('admin'),
+                'options' => array('target' => '_blank'),),
+            'nodexport' => array(
+                'title' => 'NOD Export',
+                'uri' => 'NodExport',
+                'position' => 5,
+                'restricted' => array('NOD Export'),
+            ),
+            'cxldataset' => array(
+                'title' => 'CXL Dataset',
+                'uri' => 'CxlDataset',
+                'position' => 6,
+                'restricted' => array('CXL Dataset'),
+            ),
 
-                'patientmergerequest' => array(
-                    'title' => 'Patient Merge',
-                    'uri' => 'patientMergeRequest/index',
-                    'position' => 17,
-                    'restricted' => array('Patient Merge', 'Patient Merge Request'),
-                ),
-                'patient' => array(
-                    'title' => 'Add Patient',
-                    'uri' => 'patient/create',
-                    'position' => 46,
-                    'restricted' => array('TaskAddPatient'),
-                ),
-                    'gps' => array(
-                        'title' => 'Practitioners',
-                        'uri' => 'gp/index',
-                        'position' => 10,
-                        'restricted' => array('TaskViewGp', 'TaskCreateGp'),
-                    ),
-                    'practices' => array(
-                        'title' => 'Practices',
-                        'uri' => 'practice/index',
-                        'position' => 11,
-                        'restricted' => array('TaskViewPractice', 'TaskCreatePractice'),
-                    ),
-                    'disorders' => array(
-                        'title' => 'Disorders',
-                        'uri' => 'disorder/index',
-                        'position' => 12,
-                        'restricted' => array('TaskViewDisorder'),
-                    ),
-                ),
+            'patientmergerequest' => array(
+                'title' => 'Patient Merge',
+                'uri' => 'patientMergeRequest/index',
+                'position' => 17,
+                'restricted' => array('Patient Merge', 'Patient Merge Request'),
+            ),
+            'patient' => array(
+                'title' => 'Add Patient',
+                'uri' => 'patient/create',
+                'position' => 46,
+                'restricted' => array('TaskAddPatient'),
+            ),
+            'gps' => array(
+                'title' => 'Practitioners',
+                'uri' => 'gp/index',
+                'position' => 10,
+                'restricted' => array('TaskViewGp', 'TaskCreateGp'),
+            ),
+            'practices' => array(
+                'title' => 'Practices',
+                'uri' => 'practice/index',
+                'position' => 11,
+                'restricted' => array('TaskViewPractice', 'TaskCreatePractice'),
+            ),
+            'disorders' => array(
+                'title' => 'Disorders',
+                'uri' => 'disorder/index',
+                'position' => 12,
+                'restricted' => array('TaskViewDisorder'),
             ),
 // temporarily disabled
 //			'worklist' => array(
@@ -382,8 +373,7 @@ return array(
 //				'position' => 3,
 //			),
         ),
-        'admin_menu' => array(
-        ),
+        'admin_menu' => array(),
         'dashboard_items' => array(
             array(
                 'class' => 'WorklistManager',
@@ -399,8 +389,7 @@ return array(
         'enable_transactions' => true,
         'event_lock_days' => 0,
         'event_lock_disable' => false,
-        'reports' => array(
-        ),
+        'reports' => array(),
         'opbooking_disable_both_eyes' => false,
         //'html_autocomplete' => 'off',
         // html|pdf, pdf requires wkhtmltopdf with patched QT
@@ -419,11 +408,11 @@ return array(
         'hscic' => array(
             'data' => array(
                 // to store processed zip files
-                'path' => realpath(dirname(__FILE__).'/../..').'/data/hscic',
+                'path' => realpath(dirname(__FILE__) . '/../..') . '/data/hscic',
 
                 // to store downloaded zip files which will be processed if they are different from the already processed ones
                 // otherwise ignored and will be overwritten on then next download
-                'temp_path' => realpath(dirname(__FILE__).'/../..').'/data/hscic/temp',
+                'temp_path' => realpath(dirname(__FILE__) . '/../..') . '/data/hscic/temp',
             ),
         ),
 
@@ -458,10 +447,10 @@ return array(
          * e.g: saveprint' => null,
          */
         'OphCoCorrespondence_event_actions' => array(
-                'create' => array(
-                    'savedraft' => 'Save draft',
-                    'save' => null,
-                    'saveprint' => 'Save and print'
+            'create' => array(
+                'savedraft' => 'Save draft',
+                'save' => null,
+                'saveprint' => 'Save and print'
             )
         ),
 

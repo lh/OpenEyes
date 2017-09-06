@@ -110,7 +110,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
       </div>
 
        <div class="row field-row">
-        <div class="large-3 column"><?php echo $form->labelEx($contact, 'maiden_name'); ?></div>
+        <div class="large-5 column"><?php echo $form->labelEx($contact, 'maiden_name'); ?></div>
         <div class="large-4 column end">
             <?php echo $form->textField($contact, 'maiden_name', array('size' => 40, 'maxlength' => 40)); ?>
             <?php echo $form->error($contact, 'maiden_name'); ?>
