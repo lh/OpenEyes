@@ -456,7 +456,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     </div>
   </div>
   <!-- end of referred to field-->
-    <?php if ($patient->isNewRecord) : ?>
+    <?php if (Patient::model()->findByPk($patient->id) === null) : ?>
       <div class="row field-row">
         <div class="large-12 column">
           <div class="row field-row">
