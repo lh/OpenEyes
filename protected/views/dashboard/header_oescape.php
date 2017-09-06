@@ -28,7 +28,7 @@
         <span class="nhs-number">
             <?php echo $this->patient->getNhsnum(); ?>
         </span>
-        <span>Hospital No:
+        <span>CERA No:
             <b><?php echo $this->patient->hos_num; ?></b>
         </span>
         <span>

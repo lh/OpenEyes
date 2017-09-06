@@ -96,7 +96,7 @@ class PatientTest extends CDbTestCase
             'gender' => 'Gender',
             'ethnic_group_id' => 'Ethnic Group',
             'hos_num' => 'Hospital Number',
-            'nhs_num' => 'NHS Number',
+            'nhs_num' => 'Medicare Number',
             'deleted' => 'Is Deleted',
         );
 

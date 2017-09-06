@@ -40,10 +40,10 @@
         <div class="row">
             <div class="large-12 large-centered column">
                 <div class="search-examples">
-                    Find a patient by...<br />
-                    <strong>Hospital Number</strong>,<br />
-                    <strong>NHS Number</strong>,<br />
-                    <strong>Firstname Surname</strong> or <br />
+                Find a patient by
+                <strong>CERA Number</strong>,
+                <strong>Medicare Number</strong>,
+                <strong>Firstname Surname</strong> or
                     <strong>Surname, Firstname</strong>.
                 </div>
                 <?php echo CHtml::textField('query', '', array('autocomplete' => Yii::app()->params['html_autocomplete'], 'class' => 'large', 'placeholder' => 'Enter search...')); ?>

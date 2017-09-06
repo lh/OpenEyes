@@ -64,11 +64,14 @@ class Address extends BaseActiveRecordVersioned
     public function rules()
     {
         return array(
-            array('address1, address2, city, county', 'length', 'max' => 255),
+            array('address1, city, county', 'length', 'max' => 255),
+            array('address1, city, county, email', 'required', 'on' => 'self_register'),
+            array('address1, city, county, email', 'required', 'on' => 'other_register'),
+            array('address1, city, county', 'required', 'on' => 'manage_practice'),
             array('postcode', 'length', 'max' => 10),
             array('email', 'length', 'max' => 255),
             array('email','email'),
-            array('country_id, address_type_id, date_start, date_end', 'safe'),
+            array('country_id, address_type_id, date_start, date_end,address2', 'safe'),
             array('country_id, contact_id', 'required'),
             array('id, address1, address2, city, postcode, county, email, country_id, address_type_id, date_start, date_end', 'safe', 'on' => 'search'),
         );
@@ -96,7 +99,7 @@ class Address extends BaseActiveRecordVersioned
             'address2' => 'Address2',
             'city' => 'City',
             'postcode' => 'Postcode',
-            'county' => 'County',
+            'county' => 'State',
             'country_id' => 'Country',
             'email' => 'Email',
             'address_type_id' => 'Address Type',

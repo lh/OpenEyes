@@ -1,2 +1,4 @@
 yii
 
+!/modules/OECaseSearch/assets/js/QueryBuilder.js
+/tests/coverage

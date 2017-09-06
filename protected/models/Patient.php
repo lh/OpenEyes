@@ -40,25 +40,35 @@
  * @property int $created_user_id
  * @property int $last_modified_user_id
  * @property datetime $no_allergies_date
- * @property tinyint $deleted
+ * @property int $deleted
  * @property int $ethnic_group_id
+ * @property int $patient_source
  *
  * The followings are the available model relations:
  * @property Episode[] $episodes
  * @property Address[] $addresses
  * @property Address $address Primary address
  * @property Contact[] $contactAssignments
+ * @property Contact $contact
  * @property Gp $gp
+ * @property PatientReferral $referral
+ * @property Medication[] $medications
  * @property Practice $practice
  * @property Allergy[] $allergies
+ * @property SecondaryDiagnosis[] $secondarydiagnoses
  * @property EthnicGroup $ethnic_group
  * @property CommissioningBody[] $commissioningbodies
  * @property SocialHistory $socialhistory
+ * @property TrialPatient[] trials
  *
  */
 class Patient extends BaseActiveRecordVersioned
 {
     const CHILD_AGE_LIMIT = 16;
+
+    const PATIENT_SOURCE_OTHER = 0;
+    const PATIENT_SOURCE_REFERRAL = 1;
+    const PATIENT_SOURCE_SELF_REGISTER = 2;
 
     public $use_pas = true;
     private $_orderedepisodes;
@@ -111,16 +121,19 @@ class Patient extends BaseActiveRecordVersioned
     {
         return array(
             array('pas_key', 'length', 'max' => 10),
+            array('dob, patient_source', 'required'),
             array('hos_num', 'required', 'on' => 'pas'),
             array('hos_num, nhs_num', 'length', 'max' => 40),
             array('hos_num', 'hosNumValidator'), // 'on' => 'manual'
             array('gender,is_local', 'length', 'max' => 1),
-            array('dob, is_deceased, date_of_death, ethnic_group_id, gp_id, practice_id, is_local,nhs_num_status_id', 'safe'),
-            array('gender, dob', 'required', 'on' => 'manual'),
+            array('dob, is_deceased, date_of_death, ethnic_group_id, gp_id, practice_id, is_local,nhs_num_status_id, patient_source', 'safe'),
+            array('gender', 'required', 'on' => 'self_register'),
+            array('gp_id', 'required', 'on' => 'referral'),
             array('deleted', 'safe'),
-            array('dob', 'dateFormatValidator', 'on' => 'manual'),
-            array('date_of_death', 'deathDateFormatValidator', 'on' => 'manual'),
-            array('dob, hos_num, nhs_num, date_of_death, deleted,is_local', 'safe', 'on' => 'search'),
+            array('dob', 'dateFormatValidator', 'on' => array('manual', 'self_register', 'referral', 'other_register')),
+            array('date_of_death', 'deathDateFormatValidator', 'on' => array('manual', 'self_register', 'referral', 'other_register')),
+            array('dob, hos_num, nhs_num, date_of_death, deleted,is_local, patient_source', 'safe', 'on' => 'search'),
+            array('dob','dateOfBirthRangeValidator', 'on' => array('manual', 'self_register', 'referral', 'other_register')),
         );
     }
 
@@ -148,6 +161,7 @@ class Patient extends BaseActiveRecordVersioned
                 'alias' => 'patient_allergies',
                 'order' => 'patient_allergies.name', ),
             'allergyAssignments' => array(self::HAS_MANY, 'PatientAllergyAssignment', 'patient_id'),
+            'referral' => array(self::HAS_ONE, 'PatientReferral', 'patient_id'),
             'risks' => array(
                 self::MANY_MANY,
                 'Risk',
@@ -162,11 +176,12 @@ class Patient extends BaseActiveRecordVersioned
             //'medications' => array(self::HAS_MANY, 'Medication', 'patient_id', 'order' => 'created_date', 'condition' => 'end_date is null'),
             //'previous_medications' => array(self::HAS_MANY, 'Medication', 'patient_id', 'order' => 'created_date', 'condition' => 'end_date is not null'),
             'commissioningbodies' => array(self::MANY_MANY, 'CommissioningBody', 'commissioning_body_patient_assignment(patient_id, commissioning_body_id)'),
-            'referrals' => array(self::HAS_MANY, 'Referral', 'patient_id'),
             'lastReferral' => array(self::HAS_ONE, 'Referral', 'patient_id', 'order' => 'received_date desc'),
             'adherence' => array(self::HAS_ONE, 'MedicationAdherence', 'patient_id'),
             'nhsNumberStatus' => array(self::BELONGS_TO, 'NhsNumberVerificationStatus', 'nhs_num_status_id'),
             'geneticsPatient' => array(self::HAS_ONE, 'GeneticsPatient', 'patient_id'),
+            'trials' => array(self::HAS_MANY, 'TrialPatient', 'patient_id'),
+            'patientuserreferral' => array(self::HAS_MANY, 'PatientUserReferral', 'patient_id','alias' => 'patient_user_referral','order' => 'patient_user_referral.created_date DESC' ),
         );
     }
 
@@ -180,7 +195,7 @@ class Patient extends BaseActiveRecordVersioned
      */
     public function hosNumValidator($attribute, $params)
     {
-        if($this->scenario == 'manual'){
+        if (in_array($this->getScenario(), array('manual', 'referral', 'other_register', 'self_register'), true)) {
 
             $patient_search = new PatientSearch();
             if ($patient_search->getHospitalNumber($this->hos_num)) {
@@ -188,10 +203,10 @@ class Patient extends BaseActiveRecordVersioned
 
                 $item_count = $dataProvider->totalItemCount;
                 if( $item_count && $item_count > 0 ){
-                    $this->addError($attribute, 'A patient already exists with this hospital number');
+                    $this->addError($attribute, 'A patient already exists with this CERA number');
                 }
             } elseif( !empty($this->hos_num)){
-                $this->addError($attribute, 'Not a valid Hospital Number');
+                $this->addError($attribute, 'Not a valid CERA Number');
             }
         }
     }
@@ -242,14 +257,44 @@ class Patient extends BaseActiveRecordVersioned
             'date_of_death' => 'Date of Death',
             'gender' => 'Gender',
             'ethnic_group_id' => 'Ethnic Group',
-            'hos_num' => 'Hospital Number',
-            'nhs_num' => 'NHS Number',
+            'hos_num' => 'CERA Number',
+            'nhs_num' => 'Medicare Number',
             'deleted' => 'Is Deleted',
-            'nhs_num_status_id' => 'NHS Number Status',
-            'gp_id' => 'General Practitioner',
+            'nhs_num_status_id' => 'Medicare Number Status',
+            'gp_id' => 'Referring Practitioner',
             'practice_id' => 'Practice',
-            'is_local' => 'Is local patient ?'
+            'is_local' => 'Is local patient ?',
+            'patient_source' => 'Patient Source'
         );
+    }
+
+    /**
+     * @return array List of sources for display in a drop-down list.
+     */
+    public function getSourcesList()
+    {
+        return array(
+            self::PATIENT_SOURCE_REFERRAL => 'Referral',
+            self::PATIENT_SOURCE_SELF_REGISTER => 'Self-Registration',
+            self::PATIENT_SOURCE_OTHER => 'Other'
+        );
+    }
+
+    /**
+     * @return string Human-readable patient source for read-only display.
+     */
+    public function getPatientSource()
+    {
+        switch ($this->patient_source)
+        {
+            case self::PATIENT_SOURCE_REFERRAL:
+                return 'Referral';
+            case self::PATIENT_SOURCE_SELF_REGISTER:
+                return 'Self-Registration';
+            case self::PATIENT_SOURCE_OTHER:
+                return 'Other';
+        }
+        return 'None';
     }
 
     public function search_nr($params)
@@ -319,6 +364,7 @@ class Patient extends BaseActiveRecordVersioned
 
     public function beforeSave()
     {
+
         foreach (array('first_name', 'last_name', 'dob', 'title', 'primary_phone') as $property) {
             if ($randomised = $this->randomData($property)) {
                 $this->$property = $randomised;
@@ -352,7 +398,7 @@ class Patient extends BaseActiveRecordVersioned
             $this->is_deceased = 1;
         }
 
-        if( $this->scenario == 'manual'){
+        if (in_array($this->getScenario(), array('manual', 'referral', 'other_register', 'self_register'), true)) {
             $this->dob = str_replace('/', '-', $this->dob);
             $this->date_of_death = str_replace('/', '-', $this->date_of_death);
         }
@@ -622,6 +668,17 @@ class Patient extends BaseActiveRecordVersioned
     public function hasRiskStatus()
     {
         return $this->no_risks_date || $this->risks;
+    }
+
+    public function hasUnconfirmedDiagnoses()
+    {
+        foreach ($this->secondarydiagnoses as $diagnosis) {
+            if ($diagnosis->isUnconfirmed()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -1412,6 +1469,7 @@ class Patient extends BaseActiveRecordVersioned
             $sd->disorder_id = $disorder_id;
             $sd->eye_id = $eye_id;
             $sd->date = $date;
+            $sd->is_confirmed = 0;
 
             if (!$sd->save()) {
                 throw new Exception('Unable to save secondary diagnosis: '.print_r($sd->getErrors(), true));
@@ -1448,6 +1506,38 @@ class Patient extends BaseActiveRecordVersioned
         Yii::app()->event->dispatch('patient_remove_diagnosis', array('patient'=>$patient, 'diagnosis' => $sd));
 
         $this->audit('patient', "remove-$type-diagnosis");
+    }
+
+    /**
+     * @param integer $diagnosis_id
+     * @throws Exception
+     */
+    public function confirmDiagnosis($diagnosis_id)
+    {
+        if (!$sd = SecondaryDiagnosis::model()->findByPk($diagnosis_id)) {
+            throw new Exception('Unable to find secondary_diagnosis: '.$diagnosis_id);
+        }
+
+        if (!$disorder = Disorder::model()->findByPk($sd->disorder_id)) {
+            throw new Exception('Unable to find disorder: '.$sd->disorder_id);
+        }
+
+        $patient = $sd->patient;
+
+        if ($disorder->specialty_id) {
+            $type = strtolower(Specialty::model()->findByPk($disorder->specialty_id)->code);
+        } else {
+            $type = 'sys';
+        }
+
+        $sd->is_confirmed = 1;
+        if (!$sd->save()) {
+            throw new Exception('Unable to confirm diagnosis: '.print_r($sd->getErrors(), true));
+        }
+
+        Yii::app()->event->dispatch('patient_confirm_diagnosis', array('patient'=>$patient, 'diagnosis' => $sd));
+
+        $this->audit('patient', "confirm-$type-diagnosis");
     }
 
     /**
@@ -2065,6 +2155,71 @@ class Patient extends BaseActiveRecordVersioned
         }
 
         return $patient->episodes[0]->id;
+    }
+
+    /**
+     * Gets whether this patient is currently in an open Intervention trial (other than the given trial)
+     *
+     * @param integer $trial_id If set, this function will ignore trials with this ID
+     *
+     * @return bool Returns true if this patient is currently in an open Intervention trial, otherwise false
+     */
+    public function isCurrentlyInInterventionTrial($trial_id = null)
+    {
+        foreach ($this->trials as $trialPatient) {
+            if ((int)$trialPatient->patient_status === TrialPatient::STATUS_ACCEPTED &&
+                (int)$trialPatient->trial->trial_type === Trial::TRIAL_TYPE_INTERVENTION &&
+                (int)$trialPatient->trial->status !== Trial::STATUS_CLOSED &&
+                (int)$trialPatient->trial->status !== Trial::STATUS_CANCELLED &&
+                ($trial_id === null || $trialPatient->trial_id !== $trial_id)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function dateOfBirthRangeValidator($attribute, $params)
+    {
+        if ($this->hasErrors('dob')) {
+            return;
+        }
+
+        $currentDate = new DateTime(date('j M Y'));
+        $date_of_birth = new DateTime($this->dob);
+
+        if ($date_of_birth > $currentDate || $this->getAge() > 100) {
+            $this->addError($attribute,'Date of Birth is not in the reasonable date range');
+        }
+
+    }
+
+    /**
+     * Find all patients with the same date of birth and similar-sounding names.
+     * @param $firstName string First name.
+     * @param $last_name string Last name.
+     * @param $dob string Date of Birth (DD/MM/YYYY).
+     * @param $id int ID of the current patient record.
+     * @return array|Patient[] The list of patients who have similar names and the same date of birth.
+     */
+    public static function findDuplicates($firstName, $last_name, $dob, $id)
+    {
+        $sql = '
+        SELECT p.*
+        FROM patient p
+        JOIN contact c
+          ON c.id = p.contact_id
+        WHERE p.dob = :dob
+          AND (SOUNDEX(c.first_name) = SOUNDEX(:first_name) OR levenshtein_ratio(c.first_name, :first_name) >= 60)
+          AND (SOUNDEX(c.last_name) = SOUNDEX(:last_name) OR levenshtein_ratio(c.last_name, :last_name) >= 60)
+          AND (:id IS NULL OR p.id != :id)
+        ORDER BY c.first_name, c.last_name
+        ';
+
+        $mysqlDob = Helper::convertNHS2MySQL(date('d M Y', strtotime(str_replace('/', '-', $dob))));
+
+        return Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $last_name, ':id' => $id));
     }
 
     /**

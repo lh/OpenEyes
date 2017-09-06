@@ -135,5 +135,22 @@ return array(
         'contact_id' => 6,
         'is_local' => 0,
     ),
+    'patient9' => array(
+        'id' => 9,
+        'pas_key' => '10109',
+        'title' => 'Mrs',
+        'first_name' => 'Agne',
+        'last_name' => 'Bray',
+        'dob' => '1977-01-01',
+        'gender' => 'F',
+        'hos_num' => 34323,
+        'nhs_num' => 76570,
+        'practice_id' => 3,
+        'address_id' => 4,
+        'contact_id' => 6,
+        'is_local' => 0,
+        'is_deceased' => 1,
+        'date_of_death' => '2000-01-01'
+    ),
 
 );

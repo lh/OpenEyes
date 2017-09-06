@@ -12,4 +12,4 @@
   version: 1.4.2
 - src: geerlingguy.nodejs
   version: 3.3.0
-- src: zealot128.wkhtmltox
+- src: aeriscloud.wkhtmltopdf

@@ -90,7 +90,7 @@
 						<th>Firm:</th>
 						<th>Next letter due:</th>
 						<th>Site:</th>
-						<th>Hospital no:</th>
+						<th>CERA no:</th>
 						<th>&nbsp;</th>
 					</tr>
 					</thead>
@@ -124,7 +124,7 @@
 						</td>
 						<td>
 							<?php echo CHtml::textField('hos_num', @$_POST['hos_num'], array('autocomplete' => Yii::app()->params['html_autocomplete'], 'size' => 12))?>
-							<span id="hos_num_error" class="red"<?php if (!@$_POST['hos_num'] || ctype_digit($_POST['hos_num'])) {?> style="display: none;"<?php }?>>Invalid hospital number</span>
+							<span id="hos_num_error" class="red"<?php if (!@$_POST['hos_num'] || ctype_digit($_POST['hos_num'])) {?> style="display: none;"<?php }?>>Invalid CERA number</span>
 						</td>
 						<td class="text-right">
 							<img class="loader" src="<?php echo Yii::app()->assetManager->createUrl('img/ajax-loader.gif')?>" alt="loading..." style="display: none;" />

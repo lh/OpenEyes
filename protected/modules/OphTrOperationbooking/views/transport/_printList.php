@@ -21,7 +21,7 @@
 	<table>
 		<thead>
 			<tr>
-				<th>Hospital number</th>
+				<th>CERA number</th>
 				<th>Patient</th>
 				<th>TCI date</th>
 				<th>Admission time</th>

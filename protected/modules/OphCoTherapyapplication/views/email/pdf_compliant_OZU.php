@@ -52,7 +52,7 @@ $gp_cb = $patient->gp ? $patient->practice->getCommissioningBodyOfType($cbody_ty
 
 <table cellpadding="5">
 <tr>
-<td>Patient NHS Number:</td>
+<td>Patient Medicare Number:</td>
 <td><?php echo $patient->nhs_num ? $patient->nhs_num : 'Unknown' ?></td>
 <td>Trust</td>
 <td>Moorfields NHS Foundation Trust</td>
@@ -61,7 +61,7 @@ $gp_cb = $patient->gp ? $patient->practice->getCommissioningBodyOfType($cbody_ty
 </tr>
 
 <tr>
-<td>Patient Hospital Number:</td>
+<td>Patient CERA Number:</td>
 <td><?php echo $patient->hos_num ?></td>
 <td>Consultant Making Request:</td>
 <td><?php echo $service_info->consultant->getConsultantName() ?></td>

@@ -31,7 +31,7 @@
                 array(
                     'id' => 'hos_num',
                     'class' => 'CDataColumn',
-                    'header' => 'Hospital No.',
+                    'header' => 'CERA No.',
                     'value' => '$data->patient->hos_num',
                 ),
                 array(

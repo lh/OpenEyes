@@ -25,6 +25,7 @@
  * @property int $id
  * @property int $disorder_id
  * @property int $eye_id
+ * @property boolean $is_confirmed
  * @property int $patient_id
  * @property int $episode_id
  *
@@ -63,7 +64,7 @@ class SecondaryDiagnosis extends BaseActiveRecordVersioned
         // will receive user inputs.
         return array(
             array('disorder_id, patient_id', 'required'),
-            array('disorder_id, eye_id, patient_id', 'safe'),
+            array('disorder_id, eye_id, patient_id, is_confirmed', 'safe'),
             array('date', 'OEFuzzyDateValidator'),
         );
     }
@@ -118,10 +119,30 @@ class SecondaryDiagnosis extends BaseActiveRecordVersioned
     }
 
     /**
+     * Gets a value indicating whether this diagnosis is confirmed
+     *
+     * @return bool True if the diagnosis is confirmed, otherwise false
+     */
+    public function isConfirmed()
+    {
+        return $this->is_confirmed === null || (int)$this->is_confirmed === 1;
+    }
+
+    /**
      * @return string
      */
     public function getOphthalmicDescription() {
         return $this->eye->adjective.' '.$this->disorder->term;
+    }
+
+    /**
+     * Gets a value indicating whether this diagnosis is unconfirmed
+     *
+     * @return bool True if the diagnosis is unconfirmed, otherwise false
+     */
+    public function isUnconfirmed()
+    {
+        return $this->is_confirmed !== null && (int)$this->is_confirmed === 0;
     }
 
     /**

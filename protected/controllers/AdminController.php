@@ -410,6 +410,10 @@ class AdminController extends BaseAdminController
                     $userAtt['firms'] = array();
                 }
 
+                if (!array_key_exists('roles', $userAtt) || !is_array($userAtt['roles']) || !isset($userAtt['roles'])) {
+                    $userAtt['roles'] = array();
+                }
+
                 $user->saveRoles($userAtt['roles']);
 
                 try {

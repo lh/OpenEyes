@@ -14,8 +14,8 @@
     <div class="row">
         <div class="search-examples">
             Find a patient by
-            <strong>Hospital Number</strong>,
-            <strong>NHS Number</strong>,
+            <strong>CERA Number</strong>,
+            <strong>Medicare Number</strong>,
             <strong>Firstname Surname</strong> or
             <strong>Surname, Firstname</strong>.
         </div>

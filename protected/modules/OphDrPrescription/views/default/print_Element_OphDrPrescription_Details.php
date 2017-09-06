@@ -30,13 +30,13 @@ $subspecialty = $firm->serviceSubspecialtyAssignment->subspecialty;
 	<tr>
 		<th>Patient Name</th>
 		<td><?php echo $this->patient->fullname ?> (<?php echo $this->patient->gender ?>)</td>
-		<th>Hospital Number</th>
+		<th>CERA Number</th>
 		<td><?php echo $this->patient->hos_num ?></td>
 	</tr>
 	<tr>
 		<th>Date of Birth</th>
 		<td><?php echo $this->patient->NHSDate('dob') ?> (<?php echo $this->patient->age ?>)</td>
-		<th>NHS Number</th>
+		<th>Medicare Number</th>
 		<td><?php echo $this->patient->getNhsnum() ?></td>
 	</tr>
 	<tr>

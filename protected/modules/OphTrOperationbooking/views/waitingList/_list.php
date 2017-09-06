@@ -24,8 +24,8 @@
 
 	<div id="pas_warnings" class="alert-box alert with-icon hide">
 		<ul>
-			<li>One or more patients has no GP practice address, please correct in PAS before printing GP letter.</li>
-			<li>One or more patients has no Address, please correct in PAS before printing a letter for them.</li>
+			<li>One or more patients has no Practitioner practice address, please correct by clicking the edit link in the patient summary before printing Practitioner letter.</li>
+			<li>One or more patients has no Address, please correct by clicking the edit link in the patient summary before printing a letter for them.</li>
 		</ul>
 		<a href="#" class="close">×</a>
 	</div>
@@ -35,7 +35,7 @@
 		<tr>
 			<th>Letters sent</th>
 			<th>Patient</th>
-			<th>Hospital number</th>
+			<th>CERA number</th>
 			<th>Location</th>
 			<th>Procedure</th>
 			<th>Eye</th>

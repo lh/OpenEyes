@@ -54,9 +54,11 @@ return array(
         'gii' => array(
             'class' => 'system.gii.GiiModule',
             'password' => 'openeyes',
-            'ipFilters' => array('127.0.0.1'),
+            'ipFilters' => array('127.0.0.1')
         ),
         'oldadmin',
+        'OETrial',
+        'OECaseSearch',
     ),
 
     // Application components
@@ -187,7 +189,7 @@ return array(
             'class' => 'ModuleAPI',
         ),
         'request' => array(
-            'enableCsrfValidation' => true,
+            'enableCsrfValidation' => false,
             'class' => 'HttpRequest',
             'noCsrfValidationRoutes' => array(
                 'site/login', //disabled csrf check on login form
@@ -283,7 +285,8 @@ return array(
         'local_users' => array(),
         'log_events' => true,
         'default_site_code' => '',
-        'institution_code' => 'RP6',
+        'institution_code_source' => 5,
+        'institution_code' => 'CERA',
         'erod_lead_time_weeks' => 3,
         // specifies which specialties are available in patient summary for diagnoses etc (use specialty codes)
         'specialty_codes' => array(),
@@ -296,6 +299,13 @@ return array(
         'profile_user_can_change_password' => true,
         'menu_bar_items' => array(
                 'admin' => array(
+                'title' => 'More',
+                'uri' => '#',
+                'position' => 2,
+                'userrule' => 'isSurgeon',
+                'restricted' => array('admin', 'Report', 'NOD Export', 'Add patient', 'Patient Merge', 'Patient Merge Request', 'Optom co-ordinator', 'View Practitioner', 'Manage Practitioner', 'View Practice', 'Manage Practice', 'Manage Disorder', 'View Disorder'),
+                'sub' => array(
+                    'admin' => array(
                     'title' => 'Admin',
                     'uri' => 'admin',
                     'position' => 1,
@@ -345,6 +355,26 @@ return array(
                     'position' => 46,
                     'restricted' => array('TaskAddPatient'),
                 ),
+                    'gps' => array(
+                        'title' => 'Practitioners',
+                        'uri' => 'gp/index',
+                        'position' => 10,
+                        'restricted' => array('TaskViewGp', 'TaskCreateGp'),
+                    ),
+                    'practices' => array(
+                        'title' => 'Practices',
+                        'uri' => 'practice/index',
+                        'position' => 11,
+                        'restricted' => array('TaskViewPractice', 'TaskCreatePractice'),
+                    ),
+                    'disorders' => array(
+                        'title' => 'Disorders',
+                        'uri' => 'disorder/index',
+                        'position' => 12,
+                        'restricted' => array('TaskViewDisorder'),
+                    ),
+                ),
+            ),
 // temporarily disabled
 //			'worklist' => array(
 //				'title' => 'Worklists',

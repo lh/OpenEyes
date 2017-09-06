@@ -51,7 +51,7 @@ $cols = array(
     array(
         'id' => 'hosnum',
         'class' => 'CDataColumn',
-        'header' => $dp->getSort()->link('hosnum', 'Hospital No.', array('class' => 'sort-link')),
+        'header' => $dp->getSort()->link('hosnum', 'CERA No.', array('class' => 'sort-link')),
         'value' => '$data->event->episode->patient->hos_num'
     ),
     array(

@@ -30,7 +30,7 @@
 </div>
 <div class="row field-row">
   <div class="large-2 column">
-    <label for="patient-search">Hospital Number</label>
+    <label for="patient-search">CERA Number</label>
   </div>
   <div class="large-5 column end">
     <input type="text" id="patient-lookup-extra-hos-num" value="<?= ($model->patient) ? $model->patient->hos_num : '' ?>" readonly>
