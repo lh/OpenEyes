@@ -64,7 +64,6 @@ $address_type_ids = CHtml::listData(AddressType::model()->findAll(), 'id', 'name
                 'form' => $form,
                 'address' => $address,
                 'countries' => $countries,
-                'address_type_ids' => $address_type_ids,
             )); ?>
         </div>
     </div>
