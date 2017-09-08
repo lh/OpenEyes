@@ -61,9 +61,14 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 
         <div class="large-5 column"><?php echo $form->labelEx($patient, 'hos_num'); ?></div>
         <div class="large-5 column end">
-            <?php echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40)); ?>
-
-          <?php echo $form->error($patient, 'hos_num'); ?>
+            <?php if (in_array("admin", Yii::app()->user->getRole(Yii::app()->user->getId())))
+            {
+                echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40));
+            } else{
+                echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40, 'readonly'=>true));
+            }
+            ?>
+            <?php echo $form->error($patient, 'hos_num'); ?>
       </div>
     </div>
   <div class="row field-row">

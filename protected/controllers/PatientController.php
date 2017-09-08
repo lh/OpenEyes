@@ -1507,7 +1507,6 @@ class PatientController extends BaseController
         $patient_user_referral = null;
 
         $this->performAjaxValidation(array($patient, $contact, $address));
-        
         if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
         {   
             $contact->attributes = $_POST['Contact'];
@@ -1557,7 +1556,7 @@ class PatientController extends BaseController
         if (isset($patient->gp_id)){
             $gp = Gp::model()->findByPk($patient->gp_id);
         }
-        
+        $patient->hos_num = $patient->autoCompleteHosNum();
         $this->render('crud/create',array(
                         'patient' => $patient,
                         'contact' => $contact,

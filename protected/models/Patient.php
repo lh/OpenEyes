@@ -185,6 +185,17 @@ class Patient extends BaseActiveRecordVersioned
         );
     }
 
+    public function autoCompleteHosNum(){
+        $query = "SELECT AUTO_INCREMENT
+          FROM information_schema.tables
+          WHERE table_name = 'patient'
+          AND table_schema = DATABASE( );";
+        $command = Yii::app()->db->createCommand($query);
+        $command->prepare();
+        $result = $command->queryAll();
+        $default_hos_num = $result[0]["AUTO_INCREMENT"];
+        return $default_hos_num;
+    }
     /**
      * Validate the hos_num attribute based on the PatientSearch pattern.
      * this was implemented because of the leading zero check
