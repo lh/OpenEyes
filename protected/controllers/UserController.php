@@ -21,6 +21,10 @@ class UserController extends BaseController
                 'actions' => array('autoComplete', 'surgeonGrade'),
                 'roles' => array('OprnViewClinical'),
             ),
+            array('allow',
+                'actions'=>array('autoComplete'),
+                'roles'=>array('User', 'Add Patient','Edit'),
+            ),
         );
     }
 
