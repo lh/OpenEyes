@@ -482,11 +482,14 @@ class User extends BaseActiveRecordVersioned
 
         if (!$this->global_firm_rights){
             $request = Yii::app()->getRequest();
+            $firms = null;
             if ($request->getIsPostRequest()){
                 $user = $request->getPost('User');
                 Yii::log(var_export($user, true));
             }
-            $firms = $user['firms'];
+            if(isset($user['firms'])){
+                $firms = $user['firms'];
+            }
             if($firms === null || $firms === ''){
                 $this->addError('global_firm_rights',
                     'When no global firm rights is set, a firm must be selected');
