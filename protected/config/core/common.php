@@ -189,7 +189,7 @@ return array(
             'class' => 'ModuleAPI',
         ),
         'request' => array(
-            'enableCsrfValidation' => false,
+            'enableCsrfValidation' => true,
             'class' => 'HttpRequest',
             'noCsrfValidationRoutes' => array(
                 'site/login', //disabled csrf check on login form
