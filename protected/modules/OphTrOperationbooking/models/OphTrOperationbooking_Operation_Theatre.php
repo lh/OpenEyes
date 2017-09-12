@@ -149,9 +149,14 @@ class OphTrOperationbooking_Operation_Theatre extends BaseActiveRecordVersioned
             ->from($model->tableName());
 
         $ids = array_map(function($r) { return $r['site_id'];}, $cmd->queryAll());
-
+        $ids_res = $cmd->queryAll();
+        foreach ($ids_res as $id){
+            foreach ($id as $item){
+                echo $item,'<br>';
+            }
+        }
         $criteria = new CDbCriteria();
-        $criteria->addCondition("active = 1 and short_name != ''");
+//        $criteria->addCondition("active = 1 and short_name != ''");
         $criteria->addInCondition('id', $ids);
         if ($current_site_id) {
             $criteria->addCondition('id = :id', 'OR');
@@ -159,7 +164,12 @@ class OphTrOperationbooking_Operation_Theatre extends BaseActiveRecordVersioned
         }
         $criteria->order = 'short_name';
 
-        return Site::model()->findAll($criteria);
+        $result = Site::model()->findAll($criteria);
+        foreach ($result as $item){
+            echo $item['name'];
+            echo "<br>";
+        }
+        return $result;
     }
 
 }
