@@ -72,18 +72,15 @@ $(document).ready(function(){
       uri,
       serializedForm,
       $form;
-
+    object = null;
     if ($(e.target).data('object')) {
       object = $(e.target).data('object');
-      if (object.charAt(object.length - 1) !== 's') {
-        object = object + 's';
-      }
     } else {
       hrefArray = window.location.href.split('?')[0].split('/');
 
       for (var i = 0; i < hrefArray.length; i++) {
         if (hrefArray[i] === 'admin') {
-          object = hrefArray[parseInt(i) + 1].replace(/s$/, '');
+          object = hrefArray[parseInt(i) + 1];
         }
       }
     }
