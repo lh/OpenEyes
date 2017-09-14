@@ -64,18 +64,21 @@ class PatientSearch
 
         // NHS number
         if ($nhs = $this->getNHSnumber($term)) {
+            Yii::log("PatientSearch->NHSnumber:".$term);
             $search_terms['nhs_num'] = $nhs;
 
         // Hospital number (assume a < 10 digit number is a hosnum)
         } elseif ($hos_num = $this->getHospitalNumber($term)) {
+            Yii::log("PatientSearch->HospitalNumber:".$term);
             $search_terms['hos_num'] = $hos_num;
 
         // Patient name
         } elseif ($name = $this->getPatientName($term)) {
             $search_terms['first_name'] = trim($name['first_name']);
             $search_terms['last_name'] = trim($name['last_name']);
+            $search_terms['patient_name'] = trim($name['patient_name']);
         }
-
+        Yii::log("PatientSearch->parseTerm:".var_export($this->searchTerms));
         $this->searchTerms = CHtml::encodeArray($search_terms);
 
         return $this->searchTerms;
@@ -137,6 +140,7 @@ class PatientSearch
             'currentPage' => $currentPage,
             'first_name' => CHtml::decode($search_terms['first_name']),
             'last_name' => CHtml::decode($search_terms['last_name']),
+            'patient_name'=>CHtml::decode($search_terms['patient_name']),
         );
 
         if( $this->use_pas == false ){
@@ -199,15 +203,19 @@ class PatientSearch
 
             if (strpos($name, ',') !== false) {
                 list($surname, $firstname) = explode(',', $name, 2);
+                $patientname = '';
             } elseif (strpos($name, ' ')) {
                 list($firstname, $surname) = explode(' ', $name, 2);
+                $patientname = '';
             } else {
-                $surname = $name;
                 $firstname = '';
+                $surname = '';
+                $patientname = $name;
             }
 
             $result['first_name'] = trim($firstname);
             $result['last_name'] = trim($surname);
+            $result['patient_name'] = trim($patientname);
         }
 
         return $result;

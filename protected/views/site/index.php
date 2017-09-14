@@ -44,7 +44,7 @@
                 <strong>CERA Number</strong>,
                 <strong>Medicare Number</strong>,
                 <strong>Firstname Surname</strong> or
-                    <strong>Surname, Firstname</strong>.
+                  <strong>Surname, Firstname</strong>.
                 </div>
                 <?php echo CHtml::textField('query', '', array('autocomplete' => Yii::app()->params['html_autocomplete'], 'class' => 'large', 'placeholder' => 'Enter search...')); ?>
                 <div class="column text-center" style="padding: 20px 0 0 0;">
