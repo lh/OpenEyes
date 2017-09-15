@@ -201,8 +201,8 @@ class PatientController extends BaseController
                 }
             } elseif ($search_terms['nhs_num']) {
                 $message .= 'for Medicare Number <strong>"'.$search_terms['nhs_num'].'"</strong>';
-            } elseif ($search_terms['first_name'] && $search_terms['last_name']) {
-                $message .= 'for Patient Name <strong>"'.$search_terms['first_name'].' '.$search_terms['last_name'].'"</strong>';
+            } elseif ($search_terms['patient_name']) {
+                $message .= 'for Patient Name <strong>"'.$search_terms['patient_name'].'"</strong>';
             } else {
                 $message .= 'found for your search.';
             }

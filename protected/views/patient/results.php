@@ -19,11 +19,8 @@
 ?>
 <?php
 $based_on = array();
-if ($search_terms['last_name']) {
-    $based_on[] = 'LAST NAME: <strong>"' . $search_terms['last_name'] . '"</strong>';
-}
-if ($search_terms['first_name']) {
-    $based_on[] = 'FIRST NAME: <strong>"' . $search_terms['first_name'] . '"</strong>';
+if ($search_terms['patient_name']) {
+    $based_on[] = 'Name: <strong>' . $search_terms['patient_name'] . '</strong>';
 }
 if ($search_terms['hos_num']) {
     $based_on[] = 'CERA NUMBER: <strong>' . $search_terms['hos_num'] . '</strong>';

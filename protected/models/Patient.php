@@ -317,19 +317,19 @@ class Patient extends BaseActiveRecordVersioned
         $criteria = new CDbCriteria();
         $criteria->compare('t.id', $this->id);
         $criteria->join = 'JOIN contact ON contact_id = contact.id';
-        if (isset($params['first_name'])) {
-            $criteria->compare('contact.first_name', $params['first_name'], true);
-        }
-        if (isset($params['last_name'])) {
-            $criteria->compare('contact.last_name', $params['last_name'], true);
-        }
         if (isset($params['maiden_name'])) {
             $criteria->compare('contact.maiden_name', $params['maiden_name'], false);
         }
         if (isset($params['patient_name'])) {
-            $criteria->compare('contact.last_name', $params['patient_name'], true);
-            $criteria->compare('contact.first_name', $params['patient_name'], true,'OR');
-
+            $name = explode(' ', $params['patient_name'], 2);
+            $name_len = sizeof($name);
+            if ($name_len == 1){
+                $criteria->compare('contact.first_name', $name[0], true);
+                $criteria->compare('contact.last_name', $name[0], true,'OR');
+            }else{
+                $criteria->compare('contact.first_name', $name[0], true);
+                $criteria->compare('contact.last_name', $name[1], true,'AND');
+            }
         }
         if (strlen($this->nhs_num) == 10) {
             $criteria->compare('nhs_num', $this->nhs_num, false);

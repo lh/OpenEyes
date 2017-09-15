@@ -58,8 +58,7 @@ class PatientSearch
         $search_terms = array(
             'hos_num' => null,
             'nhs_num' => null,
-            'first_name' => null,
-            'last_name' => null,
+            'patient_name' => null,
         );
 
         // NHS number
@@ -74,8 +73,6 @@ class PatientSearch
 
         // Patient name
         } elseif ($name = $this->getPatientName($term)) {
-            $search_terms['first_name'] = trim($name['first_name']);
-            $search_terms['last_name'] = trim($name['last_name']);
             $search_terms['patient_name'] = trim($name['patient_name']);
         }
         Yii::log("PatientSearch->parseTerm:".var_export($this->searchTerms));
@@ -138,8 +135,6 @@ class PatientSearch
             'sortBy' => $sortBy,
             'sortDir' => $sortDir,
             'currentPage' => $currentPage,
-            'first_name' => CHtml::decode($search_terms['first_name']),
-            'last_name' => CHtml::decode($search_terms['last_name']),
             'patient_name'=>CHtml::decode($search_terms['patient_name']),
         );
 
@@ -200,24 +195,14 @@ class PatientSearch
         $result = null;
         if (preg_match(self::PATIENT_NAME_REGEX, $term, $m)) {
             $name = $m[1];
-
             if (strpos($name, ',') !== false) {
                 list($surname, $firstname) = explode(',', $name, 2);
-                $patientname = '';
-            } elseif (strpos($name, ' ')) {
-                list($firstname, $surname) = explode(' ', $name, 2);
-                $patientname = '';
+                $patientname = $firstname.' '.$surname;
             } else {
-                $firstname = '';
-                $surname = '';
                 $patientname = $name;
             }
-
-            $result['first_name'] = trim($firstname);
-            $result['last_name'] = trim($surname);
             $result['patient_name'] = trim($patientname);
         }
-
         return $result;
     }
 
