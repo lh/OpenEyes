@@ -115,9 +115,9 @@ class BaseReportController extends BaseController
             $report_filename = $_POST['report-filename'];
 
             // sanitise filename
-            $report_filename = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $report_filename);
+            $report_filename = preg_replace('/([^\w\s\d\-_~,;\[\]().])/u', '', $report_filename);
             // Remove any runs of full stops
-            $report_filename = mb_ereg_replace("([\.]{2,})", '', $report_filename);
+            $report_filename = preg_replace('/([.]{2,})/u', '', $report_filename);
         } else {
             $report_filename = $_POST['report-name'];
         }
