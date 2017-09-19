@@ -101,14 +101,14 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             <div class="row field-row">
                 <div class="large-5 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
                 <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'title', array('size' => 40, 'maxlength' => 40)); ?>
+                    <?php echo $form->textField($contact, 'title', array('size' => 40, 'maxlength' => 20)); ?>
                     <?php echo $form->error($contact, 'title'); ?>
                 </div>
             </div>
             <div class="row field-row">
                 <div class="large-5 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
                 <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 40, 'onblur' => "findDuplicates($patient->id);")); ?>
+                    <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 100, 'onblur' => "findDuplicates($patient->id);")); ?>
                     <?php echo $form->error($contact, 'first_name'); ?>
                 </div>
             </div>
@@ -116,7 +116,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             <div class="row field-row">
                 <div class="large-5 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
                 <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 40, 'onblur' => "findDuplicates($patient->id);")); ?>
+                    <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 100, 'onblur' => "findDuplicates($patient->id);")); ?>
                     <?php echo $form->error($contact, 'last_name'); ?>
                 </div>
             </div>
@@ -124,7 +124,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             <div class="row field-row">
                 <div class="large-5 column"><?php echo $form->labelEx($contact, 'maiden_name'); ?></div>
                 <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'maiden_name', array('size' => 40, 'maxlength' => 40)); ?>
+                    <?php echo $form->textField($contact, 'maiden_name', array('size' => 40, 'maxlength' => 100)); ?>
                     <?php echo $form->error($contact, 'maiden_name'); ?>
                 </div>
             </div>
