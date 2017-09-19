@@ -27,7 +27,11 @@ Yii::app()->assetManager->registerCssFile('components/font-awesome/css/font-awes
     <div class="patient-details">
         <?php echo CHtml::link($this->patient->getDisplayName(), array('/patient/view/'.$this->patient->id)) ?>
         <span class="patient-title">
-			  (<?= $this->patient->title.', '.$this->patient->getAge() ?>)
+          <?php if($this->patient->title): ?>
+            (<?= $this->patient->title.', '.$this->patient->getAge() ?>)
+          <?php else: ?>
+            (<?= $this->patient->getAge() ?>)
+          <?php endif; ?>
         </span>
     </div>
     <div class="hospital-number">
