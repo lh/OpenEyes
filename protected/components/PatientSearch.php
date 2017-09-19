@@ -20,7 +20,7 @@ class PatientSearch
 {
     // NHS number (assume 10 digit number is an NHS number)
     const NHS_NUMBER_REGEX_1 = '/^(N|NHS)\s*[:;]\s*([0-9\- ]+)$/i';
-    const NHS_NUMBER_REGEX_2 = '/^([0-9]{3}[- ]?[0-9]{3}[- ]?[0-9]{4})$/i';
+    const NHS_NUMBER_REGEX_2 = '/^([0-9]{3}[- ]?[0-9]{3}[- ]?[0-9]{4,})$/i';
 
     // Hospital number (assume a < 10 digit number is a hosnum)
     const HOSPITAL_NUMBER_REGEX = '/^(H|Hosnum)\s*[:;]\s*([0-9\-]+)$/i';

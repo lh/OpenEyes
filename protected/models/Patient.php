@@ -331,10 +331,10 @@ class Patient extends BaseActiveRecordVersioned
                 $criteria->compare('contact.last_name', $name[1], true,'AND');
             }
         }
-        if (strlen($this->nhs_num) == 10) {
+        if ($this->nhs_num || $this->hos_num) {
             $criteria->compare('nhs_num', $this->nhs_num, true);
-        } else {
-            $criteria->compare('hos_num', $this->hos_num, true);
+            $criteria->compare('nhs_num', $this->hos_num, true,'OR');
+            $criteria->compare('hos_num', $this->hos_num, true,'OR');
         }
         $criteria->compare('t.deleted', 0);
 
