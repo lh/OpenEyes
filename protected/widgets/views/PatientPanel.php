@@ -32,7 +32,7 @@ Yii::app()->assetManager->registerCssFile('components/font-awesome/css/font-awes
     </div>
     <div class="hospital-number">
 		<span>
-			Hospital No.
+			CERA No.
 		</span>
         <?php echo $this->patient->hos_num?>
     </div>
