@@ -59,7 +59,7 @@
       <?php echo $form->textField($model, 'path', array('size' => 65)); ?>
     <div class="tooltip">
       This refers to the module that the new model class and test case should be generated under.
-      It should be specified in the form of a path alias, for example, <code>application.modules.OECaseSearch</code>.
+      It should be specified in the form of a path alias, for example, <code>application.modules.OphCiExamination</code>.
       Alternatively, you can specify <code>application</code> here to place the code at the application level.
     </div>
       <?php echo $form->error($model, 'path'); ?>

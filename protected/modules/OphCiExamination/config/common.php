@@ -49,6 +49,14 @@ return array(
                 'uri' => '/OphCiExamination/OptomFeedback/list',
                 'restricted' => array(array('Optom co-ordinator', 'user_id')),
             )
-        )
-    )
+        ),
+        'CaseSearch' => array(
+            'parameters' => array(
+                'OphCiExamination' => array(
+                    'PatientAllergy',
+                    'FamilyHistory'
+                ),
+            ),
+        ),
+    ),
 );

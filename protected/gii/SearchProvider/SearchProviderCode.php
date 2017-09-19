@@ -28,9 +28,9 @@ class SearchProviderCode extends CCodeModel
 
     public function prepare()
     {
-        $providerPath = Yii::getPathOfAlias('application.modules.OECaseSearch.components.' . $this->className) . '.php';
+        $providerPath = Yii::getPathOfAlias('application.components.' . $this->className) . '.php';
         $providerCode = $this->render($this->templatePath.'/search_provider.php');
-        $interfacePath = Yii::getPathOfAlias('application.modules.OECaseSearch.components.' . $this->className) . 'Interface.php';
+        $interfacePath = Yii::getPathOfAlias('application.components.' . $this->className) . 'Interface.php';
         $interfaceCode = $this->render($this->templatePath.'/search_provider_interface.php');
         $this->files[] = new CCodeFile($providerPath, $providerCode);
         $this->files[] = new CCodeFile($interfacePath, $interfaceCode);
