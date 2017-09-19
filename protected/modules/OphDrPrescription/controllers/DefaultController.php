@@ -227,6 +227,23 @@ class DefaultController extends BaseEventTypeController
         }
     }
 
+    /*
+     * Set flash message reason for edit
+     * @param $reason_id
+     * @param $reason_text
+     */
+    protected function showReasonForEdit( $reason_id, $reason_text )
+    {
+        $edit_reason = OphDrPrescriptionEditReasons::model()->findByPk($reason_id);
+        if($edit_reason != null){
+            if($reason_id > 1){
+                Yii::app()->user->setFlash('alert.edit_reason', 'Edit reason: '.$edit_reason->caption);
+            } else {
+                Yii::app()->user->setFlash('alert.edit_reason', 'Edit reason: '.$reason_text);
+            }
+        }
+    }
+
     /**
      * Ajax action to search for drugs.
      */
@@ -497,7 +514,8 @@ class DefaultController extends BaseEventTypeController
                          'dose',
                          'route_option_id',
                          'route_id',
-                         'continue_by_gp',
+                         'dispense_condition_id',
+                         'dispense_location_id'
                      ) as $field) {
                 $item->$field = $source->$field;
             }
@@ -518,7 +536,7 @@ class DefaultController extends BaseEventTypeController
                 // Source is an drug set item which contains frequency and duration data
                 $item->drug_id = $source->drug_id;
                 $item->loadDefaults();
-                foreach (array('duration_id', 'frequency_id', 'dose', 'route_id') as $field) {
+                foreach (array('duration_id', 'frequency_id', 'dose', 'route_id', 'dispense_condition_id', 'dispense_location_id') as $field) {
                     if ($source->$field) {
                         $item->$field = $source->$field;
                     }
@@ -590,20 +608,48 @@ class DefaultController extends BaseEventTypeController
         }
         else
         {
-            if(isset($_POST['do_not_save']) && $_POST['do_not_save']=='1')
+            if(isset($_GET['do_not_save']) && $_GET['do_not_save']=='1')
             {
-                $reason_id = isset($_POST['reason']) ? $_POST['reason'] : 0;
-                $reason_other_text = isset($_POST['reason_other']) ? $_POST['reason_other'] : '';
-                $_POST=null;
+                $reason_id = isset($_GET['reason']) ? $_GET['reason'] : 0;
+                $reason_other_text = isset($_GET['reason_other']) ? $_GET['reason_other'] : '';
+               // $_POST=null;
             }
             else
             {
                 $reason_id = $model->edit_reason_id;
                 $reason_other_text = $model->edit_reason_other;
             }
-
+            $this->showReasonForEdit($reason_id,$reason_other_text);
             parent::actionUpdate($id);
         }
     }
 
+
+    /**
+     * Group the different kind of drug items for the printout
+     *
+     * @param $items
+     * @return mixed
+     */
+    public function groupItems($items)
+    {
+        $item_group = array();
+        foreach($items as $item)
+        {
+            $item_group[$item->dispense_condition_id][] = $item;
+        }
+        return $item_group;
+    }
+
+
+    public function getSiteAndTheatreForLatestEvent()
+    {
+        if($api = Yii::app()->moduleAPI->get('OphTrOperationnote')){
+            if($site_theatre = $api->getElementFromLatestEvent('Element_OphTrOperationnote_SiteTheatre', $this->patient, true))
+            {
+                return $site_theatre;
+            }
+        }
+        return false;
+    }
 }

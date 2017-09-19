@@ -28,14 +28,18 @@ namespace OEModule\OphCiExamination\models;
  * @property int $id
  * @property int $element_id
  * @property int $risk_id
+ * @property int $has_risk
  * @property string $other
  * @property string $comments
  *
- * @property Risk $risk
+ * @property OphCiExaminationRisk $risk
  * @property HistoryRisks $element
  */
 class HistoryRisksEntry extends \BaseElement
 {
+    public static $PRESENT = 1;
+    public static $NOT_PRESENT = 0;
+    public static $NOT_CHECKED = -9;
     /**
      * Returns the static model of the specified AR class.
      *
@@ -64,6 +68,7 @@ class HistoryRisksEntry extends \BaseElement
         return array(
             array('element_id, risk_id, other, has_risk, comments', 'safe'),
             array('risk_id', 'required'),
+            array('has_risk', 'required', 'message'=>'Checked Status cannot be blank'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, element_id, risk_id, other, has_risk, comments', 'safe', 'on' => 'search'),
@@ -145,9 +150,9 @@ class HistoryRisksEntry extends \BaseElement
      */
     public function getDisplayHasRisk()
     {
-        if ($this->has_risk) {
+        if ($this->has_risk === (string) static::$PRESENT) {
             return 'Present';
-        } elseif ($this->has_risk === '0') {
+        } elseif ($this->has_risk === static::$NOT_PRESENT) {
             return 'Not present';
         }
         return 'Not checked';

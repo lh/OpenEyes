@@ -81,7 +81,7 @@ return array(
         ),
         'cacheBuster' => array(
             'class' => 'CacheBuster',
-            'time' => '201708040841',
+            'time' => '201709130855',
         ),
         'clientScript' => array(
             'class' => 'ClientScript',
@@ -271,7 +271,7 @@ return array(
         'ldap_dn' => '',
         'ldap_method' => 'native', // use 'zend' for the Zend_Ldap vendor module
         // set to integer value of 2 or 3 to force specific ldap protocol
-        'ldap_protocol_version' => null,
+        'ldap_protocol_version' => 3,
         // alters the prefix used when binding to a user in native ldap connections
         'ldap_username_prefix' => 'cn',
         'ldap_native_timeout' => 3,

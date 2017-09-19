@@ -74,6 +74,12 @@ class Patient extends BaseActiveRecordVersioned
     private $_orderedepisodes;
 
     /**
+     * Holds errors PAS related errors
+     * @var array
+     */
+    private $_pas_errors = array();
+
+    /**
      * Returns the static model of the specified AR class.
      *
      * @return Patient the static model class
@@ -173,8 +179,6 @@ class Patient extends BaseActiveRecordVersioned
             'secondarydiagnoses' => array(self::HAS_MANY, 'SecondaryDiagnosis', 'patient_id'),
             'ethnic_group' => array(self::BELONGS_TO, 'EthnicGroup', 'ethnic_group_id'),
             'previousOperations' => array(self::HAS_MANY, 'PreviousOperation', 'patient_id', 'order' => 'CASE WHEN Date IS NULL THEN 1 ELSE 0 END, Date'),
-            //'medications' => array(self::HAS_MANY, 'Medication', 'patient_id', 'order' => 'created_date', 'condition' => 'end_date is null'),
-            //'previous_medications' => array(self::HAS_MANY, 'Medication', 'patient_id', 'order' => 'created_date', 'condition' => 'end_date is not null'),
             'commissioningbodies' => array(self::MANY_MANY, 'CommissioningBody', 'commissioning_body_patient_assignment(patient_id, commissioning_body_id)'),
             'lastReferral' => array(self::HAS_ONE, 'Referral', 'patient_id', 'order' => 'received_date desc'),
             'adherence' => array(self::HAS_ONE, 'MedicationAdherence', 'patient_id'),
@@ -252,6 +256,25 @@ class Patient extends BaseActiveRecordVersioned
             'is_local' => 'Is local patient ?',
             'patient_source' => 'Patient Source'
         );
+    }
+
+    /**
+     * Adds a new error to the PAS error array.
+     * @param $error
+     */
+    public function addPasError($error)
+    {
+        $this->_pas_errors[] = $error;
+    }
+
+    /**
+     * Returns the errors of the PAS error array.
+     * @param $attribute
+     * @return mixed|null
+     */
+    public function getPasErrors()
+    {
+        return $this->_pas_errors;
     }
 
     /**
@@ -340,14 +363,19 @@ class Patient extends BaseActiveRecordVersioned
 
         $criteria->order = $params['sortBy'].' '.$params['sortDir'];
 
+        $results_from_event = array();
         if($this->use_pas == true){
-            Yii::app()->event->dispatch('patient_search_criteria', array('patient' => $this, 'criteria' => $criteria, 'params' => $params));
+            Yii::app()->event->dispatch('patient_search_criteria', array('results' => &$results_from_event,'patient' => $this, 'criteria' => $criteria, 'params' => $params));
         }
 
         $dataProvider = new CActiveDataProvider(get_class($this), array(
             'criteria' => $criteria,
             'pagination' => array('pageSize' => $params['pageSize']),
         ));
+
+        $results = $dataProvider->getData();
+
+        $dataProvider->setData( array_merge($results, $results_from_event) );
 
         return $dataProvider;
     }
@@ -777,38 +805,6 @@ class Patient extends BaseActiveRecordVersioned
         if ($api = Yii::app()->moduleAPI->get('OphDrPrescription')) {
             return $api->getPrescriptionItemsForPatient($this, $exclude);
         }
-    }
-
-    /**
-     * @param $medicationCriteria
-     *
-     * @return array
-     */
-    public function patientMedications($medicationCriteria)
-    {
-        $medicationCriteria->addCondition('patient_id = :id');
-        $medicationCriteria->params = array('id' => $this->id);
-        $medications = Medication::model()->findAll($medicationCriteria);
-
-        return $medications;
-    }
-
-    /**
-     * @param $medications
-     *
-     * @return mixed
-     */
-    public function prescriptionMedicationIds()
-    {
-        $medications = $this->patientMedications(new CDbCriteria());
-        $medicationsFromPrescriptions = array();
-        foreach ($medications as $medication) {
-            if ($medication->prescription_item_id) {
-                $medicationsFromPrescriptions[] = $medication->prescription_item_id;
-            }
-        }
-
-        return $medicationsFromPrescriptions;
     }
 
     /**
@@ -2035,98 +2031,6 @@ class Patient extends BaseActiveRecordVersioned
     }
 
     /**
-     * Gets the current medications linked with items from the prescription events.
-     *
-     * @return array
-     */
-    public function get_medications()
-    {
-        $medicationCriteria = new CDbCriteria(array('order' => 'created_date DESC'));
-        $medicationCriteria->addCondition('end_date is null or end_date > NOW()');
-        $medications = $this->patientMedications($medicationCriteria);
-        $medicationsFromPrescriptions = $this->prescriptionMedicationIds();
-        $prescriptionItems = $this->prescriptionItems($medicationsFromPrescriptions);
-
-        if ($prescriptionItems) {
-            foreach ($prescriptionItems as $item) {
-                $medication = new Medication();
-                $medication->createFromPrescriptionItem($item);
-                if ($medication->isCurrentMedication()) {
-                    $medications[] = $medication;
-                }
-            }
-        }
-
-        usort($medications, array($this, 'sortMedications'));
-
-        return $medications;
-    }
-
-    /**
-     * Gets the previous medications linked with items from the prescription events.
-     *
-     * @return array
-     */
-    public function get_previous_medications()
-    {
-        $medicationCriteria = new CDbCriteria(array('order' => 'created_date DESC'));
-        $medicationCriteria->addCondition('end_date is not null and end_date < NOW()');
-        $medications = $this->patientMedications($medicationCriteria);
-        $medicationsFromPrescriptions = $this->prescriptionMedicationIds();
-        $prescriptionItems = $this->prescriptionItems($medicationsFromPrescriptions);
-
-        if ($prescriptionItems) {
-            foreach ($prescriptionItems as $item) {
-                $medication = new Medication();
-                $medication->createFromPrescriptionItem($item);
-                if ($medication->isPreviousMedication()) {
-                    $medications[] = $medication;
-                }
-            }
-        }
-
-        usort($medications, array($this, 'sortMedications'));
-
-        return $medications;
-    }
-
-    /**
-     * Sort the medications by start date.
-     *
-     * @param $item1
-     * @param $item2
-     *
-     * @return bool
-     */
-    protected function sortMedications($item1, $item2)
-    {
-        return $item1->start_date > $item2->start_date;
-    }
-
-    /**
-     * @param $medicationList
-     * @param $prescription
-     *
-     * @return mixed
-     */
-    protected function mergeItemToMedications($medicationList, $prescription)
-    {
-        foreach ($medicationList as $medication) {
-            $currentMedication = $medication->isCurrentMedication();
-            if ($currentMedication && $medication->matches($prescription)) {
-                $medication->start_date = ($medication->start_date < $prescription->start_date) ? $medication->start_date : $prescription->start_date;
-                $endDate = $prescription->stopDateFromDuration()->format('Y-m-d');
-                if ($medication->stop_date && $medication->stop_date < $endDate) {
-                    $medication->stop_date = $endDate;
-                }
-            } else {
-            }
-        }
-
-        return $medicationList;
-    }
-
-    /**
      * Get the episode ID of the patient's cataract if it exists.
      *
      * @return mixed
@@ -2244,20 +2148,6 @@ class Patient extends BaseActiveRecordVersioned
                 return $diagnosis->ophthalmicDescription;
             }, $this->ophthalmicDiagnoses)
         );
-    }
-
-    /**
-     * Returns a summarised array of patient medications
-     * @return array
-     */
-    public function getMedicationsSummary()
-    {
-        return array_map(function($medication) {
-            $label = $medication->drug ? $medication->drug->label : $medication->medication_drug->name;
-            $option = $medication->option ? " ({$medication->option->name})" : '';
-            $frequency = $medication->frequency ? $medication->frequency->name : '';
-            return $label.$option.' '.$frequency;
-        }, $this->medications);
     }
 
     /**
