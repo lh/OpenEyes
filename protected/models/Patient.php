@@ -128,7 +128,7 @@ class Patient extends BaseActiveRecordVersioned
         return array(
             array('pas_key', 'length', 'max' => 10),
             array('dob, patient_source', 'required'),
-            array('hos_num', 'required', 'on' => 'pas'),
+            array('hos_num', 'required'),
             array('hos_num','unique'),
             array('hos_num, nhs_num', 'length', 'max' => 40),
             array('gender,is_local', 'length', 'max' => 1),
