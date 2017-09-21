@@ -32,7 +32,7 @@ script:
   - php yiic migratemodules --interactive=0
   - php yiic generateuniquecode --interactive=0
   - php yiic generatesessions --interactive=0
-  - php yiic eyedrawconfigload --filename="$TRAVIS_BUILD_DIR/protected/config/core/OE_ED_CONFIG.xml"
+  - sudo php yiic eyedrawconfigload --filename="$TRAVIS_BUILD_DIR/protected/config/core/OE_ED_CONFIG.xml"
 
   # Run unit tests.
   - cd tests
