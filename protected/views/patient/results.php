@@ -23,7 +23,7 @@ if ($search_terms['patient_name']) {
     $based_on[] = 'Name: <strong>' . $search_terms['patient_name'] . '</strong>';
 }
 if ($search_terms['hos_num']) {
-    $based_on[] = 'CERA NUMBER: <strong>' . $search_terms['hos_num'] . '</strong>';
+    $based_on[] = 'CERA Number and Medicare Number: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
 $based_on = implode(', ', $based_on);
 ?>
