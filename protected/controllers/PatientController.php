@@ -1600,22 +1600,20 @@ class PatientController extends BaseController
                         }
 
                         if ($referral->save()) {
-
                             if (isset($patient_user_referral) && $patient_user_referral->user_id !='') {
                                 if (!isset($patient_user_referral->patient_id)) {
                                     $patient_user_referral->patient_id = $patient->id;
                                 }
 
                                 if ($patient_user_referral->save()) {
-
-                    $transaction->commit();
+                                    $transaction->commit();
                                     Audit::add('Referred to', 'saved', $patient_user_referral->id );
-                    if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
-                        $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
-                    } else {
-                        Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
-                        $this->redirect(array('view', 'id' => $patient->id));
-                    }
+                                    if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
+                                        $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
+                                    } else {
+                                        Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                                        $this->redirect(array('view', 'id' => $patient->id));
+                                    }
                                 }
                                 else {
                                     $transaction->rollback();

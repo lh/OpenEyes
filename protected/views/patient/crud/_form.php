@@ -180,9 +180,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             </div>
         </div>
     </div>
-
     <hr/>
-
     <div class="row field-row">
         <div class="large-6 column">
             <div class="row field-row">
@@ -202,13 +200,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             </div>
         </div>
 
-
         <div class="large-6 column">
             <?php $this->renderPartial('_form_address', array('form' => $form, 'address' => $address, 'countries' => $countries, 'address_type_ids' => $address_type_ids)); ?>
         </div>
-
     </div>
-
     <hr>
 
     <div class="row field-row">
@@ -300,44 +295,46 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-6 column">
             <div class="row field-row">
                 <div class="large-4 column"><?php echo $form->labelEx($patient, 'gp_id'); ?></div>
-                <div class="large-4 column end"><?php
+                <div class="large-4 column end">
+                    <?php
                     echo $form->error($patient, 'gp_id');
                     $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
                         'name' => 'gp_id',
                         'id' => 'autocomplete_gp_id',
                         'source' => "js:function(request, response) {
                                     $.getJSON('/patient/gpList', {
-                                            term : request.term
+                                       term : request.term
                                     }, response);
                             }",
                         'options' => array(
                             'select' => "js:function(event, ui) {
                                     removeSelectedGP();
-                                    addItem('selected_gp_wrapper', ui);
-                                    
+                                    addItem('selected_gp_wrapper', ui);   
                                     return false;
-                    }",
+                                    }",
                             'response' => 'js:function(event, ui){
-                        if(ui.content.length === 0){
-                            $("#no_gp_result").show();
-                        } else {
-                            $("#no_gp_result").hide();
-                        }
-                    }'
+                              if(ui.content.length === 0){
+                                $("#no_gp_result").show();
+                              } else {
+                                $("#no_gp_result").hide();
+                              }
+                            }'
                         ),
                         'htmlOptions' => array(
                             'placeholder' => 'search Practitioner',
                         ),
+                    ));
 
-                    )); ?>
+                    ?>
                 </div>
+
             </div>
             <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : '' ?>">
                 <div class="large-offset-4 large-8 column selected_gp end alert-box">
-          <span class="name">
-            <?php echo($gp !== null ? $gp->correspondenceName : ''); ?>
-          </span>
-                    <a href="javascript:void(0)" class="remove right">remove</a>
+                  <span class="name">
+                    <?php echo($gp !== null ? $gp->correspondenceName : ''); ?>
+                  </span>
+                  <a href="javascript:void(0)" class="remove right">remove</a>
                 </div>
                 <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class' => 'hidden_id')); ?>
             </div>
@@ -346,8 +343,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 </div>
             </div>
             <div class="right">
+
                 <p><?php echo CHtml::link('Add Referring Practitioner', '#', array(
-                        'onclick' => '$("#gpdialog").dialog("open"); return false;',
+                        'onclick' => '$("#gpdialog").dialog("open"); 
+                        return false;',
                     )); ?></p>
             </div>
         </div>
@@ -469,6 +468,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             </div>
         </div>
     </div>
+
     <!-- end of referred to field-->
     <?php if (Patient::model()->findByPk($patient->id) === null) : ?>
         <div class="row field-row">
@@ -488,8 +488,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <div class="row buttons text-right">
         <?php echo CHtml::submitButton($patient->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
-
     <?php $this->endWidget(); ?>
+
     <?php
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
         'id' => 'gpdialog',
