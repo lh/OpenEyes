@@ -57,6 +57,13 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => true,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
+        'clientOptions'=>array(
+            'afterValidateAttribute' => "js:
+            function(form, attribute, data, hasError) {
+               form.find('#' + attribute.inputID).removeClass('error');
+               form.find('label[for='+attribute.inputID+']').removeClass('error');
+            }"
+        ),
     )); ?>
 
     <p class="note text-right">Fields with <span class="required">*</span> are required.</p>
