@@ -57,102 +57,106 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => true,
         'htmlOptions' => array('enctype' => 'multipart/form-data'),
-        'clientOptions'=>array(
+        'clientOptions' => array(
             'afterValidateAttribute' => "js:
             function(form, attribute, data, hasError) {
                form.find('#' + attribute.inputID).removeClass('error');
                form.find('label[for='+attribute.inputID+']').removeClass('error');
-            }"
+            }",
         ),
     )); ?>
 
-    <p class="note text-right">Fields with <span class="required">*</span> are required.</p>
+  <p class="note text-right">Fields with <span class="required">*</span> are required.</p>
 
     <?php echo $form->errorSummary(array($contact, $patient, $address, $referral)); ?>
 
-    <div class="row field-row">
-        <div id="contact" class="large-8 column">
-            <div class="row field-row">
+  <div class="row field-row">
+    <div id="contact" class="large-8 column">
+      <div class="row field-row">
 
-                <div class="large-4 column"><?php echo $form->labelEx($patient, 'hos_num'); ?></div>
-                <div class="large-4 column end">
-                    <?php if (in_array("admin", Yii::app()->user->getRole(Yii::app()->user->getId()))) {
-                        echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40));
-                    } else {
-                        echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40, 'readonly' => true));
-                    }
-                    ?>
-                    <?php echo $form->error($patient, 'hos_num'); ?>
-                </div>
-            </div>
-            <div class="row field-row">
-                <div class="large-4 column nhs-number-wrapper">
-                    <div class="nhs-number warning">
-                        <span class="hide-text print-only">Medicare Number:</span>
-                    </div>
-                    <div>Number</div>
-                </div>
+        <div class="large-4 column"><?php echo $form->labelEx($patient, 'hos_num'); ?></div>
+        <div class="large-4 column end">
+            <?php if (in_array("admin", Yii::app()->user->getRole(Yii::app()->user->getId()))) {
+                echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40));
+            } else {
+                echo $form->textField($patient, 'hos_num', array('size' => 40, 'maxlength' => 40, 'readonly' => true));
+            }
+            ?>
+            <?php echo $form->error($patient, 'hos_num'); ?>
+        </div>
+      </div>
+      <div class="row field-row">
+        <div class="large-4 column nhs-number-wrapper">
+          <div class="nhs-number warning">
+            <span class="hide-text print-only">Medicare Number:</span>
+          </div>
+          <div>Number</div>
+        </div>
 
-                <div class="large-4 column end">
-                    <?php echo $form->textField($patient, 'nhs_num', array('size' => 40, 'maxlength' => 40, 'data-child_row' => '.nhs-num-status')); ?>
-                </div>
-                <?php echo $form->error($patient, 'nhs_num'); ?>
-            </div>
-            <div class="row field-row nhs-num-status <?php echo(!$patient->nhs_num ? 'hide' : ''); ?>">
-                <div class="large-4 column"><?php echo $form->labelEx($patient, 'nhs_num_status_id'); ?></div>
-                <div class="large-7 column end">
-                    <?php echo $form->dropDownList($patient, 'nhs_num_status_id', $nhs_num_statuses, array('empty' => '-- select --')); ?>
-                    <?php echo $form->error($patient, 'nhs_num_status_id'); ?>
-                </div>
-            </div>
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'title', array('size' => 40, 'maxlength' => 20)); ?>
-                    <?php echo $form->error($contact, 'title'); ?>
-                </div>
-            </div>
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 100, 'onblur' => "findDuplicates($patient->id);")); ?>
-                    <?php echo $form->error($contact, 'first_name'); ?>
-                </div>
-            </div>
+        <div class="large-4 column end">
+            <?php echo $form->textField($patient, 'nhs_num',
+                array('size' => 40, 'maxlength' => 40, 'data-child_row' => '.nhs-num-status')); ?>
+        </div>
+          <?php echo $form->error($patient, 'nhs_num'); ?>
+      </div>
+      <div class="row field-row nhs-num-status <?php echo(!$patient->nhs_num ? 'hide' : ''); ?>">
+        <div class="large-4 column"><?php echo $form->labelEx($patient, 'nhs_num_status_id'); ?></div>
+        <div class="large-7 column end">
+            <?php echo $form->dropDownList($patient, 'nhs_num_status_id', $nhs_num_statuses,
+                array('empty' => '-- select --')); ?>
+            <?php echo $form->error($patient, 'nhs_num_status_id'); ?>
+        </div>
+      </div>
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->textField($contact, 'title', array('size' => 40, 'maxlength' => 20)); ?>
+            <?php echo $form->error($contact, 'title'); ?>
+        </div>
+      </div>
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->textField($contact, 'first_name',
+                array('size' => 40, 'maxlength' => 100, 'onblur' => "findDuplicates($patient->id);")); ?>
+            <?php echo $form->error($contact, 'first_name'); ?>
+        </div>
+      </div>
 
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 100, 'onblur' => "findDuplicates($patient->id);")); ?>
-                    <?php echo $form->error($contact, 'last_name'); ?>
-                </div>
-            </div>
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->textField($contact, 'last_name',
+                array('size' => 40, 'maxlength' => 100, 'onblur' => "findDuplicates($patient->id);")); ?>
+            <?php echo $form->error($contact, 'last_name'); ?>
+        </div>
+      </div>
 
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($contact, 'maiden_name'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'maiden_name', array('size' => 40, 'maxlength' => 100)); ?>
-                    <?php echo $form->error($contact, 'maiden_name'); ?>
-                </div>
-            </div>
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($contact, 'maiden_name'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->textField($contact, 'maiden_name', array('size' => 40, 'maxlength' => 100)); ?>
+            <?php echo $form->error($contact, 'maiden_name'); ?>
+        </div>
+      </div>
 
-            <!-- -->
+      <!-- -->
 
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($patient, 'dob'); ?></div>
-                <div class="large-4 column">
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($patient, 'dob'); ?></div>
+        <div class="large-4 column">
 
-                    <?php
-                    if ((bool)strtotime($patient->dob)) {
-                        $dob = new DateTime($patient->dob);
-                        $patient->dob = $dob->format('d/m/Y');
-                    } else {
-                        $patient->dob = str_replace('-', '/', $patient->dob);
-                    }
-                    ?>
-                    <?php echo $form->textField($patient, 'dob', array('onblur' => "findDuplicates($patient->id);")); ?>
+            <?php
+            if ((bool)strtotime($patient->dob)) {
+                $dob = new DateTime($patient->dob);
+                $patient->dob = $dob->format('d/m/Y');
+            } else {
+                $patient->dob = str_replace('-', '/', $patient->dob);
+            }
+            ?>
+            <?php echo $form->textField($patient, 'dob', array('onblur' => "findDuplicates($patient->id);")); ?>
 
-                    <?php /*$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            <?php /*$this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'Patient[dob]',
                 'id' => 'patient_dob',
                 'options' => array(
@@ -168,107 +172,113 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                     'placeholder' => '01 Jan 1970',
                 ),
             ))*/ ?>
-                    <?php echo $form->error($patient, 'dob'); ?>
-                </div>
-                <div class="large-3 column end"><label><i>(dd/mm/yyyy)</i></label></div>
-            </div>
+            <?php echo $form->error($patient, 'dob'); ?>
         </div>
+        <div class="large-3 column end"><label><i>(dd/mm/yyyy)</i></label></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <!-- -->
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList()); ?>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr/>
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'gender'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->dropDownList($patient, 'gender', $genders, array('empty' => '-- select --')); ?>
+            <?php echo $form->error($patient, 'gender'); ?>
+        </div>
+      </div>
+
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'ethnic_group_id'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->dropDownList($patient, 'ethnic_group_id', $ethnic_groups,
+                array('empty' => '-- select --')); ?>
+            <?php echo $form->error($patient, 'ethnic_group_id'); ?>
+        </div>
+      </div>
     </div>
 
-    <hr>
-    <!-- -->
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList()); ?>
-                </div>
-            </div>
-        </div>
+    <div class="large-6 column">
+        <?php $this->renderPartial('_form_address', array(
+            'form' => $form,
+            'address' => $address,
+            'countries' => $countries,
+            'address_type_ids' => $address_type_ids,
+        )); ?>
     </div>
-    <hr/>
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($patient, 'gender'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->dropDownList($patient, 'gender', $genders, array('empty' => '-- select --')); ?>
-                    <?php echo $form->error($patient, 'gender'); ?>
-                </div>
-            </div>
+  </div>
+  <hr>
 
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($patient, 'ethnic_group_id'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->dropDownList($patient, 'ethnic_group_id', $ethnic_groups, array('empty' => '-- select --')); ?>
-                    <?php echo $form->error($patient, 'ethnic_group_id'); ?>
-                </div>
-            </div>
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($contact, 'primary_phone'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->telField($contact, 'primary_phone', array('size' => 15, 'maxlength' => 20)); ?>
+            <?php echo $form->error($contact, 'primary_phone'); ?>
         </div>
-
-        <div class="large-6 column">
-            <?php $this->renderPartial('_form_address', array('form' => $form, 'address' => $address, 'countries' => $countries, 'address_type_ids' => $address_type_ids)); ?>
-        </div>
+      </div>
     </div>
-    <hr>
+  </div>
 
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($contact, 'primary_phone'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->telField($contact, 'primary_phone', array('size' => 15, 'maxlength' => 20)); ?>
-                    <?php echo $form->error($contact, 'primary_phone'); ?>
-                </div>
-            </div>
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($address, 'email'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->emailField($address, 'email', array('size' => 15, 'maxlength' => 255)); ?>
+            <?php echo $form->error($address, 'email'); ?>
         </div>
+      </div>
     </div>
+  </div>
 
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($address, 'email'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->emailField($address, 'email', array('size' => 15, 'maxlength' => 255)); ?>
-                    <?php echo $form->error($address, 'email'); ?>
-                </div>
-            </div>
+  <hr>
+
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'is_deceased'); ?></div>
+        <div class="large-4 column end">
+            <?php echo $form->checkBox($patient, 'is_deceased', array('data-child_row' => '.date_of_death')); ?>
+            <?php echo $form->error($patient, 'is_deceased'); ?>
         </div>
+      </div>
     </div>
+  </div>
 
-    <hr>
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row date_of_death <?php echo($patient->is_deceased == 0 ? 'hide' : ''); ?>">
+        <div class="large-3 column"><?php echo $form->labelEx($patient, 'date_of_death'); ?></div>
+        <div class="large-4 column">
 
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($patient, 'is_deceased'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->checkBox($patient, 'is_deceased', array('data-child_row' => '.date_of_death')); ?>
-                    <?php echo $form->error($patient, 'is_deceased'); ?>
-                </div>
-            </div>
-        </div>
-    </div>
+            <?php
+            if ((bool)strtotime($patient->date_of_death)) {
+                $date_of_death = new DateTime($patient->date_of_death);
+                $patient->date_of_death = $date_of_death->format('d/m/Y');
+            } else {
+                $patient->date_of_death = str_replace('-', '/', $patient->date_of_death);
+            }
+            ?>
 
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row date_of_death <?php echo($patient->is_deceased == 0 ? 'hide' : ''); ?>">
-                <div class="large-3 column"><?php echo $form->labelEx($patient, 'date_of_death'); ?></div>
-                <div class="large-4 column">
+            <?php echo $form->textField($patient, 'date_of_death'); ?>
 
-                    <?php
-                    if ((bool)strtotime($patient->date_of_death)) {
-                        $date_of_death = new DateTime($patient->date_of_death);
-                        $patient->date_of_death = $date_of_death->format('d/m/Y');
-                    } else {
-                        $patient->date_of_death = str_replace('-', '/', $patient->date_of_death);
-                    }
-                    ?>
-
-                    <?php echo $form->textField($patient, 'date_of_death'); ?>
-
-                    <?php /*$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+            <?php /*$this->widget('zii.widgets.jui.CJuiDatePicker', array(
                 'name' => 'Patient[date_of_death]',
                 'id' => 'date_to',
                 'options' => array(
@@ -280,16 +290,16 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                     'class' => 'small fixed-width',
                 ),
             ))*/ ?>
-                    <?php echo $form->error($patient, 'date_of_death'); ?>
-                </div>
-                <div class="large-4 column end"><label><i>(dd/mm/yyyy)</i></label></div>
-            </div>
+            <?php echo $form->error($patient, 'date_of_death'); ?>
         </div>
+        <div class="large-4 column end"><label><i>(dd/mm/yyyy)</i></label></div>
+      </div>
     </div>
+  </div>
 
-    <hr>
+  <hr>
 
-    <!--
+  <!--
 	<div class="row field-row">
             <div class="large-3 column"><?php echo $form->labelEx($patient, 'pas_key'); ?></div>
             <div class="large-4 column end">
@@ -298,136 +308,137 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             </div>
 	</div>
 -->
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($patient, 'gp_id'); ?></div>
-                <div class="large-4 column end">
-                    <?php
-                    echo $form->error($patient, 'gp_id');
-                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                        'name' => 'gp_id',
-                        'id' => 'autocomplete_gp_id',
-                        'source' => "js:function(request, response) {
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($patient, 'gp_id'); ?></div>
+        <div class="large-4 column end">
+            <?php
+            echo $form->error($patient, 'gp_id');
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'gp_id',
+                'id' => 'autocomplete_gp_id',
+                'source' => "js:function(request, response) {
                                     $.getJSON('/patient/gpList', {
                                        term : request.term
                                     }, response);
                             }",
-                        'options' => array(
-                            'select' => "js:function(event, ui) {
+                'options' => array(
+                    'select' => "js:function(event, ui) {
                                     removeSelectedGP();
                                     addItem('selected_gp_wrapper', ui);   
                                     return false;
                                     }",
-                            'response' => 'js:function(event, ui){
+                    'response' => 'js:function(event, ui){
                               if(ui.content.length === 0){
                                 $("#no_gp_result").show();
                               } else {
                                 $("#no_gp_result").hide();
                               }
-                            }'
-                        ),
-                        'htmlOptions' => array(
-                            'placeholder' => 'search Practitioner',
-                        ),
-                    ));
+                            }',
+                ),
+                'htmlOptions' => array(
+                    'placeholder' => 'search Practitioner',
+                ),
+            ));
 
-                    ?>
-                </div>
+            ?>
+        </div>
 
-            </div>
-            <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : '' ?>">
-                <div class="large-offset-4 large-8 column selected_gp end alert-box">
+      </div>
+      <div id="selected_gp_wrapper" class="row field-row <?php echo !$patient->gp_id ? 'hide' : '' ?>">
+        <div class="large-offset-4 large-8 column selected_gp end alert-box">
                   <span class="name">
                     <?php echo($gp !== null ? $gp->correspondenceName : ''); ?>
                   </span>
-                  <a href="javascript:void(0)" class="remove right">remove</a>
-                </div>
-                <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class' => 'hidden_id')); ?>
-            </div>
-            <div id="no_gp_result" class="row field-row hide">
-                <div class="large-offset-4 large-8 column selected_gp end">No result
-                </div>
-            </div>
-            <div class="right">
-
-                <p><?php echo CHtml::link('Add Referring Practitioner', '#', array(
-                        'onclick' => '$("#gpdialog").dialog("open"); 
-                        return false;',
-                    )); ?></p>
-            </div>
+          <a href="javascript:void(0)" class="remove right">remove</a>
         </div>
-    </div>
+          <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class' => 'hidden_id')); ?>
+      </div>
+      <div id="no_gp_result" class="row field-row hide">
+        <div class="large-offset-4 large-8 column selected_gp end">No result
+        </div>
+      </div>
+      <div class="right">
 
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($patient, 'practice_id'); ?></div>
-                <div class="large-4 column end"><?php
-                    echo $form->error($patient, 'practice_id');
-                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                        'name' => 'practice_id',
-                        'id' => 'autocomplete_practice_id',
-                        'source' => "js:function(request, response) {
+        <p><?php echo CHtml::link('Add Referring Practitioner', '#', array(
+                'onclick' => '$("#gpdialog").dialog("open"); 
+                        return false;',
+            )); ?></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($patient, 'practice_id'); ?></div>
+        <div class="large-4 column end"><?php
+            echo $form->error($patient, 'practice_id');
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'practice_id',
+                'id' => 'autocomplete_practice_id',
+                'source' => "js:function(request, response) {
                                     $.getJSON('/patient/practiceList', {
                                             term : request.term
                                     }, response);
                             }",
-                        'options' => array(
-                            'select' => "js:function(event, ui) {
+                'options' => array(
+                    'select' => "js:function(event, ui) {
                                     removeSelectedPractice();
                                     addItem('selected_practice_wrapper', ui);
                                     $('#autocomplete_practice_id').val('');
                                     return false;
                     }",
-                            'response' => 'js:function(event, ui){
+                    'response' => 'js:function(event, ui){
                         if(ui.content.length === 0){
                             $("#no_practice_result").show();
                         } else {
                             $("#no_practice_result").hide();
                         }
-                    }'
-                        ),
-                        'htmlOptions' => array(
-                            'placeholder' => 'search Practice',
-                        ),
+                    }',
+                ),
+                'htmlOptions' => array(
+                    'placeholder' => 'search Practice',
+                ),
 
-                    )); ?>
-                </div>
-            </div>
-            <div id="selected_practice_wrapper"
-                 class="row field-row <?php echo !$patient->practice_id ? 'hide' : '' ?>">
-                <div class="large-offset-4 large-8 column selected_practice end alert-box">
+            )); ?>
+        </div>
+      </div>
+      <div id="selected_practice_wrapper"
+           class="row field-row <?php echo !$patient->practice_id ? 'hide' : '' ?>">
+        <div class="large-offset-4 large-8 column selected_practice end alert-box">
           <span class="name">
               <?php echo $patient->practice ? $patient->practice->getAddressLines() : '' ?>
           </span>
-                    <a href="javascript:void(0)" class="remove right">remove</a></div>
-                <?php echo CHtml::hiddenField('Patient[practice_id]', $patient->practice_id, array('class' => 'hidden_id')); ?>
-            </div>
-            <div id="no_practice_result" class="row field-row hide">
-                <div class="large-offset-4 large-8 column selected_practice end">No result
-                </div>
-            </div>
-            <div class="right">
-                <p><?php echo CHtml::link('Add Practice', '#', array(
-                        'onclick' => '$("#practicedialog").dialog("open"); return false;',
-                    )); ?>
-                </p>
-            </div>
+          <a href="javascript:void(0)" class="remove right">remove</a></div>
+          <?php echo CHtml::hiddenField('Patient[practice_id]', $patient->practice_id,
+              array('class' => 'hidden_id')); ?>
+      </div>
+      <div id="no_practice_result" class="row field-row hide">
+        <div class="large-offset-4 large-8 column selected_practice end">No result
         </div>
+      </div>
+      <div class="right">
+        <p><?php echo CHtml::link('Add Practice', '#', array(
+                'onclick' => '$("#practicedialog").dialog("open"); return false;',
+            )); ?>
+        </p>
+      </div>
     </div>
+  </div>
 
-    <!-- Referred to field -->
-    <div class="row field-row">
-        <div class="large-6 column">
-            <div class="row field-row">
-                <div class="large-4 column"><?php echo $form->labelEx($patientuserreferral, 'Referred to'); ?></div>
-                <div class="large-4 column end"><?php
-                    echo $form->error($patientuserreferral, 'user_id');
-                    $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                        'name' => 'user_id',
-                        'id' => 'autocomplete_user_id',
-                        'source' => "js:function(request, response) {
+  <!-- Referred to field -->
+  <div class="row field-row">
+    <div class="large-6 column">
+      <div class="row field-row">
+        <div class="large-4 column"><?php echo $form->labelEx($patientuserreferral, 'Referred to'); ?></div>
+        <div class="large-4 column end"><?php
+            echo $form->error($patientuserreferral, 'user_id');
+            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => 'user_id',
+                'id' => 'autocomplete_user_id',
+                'source' => "js:function(request, response) {
                                     $.ajax({
                                         'url': '" . Yii::app()->createUrl('/user/autocomplete') . "',
                                         'type':'GET',
@@ -438,63 +449,65 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                                         }
                                     });
                                 }",
-                        'options' => array(
-                            'select' => "js:function(event, ui) {
+                'options' => array(
+                    'select' => "js:function(event, ui) {
                                     removeSelectedReferredto();
                                     addReferredToItem('selected_referred_to_wrapper', ui);
                                     $('#autocomplete_user_id').val('');
                                     return false;
                     }",
-                            'response' => 'js:function(event, ui){
+                    'response' => 'js:function(event, ui){
                         if(ui.content.length === 0){
                             $("#no_referred_to_result").show();
                         } else {
                             $("#no_referred_to_result").hide();
                         }
-                    }'
-                        ),
-                        'htmlOptions' => array(
-                            'placeholder' => 'search User',
-                        ),
+                    }',
+                ),
+                'htmlOptions' => array(
+                    'placeholder' => 'search User',
+                ),
 
-                    )); ?>
-                </div>
-            </div>
-
-            <div id="selected_referred_to_wrapper"
-                 class="row field-row <?php echo !$patientuserreferral->user_id ? 'hide' : '' ?>">
-                <div class="large-offset-4 large-8 column selected_referred_to end alert-box">
-                    <span class="name"><?php echo $patientuserreferral->user_id ? $patientuserreferral->getUserName() : '' ?></span>
-                    <a href="javascript:void(0)" class="remove right">remove</a>
-                </div>
-                <?php echo CHtml::hiddenField('PatientUserReferral[user_id]', $patientuserreferral->user_id, array('class' => 'hidden_id')); ?>
-            </div>
-            <div id="no_referred_to_result" class="row field-row hide">
-                <div class="large-offset-4 large-8 column selected_referred_to end">No result
-                </div>
-            </div>
+            )); ?>
         </div>
+      </div>
+
+      <div id="selected_referred_to_wrapper"
+           class="row field-row <?php echo !$patientuserreferral->user_id ? 'hide' : '' ?>">
+        <div class="large-offset-4 large-8 column selected_referred_to end alert-box">
+          <span
+              class="name"><?php echo $patientuserreferral->user_id ? $patientuserreferral->getUserName() : '' ?></span>
+          <a href="javascript:void(0)" class="remove right">remove</a>
+        </div>
+          <?php echo CHtml::hiddenField('PatientUserReferral[user_id]', $patientuserreferral->user_id,
+              array('class' => 'hidden_id')); ?>
+      </div>
+      <div id="no_referred_to_result" class="row field-row hide">
+        <div class="large-offset-4 large-8 column selected_referred_to end">No result
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- end of referred to field-->
+  <!-- end of referred to field-->
     <?php if (Patient::model()->findByPk($patient->id) === null) : ?>
-        <div class="row field-row">
-            <div class="large-12 column">
-                <div class="row field-row">
-                    <div class="large-2 column">
-                        <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
-                    </div>
-                    <div class="large-4 column end">
-                        <?php echo $form->fileField($referral, 'uploadedFile'); ?>
-                    </div>
-                </div>
+      <div class="row field-row">
+        <div class="large-12 column">
+          <div class="row field-row">
+            <div class="large-2 column">
+                <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
             </div>
+            <div class="large-4 column end">
+                <?php echo $form->fileField($referral, 'uploadedFile'); ?>
+            </div>
+          </div>
         </div>
+      </div>
     <?php endif; ?>
 
-    <div class="row buttons text-right">
-        <?php echo CHtml::submitButton($patient->isNewRecord ? 'Create' : 'Save'); ?>
-    </div>
+  <div class="row buttons text-right">
+      <?php echo CHtml::submitButton($patient->isNewRecord ? 'Create' : 'Save'); ?>
+  </div>
     <?php $this->endWidget(); ?>
 
     <?php
@@ -534,7 +547,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
             }',
             'complete' => 'js:function(){
                 $("#gp_form")[0].reset(); 
-          }'
+          }',
         )
     );
 
@@ -542,7 +555,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
 
-    <!-- practice form-->
+  <!-- practice form-->
 
     <?php
     $this->beginWidget('zii.widgets.jui.CJuiDialog', array(
@@ -568,7 +581,12 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     echo CHtml::activeLabelEx($practice, 'phone');
     echo CHtml::activeTextField($practice, 'phone', array('size' => 30, 'maxlength' => 30));
     echo '<br>';
-    echo $this->renderPartial('_form_address', array('form' => $form, 'address' => $practiceaddress, 'countries' => $countries, 'address_type_ids' => $address_type_ids));
+    echo $this->renderPartial('_form_address', array(
+        'form' => $form,
+        'address' => $practiceaddress,
+        'countries' => $countries,
+        'address_type_ids' => $address_type_ids,
+    ));
     echo CHtml::ajaxButton('Add',
         Yii::app()->controller->createUrl('practice/create', array("context" => 'AJAX')),
         [
@@ -591,21 +609,21 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 </div><!-- form -->
 
 <script type="text/javascript">
-    function findDuplicates(id) {
-        var first_name = $('#Contact_first_name').val();
-        var last_name = $('#Contact_last_name').val();
-        var date_of_birth = $('#Patient_dob').val();
-        if (first_name && last_name && date_of_birth) {
-            $.ajax({
-                    url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>",
-                    data: {firstName: first_name, last_name: last_name, dob: date_of_birth, id: id},
-                    type: 'GET',
-                    success: function (response) {
-                        $('#conflicts').remove();
-                        $('#contact').after(response);
-                    }
-                }
-            );
+  function findDuplicates(id) {
+    var first_name = $('#Contact_first_name').val();
+    var last_name = $('#Contact_last_name').val();
+    var date_of_birth = $('#Patient_dob').val();
+    if (first_name && last_name && date_of_birth) {
+      $.ajax({
+          url: "<?php echo Yii::app()->controller->createUrl('patient/findDuplicates'); ?>",
+          data: {firstName: first_name, last_name: last_name, dob: date_of_birth, id: id},
+          type: 'GET',
+          success: function (response) {
+            $('#conflicts').remove();
+            $('#contact').after(response);
+          }
         }
+      );
     }
+  }
 </script>
