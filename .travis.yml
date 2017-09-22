@@ -41,3 +41,9 @@ script:
   - php ../../vendor/phpunit/phpunit/phpunit.php ../modules/OphCiExamination/tests/unit/models/PatientAllergyParameterTest
   - php ../../vendor/phpunit/phpunit/phpunit.php ../modules/OphCiExamination/tests/unit/models/FamilyHistoryParameterTest
   - php ../../vendor/phpunit/phpunit/phpunit.php ./unit/components/DBProviderTest
+notifications:
+  slack:
+    rooms:
+      - secure: "Zsp6Sw1ROXK2u6+p0l7K0QJaBiDl9I5zsUOHV/5Prk1+WooHBwAPT2HiPNpexmfOM2DT27I7xuzPcrcGuzIEZyeJr4zZ5Sf/00NBtJtfmxYTR8y1ho72u/aZg6bLqLNcr41/ZpDlVkdpgMzNnu1Vs+8Mp8cdDb7YDmilwfBx1zQZY2gdlU6DTPTH2JDKPsj2lt42yjXjhEwfWoh2A/hCfVawRHraxMtAtTuoJ9T+TA2YqKq0v4dAENiNqPqMMJO81dzyv2LnglaWXOqWamp98xG1IZIti8OBQPtw/Zum+bZPfT2+GXBXzQWnrH7sC6LFHZRqQCuMGKsT7ufS8E0+7dvnKfAVH412WtZfzqswxsi0cz2zSwUaw1+nu0P8eKENVhZ8hefHHBAdsCT2gGSUAjihKv67SJzZvk+/iueate3unYo/L6xQNeZOEzrjtTGBRW70lvWsh5/nc6vPp0JP8GPEwP2QMzHXDMbLXEU0DHyj9gwDi8n7a8bZMfdS8xTD1GZpHhSGyq2mX5pcdEiGksZsnzcu+TdqKl4svr9cJvfa0ZTk59YECbVsS3l/8cJ3FqpHdw1yob0CxrVsNJAAn2f67HN9XQcHvCYFz6KDQp/TmpxDT+c5i3mSuxAx4ty7Z8rvdKNcF+TI0WRc0h362YrhROYf4HZaej4ZJz8DdOE="
+    on_success: change
+    on_failure: always
