@@ -41,6 +41,7 @@ script:
   - php ../../vendor/phpunit/phpunit/phpunit.php ../modules/OphCiExamination/tests/unit/models/PatientAllergyParameterTest
   - php ../../vendor/phpunit/phpunit/phpunit.php ../modules/OphCiExamination/tests/unit/models/FamilyHistoryParameterTest
   - php ../../vendor/phpunit/phpunit/phpunit.php ./unit/components/DBProviderTest
+  - php ../../vendor/phpunit/phpunit/phpunit.php ./unit/models/AUSPatientTest
 notifications:
   slack:
     rooms:
