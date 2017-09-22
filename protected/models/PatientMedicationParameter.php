@@ -99,11 +99,11 @@ class PatientMedicationParameter extends CaseSearchParameter implements DBProvid
                 $wildcard = '%';
 
                 return "
-SELECT p.id 
-FROM patient p 
-LEFT JOIN medication m 
-  ON m.patient_id = p.id 
-LEFT JOIN drug d 
+SELECT p.id
+FROM patient p
+JOIN patient_medication_assignment m
+  ON m.patient_id = p.id
+LEFT JOIN drug d
   ON d.id = m.drug_id
 LEFT JOIN medication_drug md
   ON md.id = m.medication_drug_id
@@ -115,11 +115,11 @@ WHERE d.name $op '$wildcard' || :p_m_value_$this->id || '$wildcard'
                 $wildcard = '%';
 
                 return "
-SELECT p.id 
-FROM patient p 
-LEFT JOIN medication m 
-  ON m.patient_id = p.id 
-LEFT JOIN drug d 
+SELECT p.id
+FROM patient p
+LEFT JOIN patient_medication_assignment m
+  ON m.patient_id = p.id
+LEFT JOIN drug d
   ON d.id = m.drug_id
 LEFT JOIN medication_drug md
   ON md.id = m.medication_drug_id

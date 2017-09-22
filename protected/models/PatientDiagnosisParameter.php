@@ -105,22 +105,29 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
      */
     public function query($searchProvider)
     {
-        $query = "SELECT DISTINCT p.id 
-FROM patient p 
-LEFT JOIN secondary_diagnosis sd 
-  ON sd.patient_id = p.id 
-LEFT JOIN episode ep
-  ON ep.patient_id = p.id
-LEFT JOIN disorder d 
-  ON (d.id = sd.disorder_id OR d.id = ep.disorder_id)
+        $query = "SELECT DISTINCT p.id
+FROM patient p
+LEFT JOIN patient_diagnosis_assignment paa
+  ON paa.patient_id = p.id
+LEFT JOIN disorder d
+  ON d.id = paa.disorder_id
 WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)";
         if ($this->firm_id !== '' && $this->firm_id !== null) {
             $query = "SELECT DISTINCT p.id 
-FROM patient p 
-JOIN episode ep
-  ON ep.patient_id = p.id
-JOIN disorder d 
-  ON (d.id = ep.disorder_id)
+FROM patient p
+LEFT JOIN patient_diagnosis_assignment paa
+  ON paa.patient_id = p.id
+LEFT JOIN disorder d
+  ON d.id = paa.disorder_id
+LEFT JOIN et_ophciexamination_diagnoses et_diag
+  ON et_diag.id = paa.element_diagnoses_id
+LEFT JOIN latest_diagnosis_examination_events latest
+  ON latest.event_id = et_diag.event_id
+  AND latest.patient_id = p.id
+LEFT JOIN event e
+  ON e.id = latest.event_id
+LEFT JOIN episode ep
+  ON ep.id = e.episode_id
 WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)
   AND ep.firm_id = :p_d_firm_$this->id";
         }
@@ -129,7 +136,7 @@ WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)
                 // Do nothing extra.
                 break;
             case 'NOT LIKE':
-                $query = "SELECT DISTINCT p1.id 
+                $query = "SELECT DISTINCT p1.id
 FROM patient p1
 WHERE p1.id NOT IN (
   $query

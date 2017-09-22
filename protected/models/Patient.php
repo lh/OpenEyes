@@ -166,6 +166,12 @@ class Patient extends BaseActiveRecordVersioned
             'allergies' => array(self::MANY_MANY, 'Allergy', 'patient_allergy_assignment(patient_id, allergy_id)',
                 'alias' => 'patient_allergies',
                 'order' => 'patient_allergies.name', ),
+            'medications' => array(self::MANY_MANY, '\OEModule\OphCiExamination\models\HistoryMedicationsEntry', 'patient_medication_assignment(patient_id, id)',
+                'alias' => 'patient_medications',
+                'order' => 'patient_medications.medication_name', ),
+            'diagnoses' => array(self::MANY_MANY, '\OEModule\OphCiExamination\models\OphCiExamination_Diagnosis', 'patient_diagnosis_assignment(patient_id, id)',
+                'alias' => 'patient_diagnoses',
+                'order' => 'patient_diagnoses.principal DESC', ),
             'allergyAssignments' => array(self::HAS_MANY, 'PatientAllergyAssignment', 'patient_id'),
             'referral' => array(self::HAS_ONE, 'PatientReferral', 'patient_id'),
             'risks' => array(

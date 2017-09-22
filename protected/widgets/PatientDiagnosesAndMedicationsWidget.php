@@ -2,6 +2,9 @@
 
 class PatientDiagnosesAndMedicationsWidget extends CWidget
 {
+    /**
+     * @var $patient Patient
+     */
     public $patient;
 
 

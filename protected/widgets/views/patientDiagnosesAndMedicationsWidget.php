@@ -32,20 +32,11 @@ foreach ($this->patient->episodes as $episode) {
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($this->patient->episodes as $episode):
-                                if ($episode->diagnosis !== null): ?>
+                            <?php foreach ($this->patient->diagnoses as $diagnosis):?>
                                 <tr>
-                                    <td><?php echo CHtml::encode($episode->diagnosis->fully_specified_name) . ' (Principal)'; ?></td>
-                                    <td><?php echo CHtml::encode($episode->firm->name); ?></td>
-                                    <td><?php echo $episode->NHSDate('start_date'); ?></td>
-                                </tr>
-                            <?php endif;
-                            endforeach; ?>
-                            <?php foreach ($this->patient->secondarydiagnoses as $diagnosis): ?>
-                                <tr>
-                                    <td><?php echo CHtml::encode($diagnosis->disorder->fully_specified_name) . ' (Secondary)'; ?></td>
-                                    <td>N/A</td>
-                                    <td><?php echo CHtml::encode($diagnosis->dateText); ?></td>
+                                    <td><?php echo CHtml::encode($diagnosis) . ' (' . ($diagnosis->principal == 1 ? 'Principal' : 'Secondary') . ')'; ?></td>
+                                    <td><?php echo CHtml::encode($diagnosis->element_diagnoses->event->episode->firm->getNameAndSubspecialty()); ?></td>
+                                    <td><?php echo CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)); ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
@@ -56,7 +47,6 @@ foreach ($this->patient->episodes as $episode) {
         </div>
     </div>
 <?php endif; ?>
-
 
 <?php if ($this->patient->medications): ?>
     <div class="row data-row">
@@ -83,11 +73,8 @@ foreach ($this->patient->episodes as $episode) {
                             <tbody>
                             <?php foreach ($this->patient->medications as $medication): ?>
                                 <tr>
-                                    <td><?php echo $medication->getDrugLabel(); ?></td>
-                                    <td><?= $medication->dose ?>
-                                        <?= isset($medication->route->name) ? $medication->route->name : '' ?>
-                                        <?= $medication->option ? "({$medication->option->name})" : '' ?>
-                                        <?= isset($medication->frequency->name) ? $medication->frequency->name : '' ?></td>
+                                    <td><?php echo $medication->getMedicationDisplay(); ?></td>
+                                    <td><?php echo $medication->getAdministrationDisplay();?></td>
                                     <td><?php echo Helper::formatFuzzyDate($medication->start_date); ?></td>
                                     <td><?php echo isset($medication->end_date) ? Helper::formatFuzzyDate($medication->end_date) : ''; ?></td>
                                 </tr>
