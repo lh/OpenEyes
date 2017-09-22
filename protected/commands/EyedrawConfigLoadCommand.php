@@ -483,7 +483,7 @@ EOSQL;
       .$this->getIndexSearchResultsHTML($index_list,$event_name)
       .$this->getIndexSearchHiddenTerms($event_name);
       $html_string = $this->formatHTML($html_string);
-      $this->saveHTMLToFile($html_string, Yii::getPathOfAlias('webroot') . "/protected/widgets/views/IndexSearch_{$event_name}.php");
+      $this->saveHTMLToFile($html_string, Yii::getPathOfAlias('application') . "/widgets/views/IndexSearch_{$event_name}.php");
     }
 
     private function getIndexSearchHeader() {
@@ -518,7 +518,7 @@ EOSQL;
     }
 
     private function saveHTMLToFile($html,$filename) {
-      $file = Yii::getPathOfAlias('webroot') . '/protected/widgets/views/IndexSearch_Examination.php';
+      $file = Yii::getPathOfAlias('application') . '/widgets/views/IndexSearch_Examination.php';
       $file_handle = fopen($file, 'w') or die('Cannot open file:  '.$file);
       fwrite($file_handle, $html);
       fclose($file_handle);
