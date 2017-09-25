@@ -6,7 +6,7 @@
  * Time: 2:11 PM
  */
 
-class AUS_PatientTest extends CDbTestCase
+class AUSPatientTest extends CDbTestCase
 {
     protected $fixtures = array('patient' => 'Patient');
     public function setUp()
@@ -32,6 +32,8 @@ class AUS_PatientTest extends CDbTestCase
 
         //fail to save with duplication
         $this->assertFalse($patient_dup->save());
+        $this->assertSame('Medicare Number "" has already been taken.' //remove the actual number
+            , preg_replace('/\d+/', '' , $patient_dup->getErrors('nhs_num')[0]));
 
         //remove duplication and save successfully
         $patient_dup->nhs_num = 65465445;
@@ -51,6 +53,8 @@ class AUS_PatientTest extends CDbTestCase
 
         //fail to save with duplication
         $this->assertFalse($patient_dup->save());
+        $this->assertSame('CERA Number "" has already been taken.'
+            , preg_replace('/\d+/', '' , $patient_dup->getErrors('hos_num')[0]));
 
         //remove duplication and save successfully
         $patient_dup->hos_num = 65465445;
