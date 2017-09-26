@@ -35,8 +35,8 @@ foreach ($this->patient->episodes as $episode) {
                             <?php foreach ($this->patient->diagnoses as $diagnosis):?>
                                 <tr>
                                     <td><?php echo CHtml::encode($diagnosis) . ' (' . ($diagnosis->principal == 1 ? 'Principal' : 'Secondary') . ')'; ?></td>
-                                    <td><?php echo CHtml::encode($diagnosis->element_diagnoses->event->episode->firm->getNameAndSubspecialty()); ?></td>
-                                    <td><?php echo CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)); ?></td>
+                                    <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode($diagnosis->element_diagnoses->event->episode->firm->getNameAndSubspecialty()) : 'Unknown'; ?></td>
+                                    <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)) : 'Unknown'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
                             </tbody>
