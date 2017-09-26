@@ -18,7 +18,7 @@ class m170907_181843_anaesthetic_type_multiselect extends OEMigration
         $this->addForeignKey('ophtrconsent_procedure_to_anaest_type_to_el', 'ophtrconsent_procedure_anaesthetic_type', 'et_ophtrconsent_procedure_id',
             'et_ophtrconsent_procedure', 'id');
 
-        $this->dropForeignKey('et_ophtrconsent_procedure_anaesthetic_type_id_fk', 'et_ophtrconsent_procedure');
+        //$this->dropForeignKey('et_ophtrconsent_procedure_anaesthetic_type_id_fk', 'et_ophtrconsent_procedure');
 
         $dataProvider = new CActiveDataProvider('Element_OphTrConsent_Procedure');
         $iterator = new CDataProviderIterator($dataProvider);
