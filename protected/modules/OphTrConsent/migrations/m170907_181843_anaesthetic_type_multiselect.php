@@ -4,7 +4,7 @@ class m170907_181843_anaesthetic_type_multiselect extends OEMigration
 {
 	public function up()
 	{
-        $this->dropOETable(ophtrconsent_procedure_anaesthetic_type, true);
+        $this->dropOETable('ophtrconsent_procedure_anaesthetic_type', true);
 
         $this->createOETable('ophtrconsent_procedure_anaesthetic_type',array(
             'id' => 'pk',
