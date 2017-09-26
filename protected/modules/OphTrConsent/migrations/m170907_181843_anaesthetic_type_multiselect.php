@@ -4,7 +4,8 @@ class m170907_181843_anaesthetic_type_multiselect extends OEMigration
 {
 	public function up()
 	{
-        $this->dropOETable('ophtrconsent_procedure_anaesthetic_type', true);
+        $this->execute('DROP TABLE IF EXISTS ophtrconsent_procedure_anaesthetic_type;');
+        $this->execute('DROP TABLE IF EXISTS ophtrconsent_procedure_anaesthetic_type_version;');
 
         $this->createOETable('ophtrconsent_procedure_anaesthetic_type',array(
             'id' => 'pk',
@@ -18,7 +19,30 @@ class m170907_181843_anaesthetic_type_multiselect extends OEMigration
         $this->addForeignKey('ophtrconsent_procedure_to_anaest_type_to_el', 'ophtrconsent_procedure_anaesthetic_type', 'et_ophtrconsent_procedure_id',
             'et_ophtrconsent_procedure', 'id');
 
-        //$this->dropForeignKey('et_ophtrconsent_procedure_anaesthetic_type_id_fk', 'et_ophtrconsent_procedure');
+        $this->dropForeignKey('et_ophtrconsent_procedure_anaesthetic_type_id_fk', 'et_ophtrconsent_procedure');
+
+        $this->execute('
+            IF EXISTS(
+                  SELECT *
+                  FROM INFORMATION_SCHEMA.STATISTICS
+                  WHERE INDEX_SCHEMA = openeyes
+                        AND INDEX_NAME = \'et_ophtrconsent_procedure_anaesthetic_type_id_fk\')
+            THEN
+    
+                ALTER TABLE `et_ophtrconsent_procedure` DROP FOREIGN KEY `et_ophtrconsent_procedure_anaesthetic_type_id_fk`;
+    
+                ALTER TABLE `et_ophtrconsent_procedure` DROP INDEX `et_ophtrconsent_procedure_anaesthetic_type_id_fk` ;
+
+            END IF;
+        ');
+
+        $this->execute('
+          UPDATE  openeyes.et_ophtrconsent_procedure 
+          SET anaesthetic_type_id = 7 
+          WHERE anaesthetic_type_id NOT IN (
+            select id from openeyes.anaesthetic_type
+            );
+        ');
 
         $dataProvider = new CActiveDataProvider('Element_OphTrConsent_Procedure');
         $iterator = new CDataProviderIterator($dataProvider);
