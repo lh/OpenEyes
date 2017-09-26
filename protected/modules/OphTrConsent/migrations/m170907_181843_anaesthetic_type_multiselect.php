@@ -108,10 +108,10 @@ class m170907_181843_anaesthetic_type_multiselect extends OEMigration
                         'text' => "Anaesthetic type moved to new table: ophtrconsent_procedure_anaesthetic_type"
                     );
 
-                    Audit::add('admin', 'update', serialize($data),
-                        'Remove redundant Anaesthetic options',
-                        array('module' => 'OphTrConsent', 'model' => 'Element_OphTrConsent_Procedure', 'event_id' => $element->event_id,
-                            'episode_id' => $event->episode_id, 'patient_id' => $episode->patient_id));
+//                    Audit::add('admin', 'update', serialize($data),
+//                        'Remove redundant Anaesthetic options',
+//                        array('module' => 'OphTrConsent', 'model' => 'Element_OphTrConsent_Procedure', 'event_id' => $element->event_id,
+//                            'episode_id' => $event->episode_id, 'patient_id' => $episode->patient_id));
                 }
 
             }
