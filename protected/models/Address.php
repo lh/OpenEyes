@@ -66,6 +66,7 @@ class Address extends BaseActiveRecordVersioned
         return array(
             array('address1, city, county', 'length', 'max' => 255),
             array('address1, city, county', 'required', 'on' => 'manage_practice'),
+            array('email','required', 'on'=>'self_register'),
             array('postcode', 'length', 'max' => 10),
             array('email', 'length', 'max' => 255),
             array('email','email'),
