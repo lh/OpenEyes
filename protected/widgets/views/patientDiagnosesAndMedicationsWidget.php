@@ -1,17 +1,4 @@
-<?php
-
-$hasPrimaryDiagnoses = false;
-
-foreach ($this->patient->episodes as $episode) {
-    if ($episode->diagnosis !== null) {
-        $hasPrimaryDiagnoses = true;
-        break;
-    }
-}
-
-?>
-
-<?php if ($this->patient->secondarydiagnoses || $hasPrimaryDiagnoses): ?>
+<?php if ($this->patient->diagnoses): ?>
     <div class="row data-row">
         <div class="large-12 column">
             <div>Diagnoses:
