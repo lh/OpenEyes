@@ -1551,11 +1551,15 @@ class PatientController extends BaseController
             
             list($contact, $patient, $address, $referral, $patient_user_referral) =
                 $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
+        } else { // When the user first enters the screen
+            $command = Yii::app()->db->createCommand('SELECT nextval("patient_cera_number")');
+            $patient->hos_num = $command->queryScalar();
         }
+
         if (isset($patient->gp_id)){
             $gp = Gp::model()->findByPk($patient->gp_id);
         }
-        $patient->hos_num = $patient->autoCompleteHosNum();
+
         $this->render('crud/create',array(
                         'patient' => $patient,
                         'contact' => $contact,
