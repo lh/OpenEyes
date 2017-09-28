@@ -628,6 +628,8 @@ class User extends BaseActiveRecordVersioned
                 throw new CDbException('Unable to save firm assignment');
             }
         }
+        //set the has_selected_firms to be true
+        User::updateByPk($this->id, array("has_selected_firms"=>1));
         $transaction->commit();
     }
 
