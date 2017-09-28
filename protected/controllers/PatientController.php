@@ -1723,7 +1723,7 @@ class PatientController extends BaseController
         $gp = isset($patient->gp) ? $patient->gp : null;
         $gp_contact = isset($gp) ? $gp->contact : new Contact();
         $practice = isset($patient->practice) ? $patient->practice : new Practice();
-        $practice_contact = isset($patient->practice) ? $patient-> practice->contact : new Contact();
+        $practice_contact = isset($patient->practice) ? $patient-> practice->contact : new Contact('manage_practice');
         $practice_address = isset($practice_contact) && isset($practice_contact->address) ? $practice_contact->address : new Address();
         $patient_user_referral = isset($patient->patientuserreferral[0]) ? $patient->patientuserreferral[0] : new PatientUserReferral();
         
@@ -1733,8 +1733,8 @@ class PatientController extends BaseController
             $this->redirect(array('view', 'id' => $patient->id));
         }
         
-        $contact = $patient->contact ? $patient->contact : new Contact();
-        $address = $patient->contact->address ? $patient->contact->address : new Address();
+        $contact = $patient->contact ?: new Contact();
+        $address = $patient->contact->address ?: new Address();
         
         switch ($patient->patient_source)
         {

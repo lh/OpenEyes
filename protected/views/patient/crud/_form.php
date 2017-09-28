@@ -358,7 +358,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-offset-4 large-8 column selected_gp end">No result
         </div>
       </div>
-      <div class="right">
+      <div class="large-offset-4 large-8 column">
 
         <p><?php echo CHtml::link('Add Referring Practitioner', '#', array(
                 'onclick' => '$("#gpdialog").dialog("open"); 
@@ -418,7 +418,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-offset-4 large-8 column selected_practice end">No result
         </div>
       </div>
-      <div class="right">
+      <div class="large-offset-4 large-8 column">
         <p><?php echo CHtml::link('Add Practice', '#', array(
                 'onclick' => '$("#practicedialog").dialog("open"); return false;',
             )); ?>
@@ -497,7 +497,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
             </div>
             <div class="large-4 column end">
-                <?php echo $form->fileField($referral, 'uploadedFile'); ?>
+                <p><?php echo $form->fileField($referral, 'uploadedFile'); ?></p>
             </div>
           </div>
         </div>
@@ -569,14 +569,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     ));
 
     echo CHtml::beginForm(Yii::app()->controller->createUrl('practice/create'), 'post', array('id' => 'practice_form'));
-    echo CHtml::activeLabelEx($practicecontact, 'title');
-    echo CHtml::activeTextField($practicecontact, 'title', array('size' => 30, 'maxlength' => 30));
     echo CHtml::activeLabelEx($practicecontact, 'first_name');
     echo CHtml::activeTextField($practicecontact, 'first_name', array('size' => 30, 'maxlength' => 30));
-    echo CHtml::activeLabelEx($practicecontact, 'last_name');
-    echo CHtml::activeTextField($practicecontact, 'last_name', array('size' => 30, 'maxlength' => 30));
-    echo CHtml::activeLabelEx($practice, 'code');
-    echo CHtml::activeTextField($practice, 'code', array('size' => 30, 'maxlength' => 30));
     echo CHtml::activeLabelEx($practice, 'phone');
     echo CHtml::activeTextField($practice, 'phone', array('size' => 30, 'maxlength' => 30));
     echo '<br>';

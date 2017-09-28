@@ -1,6 +1,8 @@
 <?php
 /* @var $this PracticeController */
-/* @var $model Contact */
+/* @var $model Practice */
+/* @var $contact Contact */
+/* @var $address Address */
 /* @var $form CActiveForm */
 ?>
 <?php
@@ -24,13 +26,6 @@ $address_type_ids = CHtml::listData(AddressType::model()->findAll(), 'id', 'name
     <div class="row field-row">
         <div class="large-6 column">
             <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($contact, 'title'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'title', array('size' => 20, 'maxlength' => 20)); ?>
-                    <?php echo $form->error($contact, 'title'); ?>
-                </div>
-            </div>
-            <div class="row field-row">
                 <div class="large-3 column"><?php echo $form->labelEx($contact, 'first_name'); ?></div>
                 <div class="large-4 column end">
                     <?php echo $form->textField($contact, 'first_name', array('size' => 40, 'maxlength' => 100)); ?>
@@ -38,24 +33,10 @@ $address_type_ids = CHtml::listData(AddressType::model()->findAll(), 'id', 'name
                 </div>
             </div>
             <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($contact, 'last_name'); ?></div>
+                <div class="large-3 column"><?php echo $form->labelEx($model, 'phone'); ?></div>
                 <div class="large-4 column end">
-                    <?php echo $form->textField($contact, 'last_name', array('size' => 40, 'maxlength' => 100)); ?>
-                    <?php echo $form->error($contact, 'last_name'); ?>
-                </div>
-            </div>
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($model, 'code'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->textField($model, 'code', array('size' => 20, 'maxlength' => 64)); ?>
-                    <?php echo $form->error($model, 'code'); ?>
-                </div>
-            </div>
-            <div class="row field-row">
-                <div class="large-3 column"><?php echo $form->labelEx($contact, 'primary_phone'); ?></div>
-                <div class="large-4 column end">
-                    <?php echo $form->telField($contact, 'primary_phone', array('size' => 15, 'maxlength' => 20)); ?>
-                    <?php echo $form->error($contact, 'primary_phone'); ?>
+                    <?php echo $form->telField($model, 'phone', array('size' => 15, 'maxlength' => 64)); ?>
+                    <?php echo $form->error($model, 'phone'); ?>
                 </div>
             </div>
         </div>
