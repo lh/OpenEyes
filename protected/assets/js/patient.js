@@ -40,7 +40,7 @@ function removeSelectedReferredto(){
 }
 
 $(document).ready(function(){
-    
+
     $('#patient-form').on('keyup', '#Patient_nhs_num', function(){
         var selector = $(this).data('child_row');
         $(selector).hide();

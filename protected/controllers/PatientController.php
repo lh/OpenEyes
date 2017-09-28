@@ -1492,11 +1492,14 @@ class PatientController extends BaseController
         Yii::app()->assetManager->registerScriptFile('js/patient.js');
         //Don't render patient summary box on top as we have no selected patient
         $this->renderPatientPanel = false;
-       
-        $patient = new Patient('other_register');
+        $patient_source ='referral';
+        if (isset($_GET['patient_source'])) {
+            $patient_source = $_GET['patient_source'];
+        }
+        $patient = new Patient($patient_source);
         $patient->noPas();
         $contact = new Contact('manualAddPatient');
-        $address = new Address();
+        $address = new Address($patient_source);
         $referral = null;
         $gp = null;
         $gp_contact = new Contact('manage_gp');
@@ -1504,7 +1507,6 @@ class PatientController extends BaseController
         $practice_address = new Address('manage_practice');
         $practice = new Practice('manage_practice');
         $patient_user_referral = null;
-
         $this->performAjaxValidation(array($patient, $contact, $address));
         if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
         {   
@@ -1564,7 +1566,7 @@ class PatientController extends BaseController
                         'patient' => $patient,
                         'contact' => $contact,
                         'address' => $address,
-                        'referral' => isset($referral) ? $referral : new PatientReferral('other_register'),
+                        'referral' => isset($referral) ? $referral : new PatientReferral($patient_source),
                         'gp' => $gp,
                         'gpcontact' => $gp_contact,
                         'practicecontact' => $practice_contact,

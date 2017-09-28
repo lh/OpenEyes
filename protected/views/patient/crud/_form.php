@@ -171,24 +171,30 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
   </div>
 
   <hr>
-  <!-- -->
+  <!-- Patient Source-->
   <div class="row field-row">
     <div class="large-6 column">
       <div class="row field-row">
         <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList()); ?>
+          <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList(),
+              array(
+//                'options'=>array($patient->getScenarioSourceCode()[$patient->getScenario()]=>array('selected'=>true)),
+                'onchange' =>'changeScenario();',
+              )); ?>
         </div>
       </div>
     </div>
   </div>
   <hr/>
+<!--  Gender -->
   <div class="row field-row">
     <div class="large-6 column">
       <div class="row field-row">
         <div class="large-3 column"><?php echo $form->labelEx($patient, 'gender'); ?></div>
         <div class="large-4 column end">
-            <?php echo $form->dropDownList($patient, 'gender', $genders, array('empty' => '-- select --')); ?>
+            <?php echo $form->dropDownList($patient, 'gender', $genders,
+                array('empty' => '-- select --')); ?>
             <?php echo $form->error($patient, 'gender'); ?>
         </div>
       </div>
@@ -594,6 +600,11 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 </div><!-- form -->
 
 <script type="text/javascript">
+  function getScenarioFromCode()
+  {
+    return {'1': 'referral', '2': 'self_register', '0': 'other_register'};
+  }
+
   function findDuplicates(id) {
     var first_name = $('#Contact_first_name').val();
     var last_name = $('#Contact_last_name').val();
@@ -610,5 +621,25 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         }
       );
     }
+  }
+
+  function changeScenario() {
+    var current_scenario = $('#Patient_patient_source').val();
+    var patient_source= getScenarioFromCode()[current_scenario];
+    var url_addr = "<?php echo Yii::app()->createUrl('patient/create') ?>";
+    window.alert(current_scenario);
+    window.alert(patient_source);
+    window.alert(url_addr);
+    $.ajax({
+      url: url_addr,
+      type: "GET",
+      data: "{'patient_source':'"+patient_source+"'}",
+      success: function(response){
+        var e= document.createElement('div');
+        e.innerHTML = response;
+        document.getElement();
+      }
+    })
+
   }
 </script>
