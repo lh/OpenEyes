@@ -24,7 +24,7 @@ class m170907_181843_anaesthetic_type_multiselect extends OEMigration
         try {//Drop if exists by another name
             $this->execute('ALTER TABLE `et_ophtrconsent_procedure` DROP FOREIGN KEY `et_ophtrconsent_procedure_anaesthetic_type_id_fk`;');
             $this->execute('ALTER TABLE `et_ophtrconsent_procedure` DROP INDEX `et_ophtrconsent_procedure_anaesthetic_type_id_fk` ;');
-        }catch (CDbExcetion $e){}
+        }catch (Exception $e){}
 
         $this->execute('
           UPDATE  openeyes.et_ophtrconsent_procedure 
