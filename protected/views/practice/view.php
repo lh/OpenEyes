@@ -36,21 +36,11 @@ $this->pageTitle = 'View Practice';
         </div>
         <div class="row data-row">
           <div class="large-3 column">
-            <div class="data-label">Code:</div>
-          </div>
-          <div class="large-3 column end">
-            <div
-                class="data-value"><?php echo CHtml::encode($model->code); ?>
-            </div>
-          </div>
-        </div>
-        <div class="row data-row">
-          <div class="large-3 column">
             <div class="data-label">Phone Number:</div>
           </div>
           <div class="large-3 column end">
             <div
-                class="data-value"><?php echo isset($model->contact->primary_phone) ? CHtml::encode($model->contact->primary_phone) : 'Unknown'; ?></div>
+                class="data-value"><?php echo CHtml::encode($model->phone); ?></div>
           </div>
         </div>
       </div>
