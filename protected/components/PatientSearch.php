@@ -19,10 +19,10 @@ class PatientSearch
 {
     // NHS number (assume 10 digit number is an NHS number)
     const NHS_NUMBER_REGEX_1 = '/^(N|NHS)\s*[:;]\s*([0-9\- ]+)$/i';
-    const NHS_NUMBER_REGEX_2 = '/^([0-9]{3}[- ]?[0-9]{3}[- ]?[0-9]{4,})$/i';
-
+    const NHS_NUMBER_REGEX_2 = '/^([0-9]{1,}[- ]?[0-9]{1,}[- ]?[0-9]{1,})$/i';
+    
     // Hospital number (assume a < 10 digit number is a hosnum)
-    const HOSPITAL_NUMBER_REGEX = '/^(H|Hosnum)\s*[:;]\s*([0-9\-]+)$/i';
+    const HOSPITAL_NUMBER_REGEX = '/^(H|Hosnum)\s*[:;]\s*([0-9\- ]+)$/i';
 
     // Patient name
     const PATIENT_NAME_REGEX = '/^(?:P(?:atient)?[:;\s]+)?([\a-zA-Z-]+[ ,]?[\a-zA-Z-]*)$/';
@@ -63,7 +63,7 @@ class PatientSearch
         // NHS number
         if ($nhs = $this->getNHSnumber($term)) {
             $search_terms['nhs_num'] = $nhs;
-        // Hospital number (assume a < 10 digit number is a hosnum)
+        // Hospital number
         } elseif ($hos_num = $this->getHospitalNumber($term)) {
             $search_terms['hos_num'] = $hos_num;
         // Patient name

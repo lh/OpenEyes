@@ -349,6 +349,7 @@ class Patient extends BaseActiveRecordVersioned
         }
         if ($this->nhs_num || $this->hos_num) {
             $criteria->compare('nhs_num', $this->nhs_num, true);
+            $criteria->compare('hos_num', $this->nhs_num, true,'OR');
             $criteria->compare('nhs_num', $this->hos_num, true,'OR');
             $criteria->compare('hos_num', $this->hos_num, true,'OR');
         }
