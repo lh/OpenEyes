@@ -1698,7 +1698,7 @@ class PatientController extends BaseController
     public function actionUpdate($id)
     {
         Yii::app()->assetManager->registerScriptFile('js/patient.js');
-        
+
         //Don't render patient summary box on top as we have no selected patient
         $this->renderPatientPanel = false;
 
@@ -1707,21 +1707,37 @@ class PatientController extends BaseController
         $gp = isset($patient->gp) ? $patient->gp : null;
         $gp_contact = isset($gp) ? $gp->contact : new Contact();
         $practice = isset($patient->practice) ? $patient->practice : new Practice();
-        $practice_contact = isset($patient->practice) ? $patient-> practice->contact : new Contact('manage_practice');
+        $practice_contact = isset($patient->practice) ? $patient->practice->contact : new Contact('manage_practice');
         $practice_address = isset($practice_contact) && isset($practice_contact->address) ? $practice_contact->address : new Address();
         $patient_user_referral = isset($patient->patientuserreferral[0]) ? $patient->patientuserreferral[0] : new PatientUserReferral();
-        
+
         //only local patient can be edited
-        if($patient->is_local == 0){
+        if ($patient->is_local == 0) {
             Yii::app()->user->setFlash('warning.update-patient', 'Only local patients can be edited.');
             $this->redirect(array('view', 'id' => $patient->id));
         }
-        
+
         $contact = $patient->contact ?: new Contact();
         $address = $patient->contact->address ?: new Address();
-        
-        switch ($patient->patient_source)
-        {
+
+        if (isset($_POST['Contact'], $_POST['Address'], $_POST['Patient'])) {
+            $contact->attributes = $_POST['Contact'];
+            $patient->attributes = $_POST['Patient'];
+            $address->attributes = $_POST['Address'];
+            if (isset($_POST['PatientReferral'])) {
+
+                $referral->attributes = $_POST['PatientReferral'];
+            }
+
+            // not to be sync with PAS
+            $patient->is_local = 1;
+            if (isset($_POST['PatientUserReferral']) && $_POST['PatientUserReferral']['user_id'] != $patient_user_referral->user_id) {
+                $patient_user_referral = new PatientUserReferral();
+                $patient_user_referral->attributes = $_POST['PatientUserReferral'];
+            }
+        }
+
+        switch ($patient->patient_source) {
             case Patient::PATIENT_SOURCE_OTHER:
                 $contact->setScenario('other_register');
                 $patient->setScenario('other_register');
@@ -1747,47 +1763,33 @@ class PatientController extends BaseController
                 $referral->setScenario('manual');
                 break;
         }
-        
+
         $this->performAjaxValidation(array($patient, $contact, $address));
 
-        if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
-        {
-            $contact->attributes = $_POST['Contact'];
-            $patient->attributes = $_POST['Patient'];
-            $address->attributes = $_POST['Address'];
-            if (isset($_POST['PatientReferral'])) {
-
-                $referral->attributes = $_POST['PatientReferral'];
-            }
-
-            // not to be sync with PAS
-            $patient->is_local = 1;
-            if (isset($_POST['PatientUserReferral']) && $_POST['PatientUserReferral']['user_id'] != $patient_user_referral->user_id) {
-                    $patient_user_referral = new PatientUserReferral();
-                    $patient_user_referral->attributes = $_POST['PatientUserReferral'];
-            }
-
-            list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
+        if (isset($_POST['Contact'], $_POST['Address'], $_POST['Patient'])) {
+            list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact,
+                $patient, $address, $referral, $patient_user_referral);
         }
-        if (isset($patient->gp_id)){
+
+        if (isset($patient->gp_id)) {
             $gp = Gp::model()->findByPk($patient->gp_id);
         }
 
-        $this->render('crud/update',array(
-                        'patient' => $patient,
-                        'contact' => $contact,
-                        'address' => $address,
-                        'referral' => $referral,
-                        'gpcontact' => $gp_contact,
-                        'practicecontact' => $practice_contact,
-                        'practiceaddress' => $practice_address,
-                        'practice' => $practice,
-                        'patientuserreferral' => $patient_user_referral,
-                        'gp' => $gp,
+        $this->render('crud/update', array(
+            'patient' => $patient,
+            'contact' => $contact,
+            'address' => $address,
+            'referral' => $referral,
+            'gpcontact' => $gp_contact,
+            'practicecontact' => $practice_contact,
+            'practiceaddress' => $practice_address,
+            'practice' => $practice,
+            'patientuserreferral' => $patient_user_referral,
+            'gp' => $gp,
 
         ));
     }
-    
+
     /**
      * Deletes a particular model.
      * If deletion is successful, the browser will be redirected to the 'admin' page.
