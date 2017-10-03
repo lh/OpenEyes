@@ -1634,12 +1634,6 @@ class PatientController extends BaseController
                         }
                         else {
                             $transaction->rollback();
-                            // to show validation error messages to the user
-                            $patient->validate();
-                            $address->validate();
-                            if (isset($referral)) {
-                                $referral->validate();
-                            }
                         }
                     }
                     else {
@@ -1678,22 +1672,8 @@ class PatientController extends BaseController
                     // patient or address failed to save
                     $transaction->rollback();
 
-                    // to show validation error messages to the user
-                    $patient->validate();
-                    $address->validate();
-                    if (isset($referral)) {
-                        $referral->validate();
-                }
-
                 }
             } else {
-                // to show validation error messages to the user
-                $patient->validate();
-                $address->validate();
-                if (isset($referral)) {
-                    $referral->validate();
-                }
-
                 // remove contact_id validation error
                 $patient->clearErrors('contact_id');
                 $address->clearErrors('contact_id');
