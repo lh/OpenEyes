@@ -31,12 +31,14 @@
 		<div class="panel">
 			<ul class="inline-list">
 				<li><strong>Need help?</strong></li>
-				<?php if (Yii::app()->params['helpdesk_email']) { ?>
-					<li><?php echo Yii::app()->params['helpdesk_email'] ?></li>
-				<?php } ?>
-				<?php if (Yii::app()->params['helpdesk_phone']) { ?>
+        <?php
+        $help_email = SettingInstallation::model()->find('`key`="helpdesk_email"')['value'];
+        $help_email .= $help_email !== null ?null:Yii::app()->params['helpdesk_email']; ?>
+        <li><?php echo  $help_email?></li>
+				<?php
+        $help_phone = SettingInstallation::model()->find('`key`="helpdesk_phone"')[value];
+        $help_phone .= $help_email !== null ?null: Yii::app()->params['helpdesk_phone'];?>
 					<li><strong><?php echo Yii::app()->params['helpdesk_phone'] ?></strong></li>
-				<?php } ?>
 				<?php if (Yii::app()->params['help_url']) { ?>
 					<li><?php echo CHtml::link('Help Documentation', Yii::app()->params['help_url'],
 					array('target' => '_blank')) ?></li>
