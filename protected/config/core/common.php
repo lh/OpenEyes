@@ -386,6 +386,8 @@ return array(
             ),
         ),
         'admin_email' => '',
+        'helpdesk_email' => 'cera.support@fivium.com.au',
+        'helpdesk_phone' => '',
         'enable_transactions' => true,
         'event_lock_days' => 0,
         'event_lock_disable' => false,
