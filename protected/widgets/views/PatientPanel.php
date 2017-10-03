@@ -43,9 +43,6 @@ Yii::app()->assetManager->registerCssFile('components/font-awesome/css/font-awes
         <div class="large-8 column">
             <!-- NHS number -->
             <div class="nhs-number warning">
-				<span class="hide-text print-only">
-					NHS number:
-				</span>
                 <?php echo $this->patient->nhsnum?>
                 <?php if ($this->patient->nhsNumberStatus && $this->patient->nhsNumberStatus->isAnnotatedStatus()):?>
                     <i class="fa fa-asterisk" aria-hidden="true"></i><span class="messages"><?= $this->patient->nhsNumberStatus->description;?></span>
