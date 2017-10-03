@@ -29,13 +29,12 @@
 			<div class="panel">
 				<div class="row">
 					<div class="large-12 column">
-
 						<table class="grid">
 							<thead>
 								<tr>
-									<th>Site:</th>
-									<th>Firm:</th>
-									<th>User:</th>
+									<th width="15%">Site:</th>
+									<th width="15%">Firm:</th>
+									<th width="20%">User:</th>
 									<th>Action:</th>
 									<th>Target type:</th>
 									<th>Event type:</th>
@@ -51,19 +50,19 @@
 									</td>
 									<td>
 										<?php
-                                            $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                                                'id' => 'user',
-                                                'name' => 'user',
-                                                'value' => '',
-                                                'sourceUrl' => array('audit/users'),
-                                                'options' => array(
-                                                    'minLength' => '3',
-                                                ),
-                                                'htmlOptions' => array(
-                                                    'placeholder' => 'Type to search for users...',
-                                                ),
-                                            ));
-                                        ?>
+                      $this->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                          'id' => 'user',
+                          'name' => 'user',
+                          'value' => '',
+                          'sourceUrl' => array('audit/users'),
+                          'options' => array(
+                              'minLength' => '3',
+                          ),
+                          'htmlOptions' => array(
+                              'placeholder' => 'Type to search for users...',
+                          ),
+                      ));
+                    ?>
 									</td>
 									<td>
 										<?php echo CHtml::dropDownList('action', @$_POST['action'], CHtml::listData(AuditAction::model()->findAll(array('order' => 'name')), 'id', 'name'), array('empty' => 'All actions'))?>
