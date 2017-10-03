@@ -8477,3 +8477,12 @@ input:checked + .slider:before {
 .is_loading {
   content: url(../img/index_search/loading.gif);
 }
+
+#audit-filter-site,
+#audit-filter-firm {
+  width:150px;
+}
+
+#audit-filter-user{
+  width:200px;
+}

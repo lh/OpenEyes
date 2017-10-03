@@ -32,9 +32,9 @@
 						<table class="grid">
 							<thead>
 								<tr>
-									<th width="15%">Site:</th>
-									<th width="15%">Firm:</th>
-									<th width="20%">User:</th>
+									<th id="audit-filter-site">Site:</th>
+									<th id="audit-filter-firm">Firm:</th>
+									<th id="audit-filter-user">User:</th>
 									<th>Action:</th>
 									<th>Target type:</th>
 									<th>Event type:</th>
