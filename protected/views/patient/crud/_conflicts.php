@@ -6,7 +6,7 @@
  * Time: 12:01 PM
  */ ?>
 
-<div id="conflicts" class="large-6 column end">
+<div id="conflicts" class="large-4 column end">
   <div class="row field-row">
     <div class="box generic">
         <?php if (isset($patients)): ?>
