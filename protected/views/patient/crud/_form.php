@@ -177,17 +177,17 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-3 column"><?php echo $form->labelEx($patient, 'patient_source'); ?></div>
         <input type="hidden" name="changePatientSource" id="changePatientSource" value='0'>
         <div class="large-4 column end">
-          <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList(),
-              array(
-                'options'=>array($patient->getScenarioSourceCode()[$patient->getScenario()]=>array('selected'=>'selected')),
-                'onchange' =>'document.getElementById("changePatientSource").value ="1"; this.form.submit();',
-              )); ?>
+            <?php echo $form->dropDownList($patient, 'patient_source', $patient->getSourcesList(),
+                array(
+                    'options' => array($patient->getScenarioSourceCode()[$patient->getScenario()] => array('selected' => 'selected')),
+                    'onchange' => 'document.getElementById("changePatientSource").value ="1"; this.form.submit();',
+                )); ?>
         </div>
       </div>
     </div>
   </div>
   <hr/>
-<!--  Gender -->
+  <!--  Gender -->
   <div class="row field-row">
     <div class="large-6 column">
       <div class="row field-row">
@@ -495,7 +495,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                 <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
             </div>
             <div class="large-4 column end">
-                <p><?php echo $form->fileField($referral, 'uploadedFile'); ?></p>
+              <p><?php echo $form->fileField($referral, 'uploadedFile'); ?></p>
             </div>
           </div>
         </div>
@@ -503,7 +503,10 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     <?php endif; ?>
 
   <div class="row buttons text-right">
-      <?php echo CHtml::submitButton($patient->isNewRecord ? 'Create' : 'Save'); ?>
+      <?php echo CHtml::submitButton($patient->isNewRecord ? 'Create' : 'Save',
+          array('id' => 'patient-form-submit-button')); ?>
+    <img id="form-submit-loader" src="<?php echo Yii::app()->assetManager->createUrl('img/ajax-loader.gif') ?>"
+         alt="loading..." style="display: none;"/>
   </div>
     <?php $this->endWidget(); ?>
 
@@ -600,8 +603,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
 </div><!-- form -->
 
 <script type="text/javascript">
-  function getScenarioFromCode()
-  {
+  function getScenarioFromCode() {
     return {'1': 'referral', '2': 'self_register', '0': 'other_register'};
   }
 
@@ -623,4 +625,18 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
     }
   }
 
+  var submitted = false;
+  $(document).ready(function () {
+    $("#patient-form").on('submit', function (e) {
+        if (!submitted) {
+          $('#patient-form-submit-button').attr('disabled', true);
+          $('#patient-form-submit-button').addClass('disabled');
+          $('#form-submit-loader').show();
+          submitted = true;
+        } else {
+          e.preventDefault();
+        }
+      }
+    );
+  });
 </script>
