@@ -86,6 +86,12 @@ class DisorderController extends BaseController
         if (isset($_POST['Disorder'])) {
             $disorder->attributes = $_POST['Disorder'];
 
+            if ($disorder->is_ophthalmic === '1' &&
+                (null === $disorder->specialty_id || empty($disorder->specialty_id)))
+            {
+                $disorder->specialty_id = Specialty::model()->find('name = "Ophthalmology"')['id'];
+            }
+
             if ($disorder->save()) {
                 $this->redirect($this->createUrl('view', array('id' => $disorder->id)));
             }
