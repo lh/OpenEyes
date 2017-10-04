@@ -87,8 +87,7 @@ class DisorderController extends BaseController
             $disorder->attributes = $_POST['Disorder'];
 
             if ($disorder->is_ophthalmic === '1' &&
-                (null === $disorder->specialty_id || empty($disorder->specialty_id)))
-            {
+                (null === $disorder->specialty_id || empty($disorder->specialty_id))) {
                 $disorder->specialty_id = Specialty::model()->find('name = "Ophthalmology"')['id'];
             }
 
@@ -193,7 +192,7 @@ class DisorderController extends BaseController
             $params = array();
             if (isset($_GET['term']) && $term = $_GET['term']) {
                 $criteria->addCondition('LOWER(term) LIKE :term');
-                $params[':term'] = '%'.strtolower(strtr($term, array('%' => '\%'))).'%';
+                $params[':term'] = '%' . strtolower(strtr($term, array('%' => '\%'))) . '%';
             }
             $criteria->order = 'term';
 
@@ -225,7 +224,7 @@ class DisorderController extends BaseController
     public function actionGetCommonlyUsedDiagnoses($type)
     {
         $return = array();
-        if($type === 'systemic'){
+        if ($type === 'systemic') {
             foreach (CommonSystemicDisorder::getDisorders() as $disorder) {
                 $return[] = $this->disorderStructure($disorder);
             };
@@ -241,7 +240,8 @@ class DisorderController extends BaseController
         if (!isset($_REQUEST['name'])) {
             echo CJavaScript::jsonEncode(false);
         } else {
-            $disorder = Disorder::model()->find('fully_specified_name = ? OR term = ?', array($_REQUEST['name'], $_REQUEST['name']));
+            $disorder = Disorder::model()->find('fully_specified_name = ? OR term = ?',
+                array($_REQUEST['name'], $_REQUEST['name']));
             if ($disorder) {
                 echo $disorder->id;
             } else {
@@ -254,8 +254,9 @@ class DisorderController extends BaseController
     {
         $firm = Firm::model()->findByPk(Yii::app()->session['selected_firm_id']);
 
-        if ($cd = CommonOphthalmicDisorder::model()->find('disorder_id=? and subspecialty_id=?', array($id, $firm->serviceSubspecialtyAssignment->subspecialty_id))) {
-            echo "<option value=\"$cd->disorder_id\" data-order=\"{$cd->display_order}\">".$cd->disorder->term.'</option>';
+        if ($cd = CommonOphthalmicDisorder::model()->find('disorder_id=? and subspecialty_id=?',
+            array($id, $firm->serviceSubspecialtyAssignment->subspecialty_id))) {
+            echo "<option value=\"$cd->disorder_id\" data-order=\"{$cd->display_order}\">" . $cd->disorder->term . '</option>';
         }
     }
 }
