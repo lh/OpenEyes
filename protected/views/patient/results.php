@@ -24,6 +24,8 @@ if ($search_terms['patient_name']) {
 if ($search_terms['hos_num']) {
     $based_on[] = 'CERA Number and Medicare Number: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
+$core_api = new CoreAPI();
+
 $based_on = implode(', ', $based_on);
 ?>
 <div class="row">
@@ -72,7 +74,7 @@ $based_on = implode(', ', $based_on);
                 </thead>
                 <tbody>
                 <?php foreach ($dataProvided as $i => $result) { ?>
-                    <tr id="r<?php echo $result->id ?>" class="clickable" data-link="<?php echo $result->generateEpisodeLink(); ?>"
+                    <tr id="r<?php echo $result->id ?>" class="clickable" data-link="<?php echo $core_api->generateEpisodeLink($result); ?>"
                         <?php
                             echo "data-hos_num='{$result->hos_num}'";
                             if($result->isNewRecord){
