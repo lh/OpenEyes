@@ -1492,10 +1492,7 @@ class PatientController extends BaseController
         Yii::app()->assetManager->registerScriptFile('js/patient.js');
         //Don't render patient summary box on top as we have no selected patient
         $this->renderPatientPanel = false;
-        $patient_source ='referral';
-        if (isset($_GET['patient_source'])) {
-            $patient_source = $_GET['patient_source'];
-        }
+        $patient_source ='other_register';
         $patient = new Patient($patient_source);
         $patient->noPas();
         $contact = new Contact('manualAddPatient');
@@ -1509,7 +1506,7 @@ class PatientController extends BaseController
         $patient_user_referral = null;
         $this->performAjaxValidation(array($patient, $contact, $address));
         if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
-        {   
+        {
             $contact->attributes = $_POST['Contact'];
             $patient->attributes = $_POST['Patient'];
             $address->attributes = $_POST['Address'];
@@ -1547,13 +1544,13 @@ class PatientController extends BaseController
                     $contact->setScenario('manual');
                     break;
             }
-            
             // not to be sync with PAS
             $patient->is_local = 1;
-            
-            list($contact, $patient, $address, $referral, $patient_user_referral) =
-                $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
-        } else { // When the user first enters the screen
+            if ($_POST["changePatientSource"]==0){
+                list($contact, $patient, $address, $referral, $patient_user_referral) =
+                    $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
+            }
+        }else { // When the user first enters the screen
             $command = Yii::app()->db->createCommand('SELECT nextval("patient_cera_number")');
             $patient->hos_num = $command->queryScalar();
         }

@@ -285,9 +285,9 @@ class Patient extends BaseActiveRecordVersioned
     public function getSourcesList()
     {
         return array(
+            self::PATIENT_SOURCE_OTHER => 'Other',
             self::PATIENT_SOURCE_REFERRAL => 'Referral',
             self::PATIENT_SOURCE_SELF_REGISTER => 'Self-Registration',
-            self::PATIENT_SOURCE_OTHER => 'Other'
         );
     }
 
