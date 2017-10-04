@@ -1874,16 +1874,23 @@ class PatientController extends BaseController
     {
         $patients = Patient::findDuplicates($firstName, $last_name, $dob, $id);
 
-        if (count($patients) !== 0) {
-            $this->renderPartial('crud/_conflicts', array(
-                'patients' => $patients,
-                'name' => $firstName . ' ' . $last_name
+        if (isset($patients['error'])) {
+            $this->renderPartial('crud/_conflicts_error', array(
+                'errors' => $patients['error'],
             ));
         }
         else {
-            $this->renderPartial('crud/_conflicts', array(
-                'name' => $firstName . ' ' . $last_name
-            ));
+            if (count($patients) !== 0) {
+                $this->renderPartial('crud/_conflicts', array(
+                    'patients' => $patients,
+                    'name' => $firstName . ' ' . $last_name
+                ));
+            }
+            else {
+                $this->renderPartial('crud/_conflicts', array(
+                    'name' => $firstName . ' ' . $last_name
+                ));
+            }
         }
     }
     

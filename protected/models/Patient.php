@@ -2098,7 +2098,7 @@ class Patient extends BaseActiveRecordVersioned
      * @param $last_name string Last name.
      * @param $dob string Date of Birth (DD/MM/YYYY).
      * @param $id int ID of the current patient record.
-     * @return array|Patient[] The list of patients who have similar names and the same date of birth.
+     * @return array The list of patients who have similar names and the same date of birth, or the invalid patient model.
      */
     public static function findDuplicates($firstName, $last_name, $dob, $id)
     {
@@ -2116,7 +2116,17 @@ class Patient extends BaseActiveRecordVersioned
 
         $mysqlDob = Helper::convertNHS2MySQL(date('d M Y', strtotime(str_replace('/', '-', $dob))));
 
-        return Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $last_name, ':id' => $id));
+        $validPatient = new Patient('manual');
+        $validContact = new Contact('manual');
+        $validContact->first_name = $firstName;
+        $validContact->last_name = $last_name;
+        $validPatient->dob = $dob;
+
+        if ($validPatient->validate(array('dob')) && $validContact->validate(array('first_name', 'last_name'))) {
+            return Patient::model()->findAllBySql($sql, array(':dob' => $mysqlDob, ':first_name' => $firstName, ':last_name' => $last_name, ':id' => $id));
+        }
+
+        return array('error' => array_merge($validPatient->getErrors(), $validContact->getErrors()));
     }
 
     /**
