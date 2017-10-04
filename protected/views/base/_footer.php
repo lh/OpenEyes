@@ -41,7 +41,7 @@
             <?php echo $help_email ?>
         </li>
           <?php
-          $help_phone = SettingInstallation::model()->find('`key`="helpdesk_phone"')[value];
+          $help_phone = SettingInstallation::model()->find('`key`="helpdesk_phone"')['value'];
           $help_phone .= $help_phone === null ? Yii::app()->params['helpdesk_phone'] : null;
           ?>
         <li>
