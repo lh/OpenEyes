@@ -8486,3 +8486,8 @@ input:checked + .slider:before {
 #audit-filter-user{
   width:200px;
 }
+
+#injection_report_table{
+  display: block;
+  overflow-x: auto;
+}
