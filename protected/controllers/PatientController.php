@@ -1766,9 +1766,12 @@ class PatientController extends BaseController
         $this->performAjaxValidation(array($patient, $contact, $address));
 
         if (isset($_POST['Contact'], $_POST['Address'], $_POST['Patient'])) {
-            list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact,
-                $patient, $address, $referral, $patient_user_referral);
+            if ($_POST['changePatientSource'] == 0) {
+                list($contact, $patient, $address, $referral, $patient_user_referral) = $this->performPatientSave($contact,
+                    $patient, $address, $referral, $patient_user_referral);
+            }
         }
+        
 
         if (isset($patient->gp_id)) {
             $gp = Gp::model()->findByPk($patient->gp_id);
