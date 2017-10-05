@@ -1584,6 +1584,7 @@ class PatientController extends BaseController
     */
    private function performPatientSave(Contact $contact, Patient $patient, Address $address, PatientReferral $referral, PatientUserReferral $patient_user_referral)
    {
+        $patientScenario = $patient->getScenario();
         $transaction = Yii::app()->db->beginTransaction();
         try{
             if( $contact->save() ){
@@ -1686,6 +1687,7 @@ class PatientController extends BaseController
             $transaction->rollback();
         }
         
+        $patient->setScenario($patientScenario);
         return array($contact, $patient, $address, $referral, $patient_user_referral);
    }
    
