@@ -62,7 +62,7 @@
     <div class="large-4 column end">
         <?php if (isset($address["country_id"])) {
             echo $form->dropDownList($address,'country_id', $countries, array('options'=>array($address["country_id"]=>array('selected'=>true))));
-        }else {
+        } else {
             echo $form->dropDownList($address,'country_id', $countries, array('options'=>array(array_search('Australia', $countries)=>array('selected'=>true))));
         } ?>
         <?php echo $form->error($address,'country_id'); ?>
