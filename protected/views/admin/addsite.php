@@ -40,7 +40,9 @@
 	<?php echo $form->textField($address, 'postcode', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
 	<?php echo $form->textField($site, 'telephone', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
 	<?php echo $form->textField($site, 'fax', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->dropDownList($address, 'country_id', 'Country')?>
+	<?php $countryName = 'Australia';
+	      $country = Country::model()->find("name = '".$countryName."'");
+        echo $form->dropDownList($address, 'country_id', 'Country', array('options'=>array($country['id']=>array('selected'=>true))))?>
 	<?php echo $form->formActions(array('cancel-uri' => '/admin/sites'));?>
 	<?php $this->endWidget()?>
 </div>
