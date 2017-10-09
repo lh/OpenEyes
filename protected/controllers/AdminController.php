@@ -1020,8 +1020,8 @@ class AdminController extends BaseAdminController
                 }
 
                 Audit::add('admin-Site', 'add', $site->id);
-
-                $this->redirect(array('/admin/editSite?site_id=' . $site->id));
+                
+                $this->redirect('/admin/sites');
             }
         }
 

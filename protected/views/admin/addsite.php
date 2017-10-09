@@ -17,9 +17,9 @@
  */
 ?>
 <div class="box admin">
-	<h2>Add site</h2>
-	<?php echo $this->renderPartial('_form_errors', array('errors' => $errors))?>
-	<?php
+  <h2>Add site</h2>
+    <?php echo $this->renderPartial('_form_errors', array('errors' => $errors)) ?>
+    <?php
     $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
         'id' => 'adminform',
         'enableAjaxValidation' => false,
@@ -28,21 +28,29 @@
             'label' => 2,
             'field' => 5,
         ),
-    ))?>
-	<?php echo $form->dropDownList($site, 'institution_id', 'Institution', array('style' => 'margin-bottom:6px;'))?>
-	<?php echo $form->textField($site, 'name', array('autocomplete' => Yii::app()->params['html_autocomplete'], 'size' => '50'))?>
-	<?php echo $form->textField($site, 'short_name', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($site, 'remote_id', array('autocomplete' => Yii::app()->params['html_autocomplete']), null, array('field' => 2))?>
-	<?php echo $form->textField($address, 'address1', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($address, 'address2', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($address, 'city', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($address, 'county', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($address, 'postcode', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($site, 'telephone', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php echo $form->textField($site, 'fax', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-	<?php $countryName = 'Australia';
+    )) ?>
+    <?php echo $form->dropDownList($site, 'institution_id', 'Institution', array('style' => 'margin-bottom:6px;')) ?>
+    <?php echo $form->textField($site, 'name',
+        array('autocomplete' => Yii::app()->params['html_autocomplete'], 'size' => '50')) ?>
+    <?php echo $form->textField($site, 'short_name',
+        array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($site, 'remote_id', array('autocomplete' => Yii::app()->params['html_autocomplete']),
+        null, array('field' => 2)) ?>
+    <?php echo $form->textField($address, 'address1',
+        array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($address, 'address2',
+        array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($address, 'city', array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($address, 'county', array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($address, 'postcode',
+        array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($site, 'telephone', array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php echo $form->textField($site, 'fax', array('autocomplete' => Yii::app()->params['html_autocomplete'])) ?>
+    <?php $countryName = 'Australia';
 	      $country = Country::model()->find("name = '".$countryName."'");
         echo $form->dropDownList($address, 'country_id', 'Country', array('options'=>array($country['id']=>array('selected'=>true))))?>
-	<?php echo $form->formActions(array('cancel-uri' => '/admin/sites'));?>
-	<?php $this->endWidget()?>
+    <?php echo $form->textField($site, 'location_code') ?>
+    <?php echo $form->checkbox($site, 'active') ?>
+    <?php echo $form->formActions(array('cancel-uri' => '/admin/sites')); ?>
+    <?php $this->endWidget() ?>
 </div>

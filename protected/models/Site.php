@@ -113,7 +113,7 @@ class Site extends BaseActiveRecordVersioned
     {
         return array(
             'id' => 'ID',
-            'remote_id' => 'Code',
+            'remote_id' => 'Institution Code',
             'name' => 'Name',
             'institution_id' => 'Institution',
             'location_code' => 'Location Code',
