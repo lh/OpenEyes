@@ -65,6 +65,7 @@ class SecondaryDiagnosis extends BaseActiveRecordVersioned
             array('disorder_id, patient_id', 'required'),
             array('disorder_id, eye_id, patient_id, is_confirmed', 'safe'),
             array('date', 'OEFuzzyDateValidator'),
+            array('date', 'OEPatientEventDateValidator', 'patient_id'=>$this->patient->id),
         );
     }
 

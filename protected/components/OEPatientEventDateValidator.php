@@ -16,12 +16,20 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html The GNU Affero General Public License V3.0
  */
 
-public class OEPatientEventDateValidator extends OEBaseDateValidator
+class OEPatientEventDateValidator extends OEDatetimeValidator
 {
+    public $patient_id;
     public function validateAttribute($object, $attribute)
     {
-        Yii::log(var_export($object, true));
-        Yii::log(var_export($attribute, true));
-        return true;
+        parent::validateAttribute($object, $attribute);
+
+        $interval = DateInterval::createFromDateString('9 months');
+        $pat_dob = DateTime::createFromFormat('Y-m-d',Patient::model()->findByPk($this->patient_id)->dob);
+        $pat_conception_date = $pat_dob->sub($interval)->format('Y-m-d');
+
+        if($object->$attribute < $pat_conception_date)
+        {
+            $this->addError($object, $attribute, 'Patients cannot have events before they are conceived');
+        }
     }
 }
