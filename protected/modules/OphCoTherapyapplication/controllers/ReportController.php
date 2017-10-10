@@ -333,12 +333,17 @@ class ReportController extends BaseReportController
     public function actionPendingApplications()
     {
         $sent = false;
+        $error_message = null;
 
         if (Yii::app()->getRequest()->getQuery('report') === 'generate') {
-            $pendingApplications = new PendingApplications();
-            $sent = $pendingApplications->emailCsvFile(Yii::app()->params['applications_alert_recipients']);
+            try {
+                $pendingApplications = new PendingApplications();
+                $sent = $pendingApplications->emailCsvFile(Yii::app()->params['applications_alert_recipients']);
+            } catch (Exception $ex) {
+                $error_message = $ex->getMessage();
+            }
         }
 
-        $this->render('pending_applications', array('sent' => $sent));
+        $this->render('pending_applications', array('sent' => $sent, 'error_message' => $error_message));
     }
 }
