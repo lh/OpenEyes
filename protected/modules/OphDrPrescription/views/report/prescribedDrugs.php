@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="large-1 column end">
-                      <img class="autocomplete-loader" style="display: none;" src="<?php echo Yii::app()->assetManager->createUrl('img/ajax-loader.gif')?>" alt="loading..." />&nbsp;
+                      <img class="autocomplete-loader" style="display: none;" src="<?php echo Yii::app()->assetManager->createUrl('img/ajax-loader.gif')?>" alt="loading..." />
                     </div>
                 </div>
 
