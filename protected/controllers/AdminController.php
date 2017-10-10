@@ -1876,7 +1876,15 @@ class AdminController extends BaseAdminController
 
     public function actionSettings()
     {
-        $this->render('/admin/settings');
+        $criteria = new CDbCriteria();
+        $criteria->addCondition('element_type_id is null');
+
+        if (isset($_POST['search'])) {
+            $criteria->addSearchCondition('LOWER(name)', strtolower($_POST['search']));
+        }
+
+        $settings = SettingMetadata::model()->findAll($criteria);
+        $this->render('/admin/settings', array('setting_metadata_list' => $settings));
     }
 
     public function actionEditSetting()

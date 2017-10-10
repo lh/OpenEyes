@@ -15,6 +15,9 @@
  * @copyright Copyright (c) 2011-2012, OpenEyes Foundation
  * @license http://www.gnu.org/licenses/agpl-3.0.html The GNU Affero General Public License V3.0
  */
+
+/* @var SettingMetadata[] $setting_metadata_list */
+
 ?>
 <div class="box admin">
 	<div class="row">
@@ -50,8 +53,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<?php
-                foreach (SettingMetadata::model()->findAll('element_type_id is null') as $metadata) {?>
+				<?php foreach ($setting_metadata_list as $metadata) {?>
 					<tr class="clickable" data-key="<?php echo $metadata->key?>">
 						<td><?php echo $metadata->name?></td>
 						<td><?php echo $metadata->getSettingName()?></td>
