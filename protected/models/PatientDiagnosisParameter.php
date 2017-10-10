@@ -76,6 +76,9 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
                     'options' => array(
                         'minLength' => 2,
                     ),
+                    'htmlOptions' => array(
+                        'placeholder' => 'Type to search for a diagnosis',
+                    ),
                 ), true);
                 Yii::app()->clientScript->render($html);
                 echo $html;
