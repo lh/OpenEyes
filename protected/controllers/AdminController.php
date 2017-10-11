@@ -692,7 +692,7 @@ class AdminController extends BaseAdminController
 
         $contacts = Contact::model()->findAll($criteria);
 
-        if (count($contacts) == 1) {
+        if (@$_GET['q'] !== '' && @$_GET['q'] !== null && count($contacts) == 1) {
             foreach ($contacts as $contact) {
             }
             $this->redirect(array('/admin/editContact?contact_id=' . $contact->id));

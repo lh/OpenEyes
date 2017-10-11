@@ -55,15 +55,7 @@
 		handleButton($('#et_search'),function(e) {
 			e.preventDefault();
 			if ($('#q').val().length <1) {
-				new OpenEyes.UI.Dialog.Alert({
-					content: "Please enter a search term"
-				})
-				.on('close', function() {
-					enableButtons();
-					$('#q').focus;
-				})
-				.open();
-				enableButtons();
+        window.location.href = baseUrl+'/admin/contacts';
 			} else {
 				window.location.href = baseUrl+'/admin/contacts?q='+$('#q').val()+'&label='+$('#label').val();
 			}
