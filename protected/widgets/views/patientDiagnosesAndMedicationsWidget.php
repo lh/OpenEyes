@@ -26,6 +26,13 @@
                                     <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)) : 'Unknown'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
+                            <?php foreach ($this->patient->systemic_diagnoses as $diagnosis):?>
+                                <tr>
+                                    <td><?php echo CHtml::encode($diagnosis->getDisplayDisorder()) . ' (Secondary)'; ?></td>
+                                    <td><?php echo $diagnosis->element->event ? CHtml::encode($diagnosis->element->event->episode->firm->getNameAndSubspecialty()) : 'Unknown'; ?></td>
+                                    <td><?php echo $diagnosis->element->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element->event->event_date)) : 'Unknown'; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>

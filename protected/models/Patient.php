@@ -57,8 +57,10 @@
  * @property SecondaryDiagnosis[] $secondarydiagnoses
  * @property EthnicGroup $ethnic_group
  * @property CommissioningBody[] $commissioningbodies
- * @property SocialHistory $socialhistory
- * @property TrialPatient[] trials
+ * @property \OEModule\OphCiExamination\models\SocialHistory $socialhistory
+ * @property TrialPatient[] $trials
+ * @property \OEModule\OphCiExamination\models\OphCiExamination_Diagnosis[] $diagnoses
+ * @property \OEModule\OphCiExamination\models\SystemicDiagnoses_Diagnosis[] $systemic_diagnoses
  *
  */
 class Patient extends BaseActiveRecordVersioned
@@ -171,6 +173,7 @@ class Patient extends BaseActiveRecordVersioned
             'diagnoses' => array(self::MANY_MANY, '\OEModule\OphCiExamination\models\OphCiExamination_Diagnosis', 'patient_diagnosis_assignment(patient_id, id)',
                 'alias' => 'patient_diagnoses',
                 'order' => 'patient_diagnoses.principal DESC', ),
+            'systemic_diagnoses' => array(self::MANY_MANY, '\OEModule\OphCiExamination\models\SystemicDiagnoses_Diagnosis', 'patient_systemic_diagnosis(patient_id, id)'),
             'allergyAssignments' => array(self::HAS_MANY, 'PatientAllergyAssignment', 'patient_id'),
             'referral' => array(self::HAS_ONE, 'PatientReferral', 'patient_id'),
             'risks' => array(
