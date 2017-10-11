@@ -19,14 +19,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($this->patient->diagnoses as $diagnosis):?>
+                            <?php foreach ($this->patient->diagnoses as $diagnosis): ?>
                                 <tr>
                                     <td><?php echo CHtml::encode($diagnosis) . ' (' . ($diagnosis->principal == 1 ? 'Principal' : 'Secondary') . ')'; ?></td>
                                     <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode($diagnosis->element_diagnoses->event->episode->firm->getNameAndSubspecialty()) : 'Unknown'; ?></td>
                                     <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)) : 'Unknown'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
-                            <?php foreach ($this->patient->systemic_diagnoses as $diagnosis):?>
+                            <?php foreach ($this->patient->systemic_diagnoses as $diagnosis): ?>
                                 <tr>
                                     <td><?php echo CHtml::encode($diagnosis->getDisplayDisorder()) . ' (Secondary)'; ?></td>
                                     <td><?php echo $diagnosis->element->event ? CHtml::encode($diagnosis->element->event->episode->firm->getNameAndSubspecialty()) : 'Unknown'; ?></td>
@@ -68,7 +68,7 @@
                             <?php foreach ($this->patient->medications as $medication): ?>
                                 <tr>
                                     <td><?php echo $medication->getMedicationDisplay(); ?></td>
-                                    <td><?php echo $medication->getAdministrationDisplay();?></td>
+                                    <td><?php echo $medication->getAdministrationDisplay(); ?></td>
                                     <td><?php echo Helper::formatFuzzyDate($medication->start_date); ?></td>
                                     <td><?php echo isset($medication->end_date) ? Helper::formatFuzzyDate($medication->end_date) : ''; ?></td>
                                 </tr>

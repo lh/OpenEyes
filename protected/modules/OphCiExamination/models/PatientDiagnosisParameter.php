@@ -110,9 +110,9 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
     {
         $query = "SELECT DISTINCT p.id
 FROM patient p
-LEFT JOIN patient_diagnosis_assignment paa
+JOIN patient_diagnosis_assignment paa
   ON paa.patient_id = p.id
-LEFT JOIN disorder d
+JOIN disorder d
   ON d.id = paa.disorder_id
 WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)
 
@@ -120,26 +120,26 @@ UNION
 
 SELECT DISTINCT p2.id
 FROM patient p2 
-LEFT JOIN patient_systemic_diagnosis psd
+JOIN patient_systemic_diagnosis psd
   ON psd.patient_id = p2.id
-LEFT JOIN disorder d2
+JOIN disorder d2
   ON d2.id = psd.disorder_id
 WHERE LOWER(d2.term) LIKE LOWER(:p_d_value_$this->id)";
         if ($this->firm_id !== '' && $this->firm_id !== null) {
             $query = "SELECT DISTINCT p.id 
 FROM patient p
-LEFT JOIN patient_diagnosis_assignment paa
+JOIN patient_diagnosis_assignment paa
   ON paa.patient_id = p.id
-LEFT JOIN disorder d
+JOIN disorder d
   ON d.id = paa.disorder_id
-LEFT JOIN et_ophciexamination_diagnoses et_diag
+JOIN et_ophciexamination_diagnoses et_diag
   ON et_diag.id = paa.element_diagnoses_id
-LEFT JOIN latest_diagnosis_examination_events latest
+JOIN latest_diagnosis_examination_events latest
   ON latest.event_id = et_diag.event_id
   AND latest.patient_id = p.id
-LEFT JOIN event e
+JOIN event e
   ON e.id = latest.event_id
-LEFT JOIN episode ep
+JOIN episode ep
   ON ep.id = e.episode_id
 WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)
   AND ep.firm_id = :p_d_firm_$this->id
@@ -148,18 +148,18 @@ UNION
 
 SELECT DISTINCT p2.id
 FROM patient p2 
-LEFT JOIN patient_systemic_diagnosis psd
+JOIN patient_systemic_diagnosis psd
   ON psd.patient_id = p2.id
-LEFT JOIN disorder d2
+JOIN disorder d2
   ON d2.id = psd.disorder_id
-LEFT JOIN et_ophciexamination_systemic_diagnoses et_systemic
+JOIN et_ophciexamination_systemic_diagnoses et_systemic
   ON et_systemic.id = psd.element_id
-LEFT JOIN latest_systemic_examination_events latest2
+JOIN latest_systemic_examination_events latest2
   ON latest2.event_id = et_systemic.event_id
   AND latest2.patient_id = p2.id
-LEFT JOIN event e2
+JOIN event e2
   ON e2.id = latest2.event_id
-LEFT JOIN episode ep2
+JOIN episode ep2
   ON ep2.id = e2.episode_id
 WHERE LOWER(d2.term) LIKE LOWER(:p_d_value_$this->id)
   AND ep2.firm_id = :p_d_firm_$this->id";
