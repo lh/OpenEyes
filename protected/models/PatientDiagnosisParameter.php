@@ -91,7 +91,7 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
                         <p>by</p>
                     </div>
                     <div class="large-10 column end">
-                        <?php echo CHtml::activeDropDownList($this, "[$id]firm_id", $firms, array('empty' => 'Any Firm')); ?>
+                        <?php echo CHtml::activeDropDownList($this, "[$id]firm_id", $firms, array('empty' => 'Any ' . Firm::contextLabel())); ?>
                     </div>
                 </div>
             </div>

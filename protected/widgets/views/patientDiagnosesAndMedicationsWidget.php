@@ -14,7 +14,7 @@
                             <thead>
                             <tr>
                                 <th>Diagnosis</th>
-                                <th>Diagnosis Origin</th>
+                                <th><?php echo Firm::contextLabel(); ?></th>
                                 <th>Date</th>
                             </tr>
                             </thead>
