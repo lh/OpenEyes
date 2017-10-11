@@ -69,7 +69,7 @@
                       'data':{'term': request.term, 'filter': filter},
                       'success':function(data) {
                         data = $.parseJSON(data);
-        
+                       
                         var result = [];
         
                         contactCache = {};
@@ -87,7 +87,7 @@
                             }
                           }
                         }
-        
+               
                         response(result);
         
                         $('img.loader').hide();
@@ -127,7 +127,6 @@
                           }
                         }
                       });
-        
                       return false;
                     }",
                   ),

@@ -195,12 +195,18 @@ class Contact extends BaseActiveRecordVersioned
         if (!$cl = ContactLabel::model()->find('name=?', array($label))) {
             throw new Exception("Unknown contact label: $label");
         }
-
         $contacts = array();
 
+        $terms = explode(" ", $term);
+
         $criteria = new CDbCriteria();
-        $criteria->addSearchCondition('lower(last_name)', $term, false);
-        if ($exclude) {
+        foreach ($terms as $termitem){
+            $criteria->addSearchCondition('lower(last_name)', $termitem, false,'OR','LIKE');
+            $criteria->addSearchCondition('lower(first_name)', $termitem, false,'OR','LIKE');
+            $criteria->addSearchCondition('lower(title)', $termitem, false,'OR');
+        }
+
+         if ($exclude) {
             $criteria->compare('contact_label_id', '<>' . $cl->id);
         } else {
             $criteria->compare('contact_label_id', $cl->id);
@@ -216,9 +222,8 @@ class Contact extends BaseActiveRecordVersioned
             $criteria->join = 'join ' . $join . ' model_join on model_join.contact_id = t.id';
         }
         $found_contacts = self::model()->with(array('locations' => array('with' => array('site', 'institution')), 'label'))->findAll($criteria);
-
         foreach ($found_contacts as $contact) {
-            if ($contact->locations) {
+            if (isset($contact->locations)) {
                 foreach ($contact->locations as $location) {
                     $contacts[] = array(
                         'line' => $contact->contactLine($location),
