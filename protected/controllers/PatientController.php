@@ -1873,6 +1873,37 @@ class PatientController extends BaseController
         Yii::app()->end();
     }
 
+    public function actionDownloadReferral($id)
+    {
+        $model = PatientReferral::model()->findByPk($id);
+
+        Yii::app()->request->sendFile($model->file_name, $model->file_content, $model->file_type, true);
+    }
+
+    public function actionFindDuplicates($firstName, $last_name, $dob, $id = null)
+    {
+        $patients = Patient::findDuplicates($firstName, $last_name, $dob, $id);
+
+        if (isset($patients['error'])) {
+            $this->renderPartial('crud/_conflicts_error', array(
+                'errors' => $patients['error'],
+            ));
+        }
+        else {
+            if (count($patients) !== 0) {
+                $this->renderPartial('crud/_conflicts', array(
+                    'patients' => $patients,
+                    'name' => $firstName . ' ' . $last_name
+                ));
+            }
+            else {
+                $this->renderPartial('crud/_conflicts', array(
+                    'name' => $firstName . ' ' . $last_name
+                ));
+            }
+        }
+    }
+
     /**
      * Ajax method for viewing previous elements.
      *
