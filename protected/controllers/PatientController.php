@@ -1492,7 +1492,7 @@ class PatientController extends BaseController
         Yii::app()->assetManager->registerScriptFile('js/patient.js');
         //Don't render patient summary box on top as we have no selected patient
         $this->renderPatientPanel = false;
-        $patient_source ='other_register';
+        $patient_source ='referral';
         $patient = new Patient($patient_source);
         $patient->noPas();
         $contact = new Contact('manualAddPatient');
