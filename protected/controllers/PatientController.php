@@ -1845,14 +1845,16 @@ class PatientController extends BaseController
         $criteria->addCondition('( (date_end is NULL OR date_end > NOW()) AND (date_start is NULL OR date_start < NOW()))');
         
         $criteria->addSearchCondition('LOWER(CONCAT_WS(", ", address1, address2, city, county, postcode))', $term);
+        $criteria->addSearchCondition('first_name', $term, true, 'OR');
         
         $practices = Practice::model()->findAll($criteria);
         
         $output = array();
         foreach($practices as $practice){
+            $displayText = (($practice->contact->first_name . ', ') ?: '') . $practice->getAddressLines();
             $output[] = array(
-                'label' => $practice->getAddressLines(),
-                'value' => $practice->getAddressLines(),
+                'label' => $displayText,
+                'value' => $displayText,
                 'id'    => $practice->id
             );
         }
