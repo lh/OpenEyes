@@ -25,12 +25,9 @@ class OEPatientEventDateValidator extends OEDatetimeValidator
         if ($object->$attribute == "0000-00-00"){
             return true;
         }
-        parent::validateAttribute($object, $attribute);
-
         $interval = DateInterval::createFromDateString('9 months');
         $pat_dob = DateTime::createFromFormat('Y-m-d', Patient::model()->findByPk($this->patient_id)->dob);
         $pat_conception_date = $pat_dob->sub($interval)->format('Y-m-d');
-
         if ($object->$attribute < $pat_conception_date) {
             $this->addError($object, $attribute, 'Patients cannot have events before they are conceived');
         }
