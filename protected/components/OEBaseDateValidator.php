@@ -48,7 +48,6 @@ abstract class OEBaseDateValidator extends CValidator
                 $res = false;
             }
         }
-
         return $res;
     }
 }

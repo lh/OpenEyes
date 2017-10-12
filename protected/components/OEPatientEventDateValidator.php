@@ -22,6 +22,9 @@ class OEPatientEventDateValidator extends OEDatetimeValidator
 
     public function validateAttribute($object, $attribute)
     {
+        if ($object->$attribute == "0000-00-00"){
+            return true;
+        }
         parent::validateAttribute($object, $attribute);
 
         $interval = DateInterval::createFromDateString('9 months');
