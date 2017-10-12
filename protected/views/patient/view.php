@@ -58,15 +58,6 @@ $warnings = $this->patient->getWarnings($clinical);
 				</div>
 			</div>
 		<?php }?>
-        <?php if ($this->patient->hasUnconfirmedDiagnoses()) {?>
-            <div class="row">
-                <div class="large-12 column">
-                    <div id="has-unconfirmed-diagnosis" class="alert-box alert with-icon">
-                        Patient has at least one unconfirmed diagnosis.
-                    </div>
-                </div>
-            </div>
-        <?php }?>
 		<?php if ($warnings) { ?>
 			<div class="row">
 				<div class="large-12 column">

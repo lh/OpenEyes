@@ -12,18 +12,6 @@ $(document).ready(function() {
 		});
 	});
 
-    $('.confirmDiagnosis').live('click',function(e) {
-        e.preventDefault();
-
-        $('#diagnosis_id').val($(this).attr('rel'));
-
-        $('#confirm_diagnosis_confirmation_dialog').dialog({
-            resizable: false,
-            modal: true,
-            width: 560
-        });
-    });
-
 	$('button.btn_remove_diagnosis').click(function(e) {
 		e.preventDefault();
 
@@ -49,38 +37,10 @@ $(document).ready(function() {
 		});
 	});
 
-    $('button.btn_confirm_diagnosis').click(function(e) {
-        e.preventDefault();
-
-        $.ajax({
-            'type': 'GET',
-            'url': baseUrl+'/patient/confirmdiagnosis?patient_id='+OE_patient_id+'&diagnosis_id='+$('#diagnosis_id').val(),
-            'success': function(html) {
-                if (html == 'success') {
-                    location.reload();
-                } else {
-                    new OpenEyes.UI.Dialog.Alert({
-                        content: "Sorry, an internal error occurred and we were unable to confirm the diagnosis.\n\nPlease contact support for assistance."
-                    }).open();
-                }
-            },
-            'error': function() {
-                new OpenEyes.UI.Dialog.Alert({
-                    content: "Sorry, an internal error occurred and we were unable to confirm the diagnosis.\n\nPlease contact support for assistance."
-                }).open();
-            }
-        });
-    });
-
 	$('button.btn_cancel_remove_diagnosis').click(function(e) {
 		e.preventDefault();
 		$("#confirm_remove_diagnosis_dialog").dialog("close");
 	});
-
-    $('button.btn_cancel_confirm_diagnosis').click(function(e) {
-        e.preventDefault();
-        $("#confirm_diagnosis_confirmation_dialog").dialog("close");
-    });
 
 	$('tr.all-episode').unbind('click').click(function(e) {
 		e.preventDefault();

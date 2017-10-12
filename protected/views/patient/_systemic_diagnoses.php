@@ -40,26 +40,20 @@
 			</tr>
 			</thead>
 			<tbody>
-			<?php foreach ($this->patient->systemicDiagnoses as $diagnosis) {?>
-				<tr>
-					<td><?php echo $diagnosis->dateText?></td>
-					<td>
-                        <?php echo $diagnosis->eye ? $diagnosis->eye->adjective : ''?>
-                        <?php echo $diagnosis->disorder->term?>
-                        <?php echo $diagnosis->isUnconfirmed() ? '(Unconfirmed)' : ''; ?>
-                    </td>
-					<?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?>
-						<td>
-                            <a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a>
-                        </td>
-                        <?php if ($diagnosis->isUnconfirmed()): ?>
-                        <td>
-                            <a href="#" class="confirmDiagnosis" rel="<?php echo $diagnosis->id?>">Confirm</a>
-                        </td>
-                        <?php endif; ?>
-                    <?php } ?>
-				</tr>
-			<?php }?>
+      <?php foreach ($this->patient->systemicDiagnoses as $diagnosis) { ?>
+        <tr>
+          <td><?php echo $diagnosis->dateText ?></td>
+          <td>
+              <?php echo $diagnosis->eye ? $diagnosis->eye->adjective : '' ?>
+              <?php echo $diagnosis->disorder->term ?>
+          </td>
+            <?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?>
+              <td>
+                <a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id ?>">Remove</a>
+              </td>
+            <?php } ?>
+        </tr>
+      <?php } ?>
 			</tbody>
 		</table>
 

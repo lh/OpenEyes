@@ -23,7 +23,6 @@ return array(
         'disorder_id' => 5,
         'patient_id' => 2,
         'date' => '2008',
-        'is_confirmed' => 0
     ),
     'secondaryDiagnoses5' => array(
         'disorder_id' => 6,
@@ -53,13 +52,11 @@ return array(
         'patient_id' => 1,
         'eye_id' => 3,
         'date' => date('Y-m-d', strtotime('-22 days')),
-        'is_confirmed' => 1
     ),
     'secondaryDiagnoses10' => array(
         'disorder_id' => 6,
         'patient_id' => 1,
         'eye_id' => 3,
         'date' => date('Y-m-d', strtotime('-22 days')),
-        'is_confirmed' => 0
     ),
 );

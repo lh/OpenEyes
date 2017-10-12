@@ -54,16 +54,9 @@
 					}
 					?>
 					<td><?php echo $diagnosis->dateText?></td>
-					<td><?php echo $term . ($diagnosis->isUnconfirmed() ? ' (Unconfirmed)' : ''); ?></td>
+					<td><?php echo $term; ?></td>
 					<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
 						<td><a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a></td>
-                        <?php if ($diagnosis->isUnconfirmed()): ?>
-                            <td>
-                                <a href="#" class="confirmDiagnosis" rel="<?php echo $diagnosis->id?>">Confirm</a>
-                            </td>
-                        <?php else: ?>
-                            <td></td>
-                        <?php endif; ?>
 					<?php } ?>
 				</tr>
 			<?php }?>
@@ -167,20 +160,6 @@
 			</div>
 		</div>
 	</div>
-
-    <div id="confirm_diagnosis_confirmation_dialog" title="Confirm diagnosis" style="display: none;">
-        <div id="confirm_diagnosis">
-            <p>
-                <strong>Are you sure you want to want to confirm this diagnosis?</strong>
-            </p>
-            <div class="buttons">
-                <input type="hidden" id="diagnosis_id" value="" />
-                <button type="submit" class="secondary small btn_confirm_diagnosis">Confirm diagnosis</button>
-                <button type="submit" class="warning small btn_cancel_confirm_diagnosis">Cancel</button>
-                <img class="loader hide" src="<?php echo Yii::app()->assetManager->createUrl('img/ajax-loader.gif')?>" alt="loading..." />
-            </div>
-        </div>
-    </div>
 
 	<script type="text/javascript">
 

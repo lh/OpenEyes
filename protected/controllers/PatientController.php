@@ -64,7 +64,7 @@ class PatientController extends BaseController
                 'roles' => array('OprnEditAllergy'),
             ),
             array('allow',
-                'actions' => array('adddiagnosis', 'validateAddDiagnosis', 'removediagnosis', 'confirmdiagnosis'),
+                'actions' => array('adddiagnosis', 'validateAddDiagnosis', 'removediagnosis'),
                 'roles' => array('OprnEditOtherOphDiagnosis'),
             ),
             array('allow',
@@ -831,17 +831,6 @@ class PatientController extends BaseController
         }
 
         $patient->removeDiagnosis(@$_GET['diagnosis_id']);
-
-        echo 'success';
-    }
-
-    public function actionConfirmdiagnosis()
-    {
-        if (!$patient = Patient::model()->findByPk(@$_GET['patient_id'])) {
-            throw new Exception('Unable to find patient: '.@$_GET['patient_id']);
-        }
-
-        $patient->confirmDiagnosis(@$_GET['diagnosis_id']);
 
         echo 'success';
     }

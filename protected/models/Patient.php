@@ -694,16 +694,6 @@ class Patient extends BaseActiveRecordVersioned
         return $this->no_risks_date || $this->risks;
     }
 
-    public function hasUnconfirmedDiagnoses()
-    {
-        foreach ($this->secondarydiagnoses as $diagnosis) {
-            if ($diagnosis->isUnconfirmed()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * @return bool Is patient deceased?
@@ -1413,7 +1403,6 @@ class Patient extends BaseActiveRecordVersioned
             $sd->disorder_id = $disorder_id;
             $sd->eye_id = $eye_id;
             $sd->date = $date;
-            $sd->is_confirmed = 0;
 
             if (!$sd->save()) {
                 throw new Exception('Unable to save secondary diagnosis: '.print_r($sd->getErrors(), true));
@@ -1450,38 +1439,6 @@ class Patient extends BaseActiveRecordVersioned
         Yii::app()->event->dispatch('patient_remove_diagnosis', array('patient'=>$patient, 'diagnosis' => $sd));
 
         $this->audit('patient', "remove-$type-diagnosis");
-    }
-
-    /**
-     * @param integer $diagnosis_id
-     * @throws Exception
-     */
-    public function confirmDiagnosis($diagnosis_id)
-    {
-        if (!$sd = SecondaryDiagnosis::model()->findByPk($diagnosis_id)) {
-            throw new Exception('Unable to find secondary_diagnosis: '.$diagnosis_id);
-        }
-
-        if (!$disorder = Disorder::model()->findByPk($sd->disorder_id)) {
-            throw new Exception('Unable to find disorder: '.$sd->disorder_id);
-        }
-
-        $patient = $sd->patient;
-
-        if ($disorder->specialty_id) {
-            $type = strtolower(Specialty::model()->findByPk($disorder->specialty_id)->code);
-        } else {
-            $type = 'sys';
-        }
-
-        $sd->is_confirmed = 1;
-        if (!$sd->save()) {
-            throw new Exception('Unable to confirm diagnosis: '.print_r($sd->getErrors(), true));
-        }
-
-        Yii::app()->event->dispatch('patient_confirm_diagnosis', array('patient'=>$patient, 'diagnosis' => $sd));
-
-        $this->audit('patient', "confirm-$type-diagnosis");
     }
 
     /**
