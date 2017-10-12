@@ -1851,7 +1851,7 @@ class PatientController extends BaseController
         
         $output = array();
         foreach($practices as $practice){
-            $displayText = (($practice->contact->first_name . ', ') ?: '') . $practice->getAddressLines();
+            $displayText = ($practice->contact->first_name ? ($practice->contact->first_name . ', ') : '') . $practice->getAddressLines();
             $output[] = array(
                 'label' => $displayText,
                 'value' => $displayText,

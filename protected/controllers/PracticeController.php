@@ -74,7 +74,7 @@ class PracticeController extends BaseController
                 $context === 'AJAX');
         }
         if ($context === 'AJAX') {
-            $displayText = (($practice->contact->first_name . ', ') ?: '') . $practice->getAddressLines();
+            $displayText = ($practice->contact->first_name ? ($practice->contact->first_name . ', ') : '') . $practice->getAddressLines();
             echo CJSON::encode(array(
                 'label' => $displayText,
                 'value' => $displayText,
