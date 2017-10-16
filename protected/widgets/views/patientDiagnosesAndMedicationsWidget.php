@@ -33,6 +33,13 @@
                                     <td><?php echo $diagnosis->element->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element->event->event_date)) : 'Unknown'; ?></td>
                                 </tr>
                             <?php endforeach; ?>
+                            <?php foreach ($this->patient->secondarydiagnoses as $diagnosis): ?>
+                                <tr>
+                                    <td><?php echo CHtml::encode($diagnosis->getSystemicDescription()) . ' (Secondary)'; ?></td>
+                                    <td>Unknown</td>
+                                    <td><?php echo $diagnosis->getDateText() ? CHtml::encode($diagnosis->getDateText()) : 'Unknown'; ?></td>
+                                </tr>
+                            <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>

@@ -124,7 +124,17 @@ JOIN patient_systemic_diagnosis psd
   ON psd.patient_id = p2.id
 JOIN disorder d2
   ON d2.id = psd.disorder_id
-WHERE LOWER(d2.term) LIKE LOWER(:p_d_value_$this->id)";
+WHERE LOWER(d2.term) LIKE LOWER(:p_d_value_$this->id)
+
+UNION
+
+SELECT DISTINCT p3.id
+FROM patient p3 
+JOIN secondary_diagnosis sd
+  ON sd.patient_id = p3.id
+JOIN disorder d3
+  ON d3.id = sd.disorder_id
+WHERE LOWER(d3.term) LIKE LOWER(:p_d_value_$this->id)";
         if ($this->firm_id !== '' && $this->firm_id !== null) {
             $query = "SELECT DISTINCT p.id 
 FROM patient p
