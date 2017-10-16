@@ -216,15 +216,10 @@ class PatientSearch
         }
 
         $terms = explode(' ', $term, 3);
-        $result = null;
-        $result['contact_name'] = array();
-        foreach ($terms as $term){
-            if (in_array($term, $titles)) {
-                $result['title'] = $term;
-            } else {
-                array_push($result['contact_name'], $term);
-            }
-        }
+        $result = array('contact_name'=>array());
+
+        $result['title'] = implode(array_intersect($terms, $titles));
+        $result['contact_name'] = array_values(array_diff($terms, $titles));
         return $result;
     }
 
