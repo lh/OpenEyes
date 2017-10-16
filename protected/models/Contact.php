@@ -197,13 +197,31 @@ class Contact extends BaseActiveRecordVersioned
         }
         $contacts = array();
 
-        $terms = explode(" ", $term);
+        $patientSearch = new PatientSearch();
+
+        $terms = $patientSearch->getContactTitleName($term);
 
         $criteria = new CDbCriteria();
-        foreach ($terms as $termitem){
-            $criteria->addSearchCondition('lower(last_name)', $termitem, false,'OR','LIKE');
-            $criteria->addSearchCondition('lower(first_name)', $termitem, false,'OR','LIKE');
-            $criteria->addSearchCondition('lower(title)', $termitem, false,'OR');
+        if (isset($terms['title'])){
+            $criteria->addSearchCondition('lower(title)', $terms['title'], false, 'AND');
+        }
+        if (isset($terms['contact_name'])){
+            if (count($terms['contact_name'])===1) {
+                $criteria2 = new CDbCriteria;
+                $criteria2->addSearchCondition('lower(last_name)', $terms['contact_name'][0], false);
+                $criteria2->addSearchCondition('lower(first_name)', $terms['contact_name'][0], false,'OR');
+                $criteria->mergeWith($criteria2);
+            }
+            else {
+                $criteria2 = new CDbCriteria;
+                $criteria2->addSearchCondition('lower(last_name)', $terms['contact_name'][1], false, 'AND', 'LIKE');
+                $criteria2->addSearchCondition('lower(first_name)', $terms['contact_name'][0], false, 'AND', 'LIKE');
+                $criteria3 = new CDbCriteria;
+                $criteria3->addSearchCondition('lower(last_name)', $terms['contact_name'][0], false, 'AND', 'LIKE');
+                $criteria3->addSearchCondition('lower(first_name)', $terms['contact_name'][1], false, 'AND', 'LIKE');
+                $criteria2->mergeWith($criteria3,'OR');
+                $criteria->mergeWith($criteria2);
+            }
         }
 
          if ($exclude) {

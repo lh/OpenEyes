@@ -28,6 +28,7 @@ class PatientSearch
     // Patient name
     const PATIENT_NAME_REGEX = '/^(?:P(?:atient)?[:;\s]+)?([\a-zA-Z-]+[ ,]?[\a-zA-Z-]*)$/';
 
+
     private $searchTerms = array();
 
     public $use_pas = true;
@@ -199,6 +200,30 @@ class PatientSearch
                 $patientname = $name;
             }
             $result['patient_name'] = trim($patientname);
+        }
+        return $result;
+    }
+
+    /**
+     * Fetch contact name and title from search term
+     */
+    public function getContactTitleName($term)
+    {
+        $contacts_result = Contact::model()->findAll(array('select'=>'title', 'distinct'=>true,));
+        $titles = array();
+        foreach ($contacts_result as $contact) {
+            array_push($titles, strtolower($contact['title']));
+        }
+
+        $terms = explode(' ', $term, 3);
+        $result = null;
+        $result['contact_name'] = array();
+        foreach ($terms as $term){
+            if (in_array($term, $titles)) {
+                $result['title'] = $term;
+            } else {
+                array_push($result['contact_name'], $term);
+            }
         }
         return $result;
     }
