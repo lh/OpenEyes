@@ -237,7 +237,7 @@ class PracticeController extends BaseController
      */
     protected function performAjaxValidation($model)
     {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'patient-form') {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'practice-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
