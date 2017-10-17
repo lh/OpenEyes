@@ -27,7 +27,7 @@ class SnippetController extends ModuleAdminController
     protected function beforeAction($action)
     {
         $this->admin = new Admin(LetterString::model(), $this);
-        $this->admin->setModelDisplayName('Letter String');
+        $this->admin->setModelDisplayName('Letter Snippet');
 
         return parent::beforeAction($action);
     }
