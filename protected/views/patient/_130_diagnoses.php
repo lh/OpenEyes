@@ -39,7 +39,6 @@
 				<th>Diagnosis</th>
 				<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
 					<th>Actions</th>
-                    <th></th>
 				<?php } ?>
 			</tr>
 			</thead>
