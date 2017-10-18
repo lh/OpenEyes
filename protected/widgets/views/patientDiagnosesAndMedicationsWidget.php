@@ -1,4 +1,4 @@
-<?php if ($this->patient->diagnoses): ?>
+<?php if ($this->patient->diagnoses || $this->patient->systemic_diagnoses): ?>
     <div class="row data-row">
         <div class="large-12 column">
             <div>Diagnoses:
@@ -19,27 +19,26 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <?php foreach ($this->patient->diagnoses as $diagnosis): ?>
+                            <?php foreach ($this->patient->diagnoses as $diagnosis):
+                                // If the event doesn't exist, it means the event has been deleted.
+                                if ($diagnosis->element_diagnoses->event):?>
                                 <tr>
                                     <td><?php echo CHtml::encode($diagnosis) . ' (' . ($diagnosis->principal == 1 ? 'Principal' : 'Secondary') . ')'; ?></td>
-                                    <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode($diagnosis->element_diagnoses->event->episode->firm->getNameAndSubspecialty()) : 'Unknown'; ?></td>
-                                    <td><?php echo $diagnosis->element_diagnoses->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)) : 'Unknown'; ?></td>
+                                    <td><?php echo CHtml::encode($diagnosis->element_diagnoses->event->episode->firm->getNameAndSubspecialty()); ?></td>
+                                    <td><?php echo CHtml::encode(Helper::convertDate2NHS($diagnosis->element_diagnoses->event->event_date)); ?></td>
                                 </tr>
-                            <?php endforeach; ?>
-                            <?php foreach ($this->patient->systemic_diagnoses as $diagnosis): ?>
+                                <?php endif;
+                            endforeach; ?>
+                            <?php foreach ($this->patient->systemic_diagnoses as $diagnosis):
+                                // If the event doesn't exist, it means the event has been deleted.
+                                if ($diagnosis->element->event):?>
                                 <tr>
                                     <td><?php echo CHtml::encode($diagnosis->getDisplayDisorder()) . ' (Secondary)'; ?></td>
-                                    <td><?php echo $diagnosis->element->event ? CHtml::encode($diagnosis->element->event->episode->firm->getNameAndSubspecialty()) : 'Unknown'; ?></td>
-                                    <td><?php echo $diagnosis->element->event ? CHtml::encode(Helper::convertDate2NHS($diagnosis->element->event->event_date)) : 'Unknown'; ?></td>
+                                    <td><?php echo CHtml::encode($diagnosis->element->event->episode->firm->getNameAndSubspecialty()); ?></td>
+                                    <td><?php echo CHtml::encode(Helper::convertDate2NHS($diagnosis->element->event->event_date)); ?></td>
                                 </tr>
-                            <?php endforeach; ?>
-                            <?php foreach ($this->patient->secondarydiagnoses as $diagnosis): ?>
-                                <tr>
-                                    <td><?php echo CHtml::encode($diagnosis->getSystemicDescription()) . ' (Secondary)'; ?></td>
-                                    <td>Unknown</td>
-                                    <td><?php echo $diagnosis->getDateText() ? CHtml::encode($diagnosis->getDateText()) : 'Unknown'; ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                                <?php endif;
+                            endforeach; ?>
                             </tbody>
                         </table>
                     </div>
