@@ -492,7 +492,12 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         <div class="large-12 column">
           <div class="row field-row">
             <div class="large-2 column">
-                <?php echo $form->labelEx($referral, 'uploadedFile'); ?>
+              <?php if ($patient->getScenario() === 'referral') {
+                  echo CHtml::activeLabel($referral, 'uploadedFile', array('required' => true));
+              } else {
+                  echo $form->labelEx($referral, 'uploadedFile');
+              }
+              ?>
             </div>
             <div class="large-4 column end">
               <p><?php echo $form->fileField($referral, 'uploadedFile'); ?></p>
