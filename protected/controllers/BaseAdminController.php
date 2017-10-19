@@ -209,17 +209,26 @@ class BaseAdminController extends BaseController
 
                         $to_delete = $model::model()->findAll($criteria);
                         foreach ($to_delete as $i=>$item) {
-                            if (!$item->delete()) {
-                                $tx->rollback();
-                                $error = $item->getErrors();
-                                foreach ($error as $e)
-                                {
-                                    $errors[$i]=$e[0];
+                            try {
+                                if (!$item->delete()) {
+                                    $tx->rollback();
+                                    $error = $item->getErrors();
+                                    foreach ($error as $e) {
+                                        $errors[$i] = $e[0];
+                                    }
+                                    Yii::app()->user->setFlash('error.error', implode('<br/>', $errors));
+                                    $this->redirect(Yii::app()->request->url);
                                 }
-
-                                Yii::app()->user->setFlash('error.error', implode('<br/>', $errors));
+                            } catch(Exception $excep){
+                                switch ($excep->getCode()){
+                                    case 23000:
+                                        $message = "Deleting Error: disorder group '".$item->name."' is in use";
+                                        break;
+                                    default:
+                                        $message = "Operation failed due to error ".$excep->getCode();
+                                }
+                                Yii::app()->user->setFlash('error.error',$message);
                                 $this->redirect(Yii::app()->request->url);
-
                             }
                             Audit::add('admin', 'delete', $item->primaryKey, null, array(
                                 'module' => (is_object($this->module)) ? $this->module->id : 'core',
