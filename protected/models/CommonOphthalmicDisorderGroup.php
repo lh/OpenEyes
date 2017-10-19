@@ -36,6 +36,7 @@ class CommonOphthalmicDisorderGroup extends BaseActiveRecordVersioned
     {
         return array(
             array('name', 'required'),
+            array('name', 'unique'),
         );
     }
 }
