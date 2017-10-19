@@ -225,7 +225,7 @@ class BaseAdminController extends BaseController
                                         $message = "Deleting Error: disorder group '".$item->name."' is in use";
                                         break;
                                     default:
-                                        $message = "Operation failed due to error ".$excep->getCode();
+                                        $message = "Operation failed, please contact support team for help!";
                                 }
                                 Yii::app()->user->setFlash('error.error',$message);
                                 $this->redirect(Yii::app()->request->url);
