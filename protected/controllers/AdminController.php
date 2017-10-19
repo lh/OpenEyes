@@ -857,7 +857,7 @@ class AdminController extends BaseAdminController
 
         if (!empty($_POST)) {
             $institution->attributes = $_POST['Institution'];
-
+            
             if (!$institution->validate()) {
                 $errors = $institution->getErrors();
             }
@@ -911,7 +911,6 @@ class AdminController extends BaseAdminController
         }
         if (!empty($_POST)) {
             $institution->attributes = $_POST['Institution'];
-
             if (!$institution->validate()) {
                 $errors = $institution->getErrors();
             }

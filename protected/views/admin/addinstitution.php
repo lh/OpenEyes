@@ -38,7 +38,9 @@
 			<?php echo $form->textField($address, 'city', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
 			<?php echo $form->textField($address, 'county', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
 			<?php echo $form->textField($address, 'postcode', array('autocomplete' => Yii::app()->params['html_autocomplete']))?>
-			<?php echo $form->dropDownList($address, 'country_id', 'Country')?>
+			<?php $countryName = 'Australia';
+			      $country = Country::model()->find("name='".$countryName."'");
+      echo $form->dropDownList($address, 'country_id', 'Country', array('options'=>array($country['id']=>array('selected'=>true))))?>
 		</fieldset>
 		<?php echo $form->formActions(array('cancel-uri' => '/admin/institutions'));?>
 	<?php $this->endWidget()?>

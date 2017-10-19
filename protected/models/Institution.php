@@ -76,6 +76,7 @@ class Institution extends BaseActiveRecordVersioned
         // will receive user inputs.
         return array(
             array('name', 'required'),
+            array('remote_id','safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
             array('id, name', 'safe', 'on' => 'search'),
