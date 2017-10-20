@@ -87,11 +87,13 @@ class CommonSystemicDisorderController extends BaseAdminController
             if (isset($_GET['term']) && strlen($term = $_GET['term']) > 0) {
                 $criteria->addCondition(array('LOWER(fully_specified_name) LIKE :term', 'LOWER(term) LIKE :term'),
                     'OR');
+                $criteria->join = 'LEFT JOIN specialty s ON s.id = t.specialty_id';
+                $criteria->addCondition('s.name != "Ophthalmology" OR s.name IS NULL');
                 $params[':term'] = '%'.strtolower(strtr($term, array('%' => '\%'))).'%';
             }
 
             $criteria->order = 'fully_specified_name';
-            $criteria->select = 'id, fully_specified_name';
+            $criteria->select = 't.id, fully_specified_name';
             $criteria->params = $params;
 
             $disorders = Disorder::model()->active()->findAll($criteria);
