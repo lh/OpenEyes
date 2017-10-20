@@ -1704,9 +1704,17 @@ class PatientController extends BaseController
         $referral = isset($patient->referral) ? $patient->referral : new PatientReferral();
         $gp = isset($patient->gp) ? $patient->gp : null;
         $gp_contact = isset($gp) ? $gp->contact : new Contact();
+        if (isset($gp_contact)) {
+            $gp_contact->setScenario('manage_gp');
+        }
+
         $practice = isset($patient->practice) ? $patient->practice : new Practice();
-        $practice_contact = isset($patient->practice) ? $patient->practice->contact : new Contact('manage_practice');
+        $practice_contact = isset($patient->practice) ? $patient->practice->contact : new Contact();
         $practice_address = isset($practice_contact) && isset($practice_contact->address) ? $practice_contact->address : new Address();
+        $practice_contact->setScenario('manage_practice');
+        $practice_address->setScenario('manage_practice');
+        $practice->setScenario('manage_practice');
+
         $patient_user_referral = isset($patient->patientuserreferral[0]) ? $patient->patientuserreferral[0] : new PatientUserReferral();
 
         //only local patient can be edited
