@@ -38,12 +38,14 @@ return array(
                 'title' => 'Theatre Diaries',
                 'uri' => 'OphTrOperationbooking/theatreDiary/index',
                 'position' => 10,
-                'requires_setting' => array('setting_key'=>'disable_theatre_diary', 'required_value'=>'off')
+                'requires_setting' => array('setting_key'=>'disable_theatre_diary', 'required_value'=>'off'),
+                'restricted' => array('OprnViewClinical'),
             ),
             'partial_bookings' => array(
                 'title' => 'Partial bookings waiting list',
                 'uri' => 'OphTrOperationbooking/waitingList/index',
                 'position' => 20,
+                'restricted' => array('OprnViewClinical'),
             ),
         ),
         'future_scheduling_limit' => '3 months',
