@@ -28,8 +28,7 @@ class OphTrOperationbooking_BookingHelper
     public function checkSessionCompatibleWithOperation(OphTrOperationbooking_Operation_Session $session, Element_OphTrOperationbooking_Operation $op)
     {
         $errors = array();
-
-        if ($op->anaesthetist_required && !$session->anaesthetist) {
+        if ($op->hasAnaestheticTypeByCode('Sedation') && !$session->anaesthetist) {
             $errors[] = self::ANAESTHETIST_REQUIRED;
         }
 
