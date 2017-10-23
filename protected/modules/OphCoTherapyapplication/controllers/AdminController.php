@@ -286,7 +286,6 @@ class AdminController extends ModuleAdminController
 
         $this->render('view_OphCoTherapyapplication_DecisionTree', array(
                 'model' => $model,
-//                'cancel_uri' => '/OphCoTherapyapplication/admin/viewDecisionTrees',
                  'cancel_uri' => $this->createUrl('admin/viewDecisionTrees'),
             'node' => $node,
         ));
@@ -329,8 +328,9 @@ class AdminController extends ModuleAdminController
         $model = new OphCoTherapyapplication_DecisionTreeNode();
 
 
-        if (isset($_POST['cancel'])){
-            $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree', array('id' => $id)));
+        if (isset($_POST['cancel'])) {
+            $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
+                array('id' => $id)));
         }
         if (isset($_POST['OphCoTherapyapplication_DecisionTreeNode'])) {
             $model->attributes = $_POST['OphCoTherapyapplication_DecisionTreeNode'];
@@ -353,7 +353,6 @@ class AdminController extends ModuleAdminController
                 'decisiontree' => $tree,
                 'title' => 'Node for '.$tree->name,
                 'cancel_uri' => $this->createUrl('admin/viewDecisionTrees'),
-
         ));
     }
 
