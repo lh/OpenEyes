@@ -75,13 +75,14 @@ class OphCoTherapyapplication_DecisionTreeNode extends BaseActiveRecordVersioned
     public function rules()
     {
         return array(
-                array('question, outcome_id, default_function, default_value, response_type_id', 'safe'),
-                array('outcome', 'outcomeValidation'),
-                array('question, response_type_id', 'requiredIfNotOutcomeValidation'),
-                array('default_function', 'defaultsValidation'),
-                // The following rule is used by search().
-                // Please remove those attributes that should not be searched.
-                array('id, question, outcome_id, default_function, default_value, response_type_id', 'safe', 'on' => 'search'),
+            array('question, response_type_id', 'required'),
+            array('outcome_id, default_function, default_value', 'safe'),
+            array('outcome', 'outcomeValidation'),
+            array('question, response_type_id', 'requiredIfNotOutcomeValidation'),
+            array('default_function', 'defaultsValidation'),
+            // The following rule is used by search().
+            // Please remove those attributes that should not be searched.
+            array('id, question, outcome_id, default_function, default_value, response_type_id', 'safe', 'on' => 'search'),
         );
     }
 

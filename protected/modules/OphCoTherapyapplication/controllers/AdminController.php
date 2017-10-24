@@ -330,7 +330,9 @@ class AdminController extends ModuleAdminController
 
     public function actionCreateDecisionTreeNode($id)
     {
-        $tree = OphCoTherapyapplication_DecisionTree::model()->findByPk((int)$id);
+
+        $this->layout = '//layouts/admin_popup';
+        $tree = OphCoTherapyapplication_DecisionTree::model()->findByPk((int) $id);
 
         $parent = null;
         if (isset($_GET['parent_id'])) {
@@ -361,6 +363,7 @@ class AdminController extends ModuleAdminController
 
                 $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
                         array('id' => $model->decisiontree_id)) . '/?node_id=' . $model->id);
+
             }
         }
 
