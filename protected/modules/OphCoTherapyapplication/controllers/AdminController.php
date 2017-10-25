@@ -382,7 +382,11 @@ class AdminController extends ModuleAdminController
 
         $model = OphCoTherapyapplication_DecisionTreeNode::model()->findByPk((int)$id);
 
-        if (isset($_POST['OphCoTherapyapplication_DecisionTreeNode'])) {
+        if (isset($_POST['cancel'])) {
+            $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
+                array('id' => $model->decisiontree_id)));
+        }
+        if (!isset($_POST['cancel'])&&isset($_POST['OphCoTherapyapplication_DecisionTreeNode'])) {
             $model->attributes = $_POST['OphCoTherapyapplication_DecisionTreeNode'];
 
             if ($model->save()) {
