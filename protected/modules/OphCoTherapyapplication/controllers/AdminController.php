@@ -32,6 +32,8 @@ class AdminController extends ModuleAdminController
         ));
     }
 
+
+
     // -- Diagnoses actions --
 
     /**
@@ -330,9 +332,9 @@ class AdminController extends ModuleAdminController
 
     public function actionCreateDecisionTreeNode($id)
     {
-
         $this->layout = '//layouts/admin_popup';
-        $tree = OphCoTherapyapplication_DecisionTree::model()->findByPk((int) $id);
+
+        $tree = OphCoTherapyapplication_DecisionTree::model()->findByPk((int)$id);
 
         $parent = null;
         if (isset($_GET['parent_id'])) {
@@ -363,15 +365,14 @@ class AdminController extends ModuleAdminController
 
                 $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
                         array('id' => $model->decisiontree_id)) . '/?node_id=' . $model->id);
-
             }
         }
 
-        $this->renderPartial('create', array(
+        $this->render('create', array(
             'model' => $model,
             'decisiontree' => $tree,
             'title' => 'Node for ' . $tree->name,
-            'cancel_uri' => $this->createUrl('admin/viewDecisionTrees'),
+            'cancel_uri' => '/OphCoTherapyapplication/admin/viewDecisionTrees',
         ));
     }
 
