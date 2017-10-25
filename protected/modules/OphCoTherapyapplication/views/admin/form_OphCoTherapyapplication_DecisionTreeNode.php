@@ -24,7 +24,7 @@ $form->layoutColumns = array(
 ?>
 
 <div class="alert-box alert">
-<p class="note"> Please fill in one of these filed groups
+<p class="note"> Please fill in one of these field groups
 <ul>
   <li>Question, Response Type Id</li>
   <li>Outcome Id</li>
@@ -37,8 +37,7 @@ $form->layoutColumns = array(
   </div>
   <div class="large-<?php echo $form->layoutColumns['field']; ?> column end">
       <?php echo $form->textField($model, 'question',
-          array('autocomplete' => Yii::app()->params['html_autocomplete'], 'maxlength' => 256),
-          array('label' => null)); ?>
+          array('autocomplete' => Yii::app()->params['html_autocomplete'], 'maxlength' => 256,'nolabel' => true)); ?>
   </div>
 </div>
 <div class="row field-row">
