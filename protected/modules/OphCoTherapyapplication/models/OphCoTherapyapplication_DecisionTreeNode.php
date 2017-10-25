@@ -75,9 +75,10 @@ class OphCoTherapyapplication_DecisionTreeNode extends BaseActiveRecordVersioned
     public function rules()
     {
         return array(
-            array('question, response_type_id', 'required'),
             array('outcome_id, default_function, default_value', 'safe'),
-            array('outcome', 'outcomeValidation'),
+            array('question, response_type_id', 'required','on'=>'not_outcome'),
+            array('outcome_id','required','on'=>'outcome'),
+            array('outcome_id', 'outcomeValidation'),
             array('question, response_type_id', 'requiredIfNotOutcomeValidation'),
             array('default_function', 'defaultsValidation'),
             // The following rule is used by search().
@@ -174,6 +175,7 @@ class OphCoTherapyapplication_DecisionTreeNode extends BaseActiveRecordVersioned
     public function outcomeValidation($attribute)
     {
         if ($this->outcome_id && ($this->question || $this->default_function || $this->default_value || $this->response_type)) {
+            $this->setScenario('outcome');
             $this->addError($attribute, 'Outcome nodes cannot have any other values set.');
         }
     }
@@ -183,7 +185,9 @@ class OphCoTherapyapplication_DecisionTreeNode extends BaseActiveRecordVersioned
      */
     public function requiredIfNotOutcomeValidation($attribute)
     {
+
         if (!$this->outcome_id && !$this->$attribute) {
+            $this->setScenario("not_outcome");
             $this->addError($attribute, $this->getAttributeLabel($attribute).' required if not an outcome node.');
         }
     }

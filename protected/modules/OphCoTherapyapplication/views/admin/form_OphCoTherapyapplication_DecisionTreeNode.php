@@ -23,15 +23,20 @@ $form->layoutColumns = array(
 );
 ?>
 
-<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-<?php echo $form->errorSummary($model); ?>
+<div class="alert-box alert">
+<p class="note"> Please fill in one of these filed groups
+<ul>
+  <li>Question, Response Type Id</li>
+  <li>Outcome Id</li>
+</ul>
+</p>
+</div>
 <div class="row field-row">
   <div class="large-<?php echo $form->layoutColumns['label']; ?> column">
       <?php echo $form->labelEx($model, 'question'); ?>
   </div>
   <div class="large-<?php echo $form->layoutColumns['field']; ?> column end">
-      <?php echo $form->textField($model, null,
+      <?php echo $form->textField($model, 'question',
           array('autocomplete' => Yii::app()->params['html_autocomplete'], 'maxlength' => 256),
           array('label' => null)); ?>
   </div>
