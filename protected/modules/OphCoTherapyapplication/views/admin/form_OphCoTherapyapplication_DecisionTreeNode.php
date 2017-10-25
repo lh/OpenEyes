@@ -26,8 +26,9 @@ $form->layoutColumns = array(
 <div class="alert-box alert">
 <p class="note"> Please fill in one of these field groups
 <ul>
-  <li>Question, Response Type Id</li>
-  <li>Outcome Id</li>
+  <li>Then Question and the Response Type Id</li>
+    <b>OR</b>
+  <li>The Outcome Id</li>
 </ul>
 </p>
 </div>

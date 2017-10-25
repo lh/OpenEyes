@@ -41,17 +41,15 @@ $(document).ready(function () {
 				if (data.length > 0) {
 					var popup = $("<div></div>");
 					popup.html(data).dialog({
-						height: 400,
-						minHeight: 400,
+						height: 500,
+						minHeight: 500,
 						width: 700,
 						title: 'Decision Tree Node',
 						modal: true,
 					}).dialog('open');
-
 				}
 			}
 		});
-
 		e.preventDefault();
 	});
 
@@ -59,7 +57,7 @@ $(document).ready(function () {
 		var node_id = $(this).attr('data-node_id');
 		var url = '/OphCoTherapyapplication/admin/updateDecisionTreeNode/' + node_id;
 		$('<iframe style="min-width: 95%"></iframe>').attr('src', url).dialog({
-			height: 400,
+			height: 500,
 			width: 700,
 			title: 'Decision Tree Node',
 			modal: true,
