@@ -1,13 +1,16 @@
 $(document).ready(function () {
 
-    $('#et_admin-save').live('click', function (e) {
+    $('#et_admin-save').on('click', function (e) {
         var check = true;
         /**
          * Comments label validation if comments allowed in Clinical disorder section
          */
         $("input[name^='comments_allowed']").each(function (key, value) {
-            if (key < ($("input[name^='comments_allowed']").length - 1) && $(this).is(':checked')) {
+
+            if (key <= ($("input[name^='comments_allowed']").length - 1) && $(this).is(':checked')&&value['name']!='comments_allowed[{{key}}]') {
+
                 var textbox_value = $("input[name^='comments_label']").eq(key).val();
+
                 var text_length = (textbox_value).length;
                 if (text_length == 0) {
                     alert("Please enter comments label");
