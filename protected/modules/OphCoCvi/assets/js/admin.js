@@ -35,7 +35,7 @@ $(document).ready(function () {
         }
 
         if (!check) {
-            event.preventDefault();
+            e.preventDefault();
         }
         return check;
 
