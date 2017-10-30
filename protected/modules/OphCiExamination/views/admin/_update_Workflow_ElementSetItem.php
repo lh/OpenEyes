@@ -50,7 +50,7 @@
 			</tbody>
 			<tfoot class="pagination-container">
 				<tr>
-					<td colspan="3">
+					<td colspan="4">
 						<div class="grid-view">
 							<div class="row">
 								<div class="large-3 column">
