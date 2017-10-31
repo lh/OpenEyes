@@ -28,18 +28,13 @@ class AuditController extends BaseController
     {
         return array(
             array('allow',
-                'roles' => array('OprnViewClinical'),
+                'roles' => array('admin'),
             ),
         );
     }
 
     public function beforeAction($action)
     {
-        Yii::app()->assetManager->registerScriptFile('js/audit.js');
-        $userid = Yii::app()->session['user']->id;
-        if (($userid != 2103) and ($userid != 122) and ($userid != 613) and ($userid != 1330) and ($userid != 1)) {
-            return false;
-        }
 
         Yii::app()->assetManager->registerScriptFile('js/audit.js');
 
