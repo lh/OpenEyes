@@ -321,7 +321,7 @@ return array(
                 'uri' => 'dashboard/cataract',
                 'position' => 4,
                 'userrule' => 'isSurgeon',
-                'restricted' => array('admin'),
+                'restricted' => array('admin,Report'),
                 'options' => array('target' => '_blank'),),
             'nodexport' => array(
                 'title' => 'NOD Export',
