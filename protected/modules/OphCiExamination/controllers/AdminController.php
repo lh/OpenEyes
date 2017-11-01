@@ -103,7 +103,6 @@ class AdminController extends \ModuleAdminController
 
         if (isset($_POST[\CHtml::modelName($model)])) {
             $model->attributes = $_POST[\CHtml::modelName($model)];
-
             if ($model->save()) {
                 Audit::add('admin', 'update', $model->id, null, array('module' => 'OphCiExamination', 'model' => 'InjectionManagementComplex_NoTreatmentReason'));
                 Yii::app()->user->setFlash('success', 'Injection Management No Treatment reason updated');
@@ -258,6 +257,7 @@ class AdminController extends \ModuleAdminController
 
         $this->render('update', array(
             'model' => $model,
+            'cancel_uri' => $this->createUrl('admin/viewOphCiExamination_InjectionManagementComplex_Question/disorder_id='.$model->disorder_id)
         ));
     }
 
