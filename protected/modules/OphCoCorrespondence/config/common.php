@@ -26,7 +26,7 @@ $config = array(
             'Letter macros' => '/OphCoCorrespondence/admin/letterMacros',
             'Letter Snippets' => '/OphCoCorrespondence/oeadmin/snippet/list',
             'Letter Snippet Groups' => '/OphCoCorrespondence/oeadmin/snippetGroup/list',
-            //'Letter Types' => '/OphCoCorrespondence/oeadmin/letterType/list', //available but have to find out how could work with Internal Referral (re letter type enable, rename)
+            'Letter Types' => '/OphCoCorrespondence/oeadmin/letterType/list', //available but have to find out how could work with Internal Referral (re letter type enable, rename)
             'Internal Referral' => '/OphCoCorrespondence/oeadmin/internalReferralSettings/settings',
         ),
     ),
