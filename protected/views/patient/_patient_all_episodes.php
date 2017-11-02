@@ -32,7 +32,7 @@
 			<tr>
 				<th>Start Date</th>
 				<th>End Date</th>
-				<th>Context</th>
+				<th><?php echo Firm::contextLabel(); ?></th>
 				<th>Subspecialty</th>
 				<th>Eye</th>
 				<th>Diagnosis</th>
