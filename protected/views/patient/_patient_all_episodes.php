@@ -32,7 +32,7 @@
 			<tr>
 				<th>Start Date</th>
 				<th>End Date</th>
-				<th>Firm</th>
+				<th>Context</th>
 				<th>Subspecialty</th>
 				<th>Eye</th>
 				<th>Diagnosis</th>
