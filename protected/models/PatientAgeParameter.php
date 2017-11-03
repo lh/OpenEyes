@@ -6,17 +6,17 @@
 class PatientAgeParameter extends CaseSearchParameter implements DBProviderInterface
 {
     /**
-     * @var integer Represents a single value
+     * @var integer $textValue Represents a single value
      */
     public $textValue;
 
     /**
-     * @var integer Represents a minimum value.
+     * @var integer $minValue Represents a minimum value.
      */
     public $minValue;
 
     /**
-     * @var integer Represents a maximum value.
+     * @var integer $maxValue Represents a maximum value.
      */
     public $maxValue;
 
@@ -101,41 +101,40 @@ class PatientAgeParameter extends CaseSearchParameter implements DBProviderInter
     public function renderParameter($id)
     {
         $ops = array(
-            '<' => 'Younger than',
-            '>' => 'Older than',
-            '=' => 'Is',
-            '!=' => 'Is not',
+            '<=' => 'Younger than',
+            '>=' => 'Older than',
             'BETWEEN' => 'Between',
         );
         ?>
-        <div class="row field-row">
-            <div class="large-2 column">
-                <?php echo CHtml::label($this->getLabel(), false); ?>
-            </div>
-            <div class="large-3 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops,
-                    array('onchange' => 'refreshValues(this)', 'prompt' => 'Select One...')); ?>
-                <?php echo CHtml::error($this, "[$id]operation"); ?>
-            </div>
-            <div class="dual-value large-3 column"
-                 style="<?php echo $this->operation === 'BETWEEN' ? 'display: inline-block;' : 'display: none;' ?>">
-                <div class="row field-row">
-                    <?php echo CHtml::activeTextField($this, "[$id]minValue", array('placeholder' => 'min')); ?>
-                    <?php echo CHtml::error($this, "[$id]minValue"); ?>
-                </div>
-                <div class="row field-row">
-                    <?php echo CHtml::activeTextField($this, "[$id]maxValue", array('placeholder' => 'max')); ?>
-                    <?php echo CHtml::error($this, "[$id]maxValue"); ?>
-                </div>
-            </div>
-            <div class="single-value large-3 column" style="<?php echo $this->operation !== 'BETWEEN' ? 'display: inline-block;' : 'display: none;' ?>">
-                <?php echo CHtml::activeTextField($this, "[$id]textValue"); ?>
-                <?php echo CHtml::error($this, "[$id]textValue"); ?>
-            </div>
-            <div class="large-4 column">
-                <p>years of age</p>
-            </div>
+      <div class="row field-row">
+        <div class="large-2 column">
+            <?php echo CHtml::label($this->getLabel(), false); ?>
         </div>
+        <div class="large-3 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops,
+                array('onchange' => 'refreshValues(this)', 'prompt' => 'Select One...')); ?>
+            <?php echo CHtml::error($this, "[$id]operation"); ?>
+        </div>
+        <div class="dual-value large-3 column"
+             style="<?php echo $this->operation === 'BETWEEN' ? 'display: inline-block;' : 'display: none;' ?>">
+          <div class="row field-row">
+              <?php echo CHtml::activeTextField($this, "[$id]minValue", array('placeholder' => 'min')); ?>
+              <?php echo CHtml::error($this, "[$id]minValue"); ?>
+          </div>
+          <div class="row field-row">
+              <?php echo CHtml::activeTextField($this, "[$id]maxValue", array('placeholder' => 'max')); ?>
+              <?php echo CHtml::error($this, "[$id]maxValue"); ?>
+          </div>
+        </div>
+        <div class="single-value large-3 column"
+             style="<?php echo $this->operation !== 'BETWEEN' ? 'display: inline-block;' : 'display: none;' ?>">
+            <?php echo CHtml::activeTextField($this, "[$id]textValue"); ?>
+            <?php echo CHtml::error($this, "[$id]textValue"); ?>
+        </div>
+        <div class="large-4 column">
+          <p>years of age</p>
+        </div>
+      </div>
         <?php
     }
 
@@ -151,23 +150,11 @@ class PatientAgeParameter extends CaseSearchParameter implements DBProviderInter
             case 'BETWEEN':
                 $op = 'BETWEEN';
                 break;
-            case '>':
-                $op = '>';
-                break;
-            case '<':
-                $op = '<';
-                break;
             case '>=':
                 $op = '>=';
                 break;
             case '<=':
                 $op = '<=';
-                break;
-            case '=':
-                $op = '=';
-                break;
-            case '!=':
-                $op = '!=';
                 break;
             default:
                 throw new CHttpException(400, 'Invalid operator specified.');
@@ -176,8 +163,9 @@ class PatientAgeParameter extends CaseSearchParameter implements DBProviderInter
 
         $queryStr = 'SELECT id FROM patient WHERE TIMESTAMPDIFF(YEAR, dob, IFNULL(date_of_death, CURDATE()))';
         if ($op === 'BETWEEN') {
-            return "$queryStr $op :p_a_min_$this->id AND :p_a_max_$this->id";
+            return "$queryStr BETWEEN :p_a_min_$this->id AND :p_a_max_$this->id";
         }
+
         return "$queryStr $op :p_a_value_$this->id";
     }
 
@@ -187,15 +175,11 @@ class PatientAgeParameter extends CaseSearchParameter implements DBProviderInter
     public function bindValues()
     {
         $bindValues = array();
-        if ($this->minValue !== '' && $this->minValue !== null) {
+
+        if ($this->operation === 'BETWEEN') {
             $bindValues["p_a_min_$this->id"] = (int)$this->minValue;
-        }
-
-        if ($this->maxValue !== '' && $this->maxValue !== null) {
             $bindValues["p_a_max_$this->id"] = (int)$this->maxValue;
-        }
-
-        if ($this->textValue !== '' && $this->textValue !== null) {
+        } else {
             $bindValues["p_a_value_$this->id"] = (int)$this->textValue;
         }
 
@@ -210,6 +194,7 @@ class PatientAgeParameter extends CaseSearchParameter implements DBProviderInter
         if ($this->operation === 'BETWEEN') {
             return "$this->name: BETWEEN $this->minValue and $this->maxValue";
         }
+
         return "$this->name: $this->operation $this->textValue";
     }
 }

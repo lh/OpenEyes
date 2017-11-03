@@ -30,11 +30,11 @@ class DBProviderTest extends CDbTestCase
         // executeSearch is a protected function so it needs to be run via DBProvider's parent function, search.
         $testParameter1 = new PatientAgeParameter();
         $testParameter1->id = 0;
-        $testParameter1->operation = '>';
+        $testParameter1->operation = '>=';
         $testParameter1->textValue = 5;
 
         $testParameter2 = new PatientAgeParameter();
-        $testParameter2->operation = '<';
+        $testParameter2->operation = '<=';
         $testParameter2->textValue = 80;
         $testParameter2->id = 1;
 

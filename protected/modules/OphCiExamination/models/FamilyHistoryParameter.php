@@ -1,21 +1,22 @@
 <?php
+
 /**
  * Class FamilyHistoryParameter
  */
 class FamilyHistoryParameter extends CaseSearchParameter implements DBProviderInterface
 {
     /**
-     * @var $relative integer
+     * @var integer $relative
      */
     public $relative;
 
     /**
-     * @var $side integer
+     * @var integer $side
      */
     public $side;
 
     /**
-     * @var $condition integer
+     * @var integer $condition
      */
     public $condition;
 
@@ -27,11 +28,11 @@ class FamilyHistoryParameter extends CaseSearchParameter implements DBProviderIn
     {
         parent::__construct($scenario);
         $this->name = 'family_history';
+        $this->operation = '=';
     }
 
     public function getLabel()
     {
-        // This is a human-readable value, so feel free to change this as required.
         return 'Family History';
     }
 
@@ -69,34 +70,37 @@ class FamilyHistoryParameter extends CaseSearchParameter implements DBProviderIn
             '!=' => 'does not have',
         );
 
-        $relatives = CHtml::listData(OEModule\OphCiExamination\models\FamilyHistoryRelative::model()->findAll(), 'id', 'name');
+        $relatives = CHtml::listData(OEModule\OphCiExamination\models\FamilyHistoryRelative::model()->findAll(), 'id',
+            'name');
         $sides = CHtml::listData(OEModule\OphCiExamination\models\FamilyHistorySide::model()->findAll(), 'id', 'name');
-        $conditions = CHtml::listData(OEModule\OphCiExamination\models\FamilyHistoryCondition::model()->findAll(), 'id', 'name');
+        $conditions = CHtml::listData(OEModule\OphCiExamination\models\FamilyHistoryCondition::model()->findAll(), 'id',
+            'name');
 
         ?>
-        <div class="row field-row">
-            <div class="large-2 column">
-                <?php echo CHtml::label($this->getLabel(), false); ?>
-            </div>
-
-            <div class="large-2 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]side", $sides, array('empty' => 'Any side')); ?>
-            </div>
-
-            <div class="large-2 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]relative", $relatives, array('empty' => 'Any relative')); ?>
-            </div>
-
-            <div class="large-3 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops, array('prompt' => 'Select One...')); ?>
-                <?php echo CHtml::error($this, "[$id]operation"); ?>
-            </div>
-            <div class="large-3 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]condition", $conditions,
-                    array('prompt' => 'Select One...')); ?>
-                <?php echo CHtml::error($this, "[$id]condition"); ?>
-            </div>
+      <div class="row field-row">
+        <div class="large-2 column">
+            <?php echo CHtml::label($this->getLabel(), false); ?>
         </div>
+
+        <div class="large-2 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]side", $sides, array('empty' => 'Any side')); ?>
+        </div>
+
+        <div class="large-2 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]relative", $relatives,
+                array('empty' => 'Any relative')); ?>
+        </div>
+
+        <div class="large-3 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops, array('prompt' => 'Select One...')); ?>
+            <?php echo CHtml::error($this, "[$id]operation"); ?>
+        </div>
+        <div class="large-3 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]condition", $conditions,
+                array('prompt' => 'Select One...')); ?>
+            <?php echo CHtml::error($this, "[$id]condition"); ?>
+        </div>
+      </div>
 
         <?php
     }

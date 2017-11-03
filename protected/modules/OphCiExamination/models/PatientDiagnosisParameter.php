@@ -5,7 +5,14 @@
  */
 class PatientDiagnosisParameter extends CaseSearchParameter implements DBProviderInterface
 {
+    /**
+     * @var string $term
+     */
     public $term;
+
+    /**
+     * @var integer $firm_id
+     */
     public $firm_id;
 
     /**
@@ -16,11 +23,11 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
     {
         parent::__construct($scenario);
         $this->name = 'diagnosis';
+        $this->operation = 'LIKE';
     }
 
     public function getLabel()
     {
-        // This is a human-readable value, so feel free to change this as required.
         return 'Diagnosis';
     }
 
@@ -48,7 +55,6 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
 
     public function renderParameter($id)
     {
-        // Place screen-rendering code here.
         $ops = array(
             'LIKE' => 'Diagnosed with',
             'NOT LIKE' => 'Not diagnosed with',
@@ -57,45 +63,46 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
 
         $firms = $firmModel->getListWithSpecialties();
         ?>
-        <div class="row field-row">
-            <div class="large-2 column">
-                <?php echo CHtml::label($this->getLabel(), false); ?>
-            </div>
-            <div class="large-3 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops, array('prompt' => 'Select One...')); ?>
-                <?php echo CHtml::error($this, "[$id]operation"); ?>
-            </div>
-
-            <div class="large-3 column">
-                <?php
-                $html = Yii::app()->controller->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'name' => $this->name . $this->id,
-                    'model' => $this,
-                    'attribute' => "[$id]term",
-                    'source' => Yii::app()->controller->createUrl('AutoComplete/commonDiagnoses'),
-                    'options' => array(
-                        'minLength' => 2,
-                    ),
-                    'htmlOptions' => array(
-                        'placeholder' => 'Type to search for a diagnosis',
-                    ),
-                ), true);
-                Yii::app()->clientScript->render($html);
-                echo $html;
-                ?>
-                <?php echo CHtml::error($this, "[$id]term"); ?>
-            </div>
-            <div class="large-4 column">
-                <div class="row field-row">
-                    <div class="large-2 column">
-                        <p>by</p>
-                    </div>
-                    <div class="large-10 column end">
-                        <?php echo CHtml::activeDropDownList($this, "[$id]firm_id", $firms, array('empty' => 'Any ' . Firm::contextLabel())); ?>
-                    </div>
-                </div>
-            </div>
+      <div class="row field-row">
+        <div class="large-2 column">
+            <?php echo CHtml::label($this->getLabel(), false); ?>
         </div>
+        <div class="large-3 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops, array('prompt' => 'Select One...')); ?>
+            <?php echo CHtml::error($this, "[$id]operation"); ?>
+        </div>
+
+        <div class="large-3 column">
+            <?php
+            $html = Yii::app()->controller->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => $this->name . $this->id,
+                'model' => $this,
+                'attribute' => "[$id]term",
+                'source' => Yii::app()->controller->createUrl('AutoComplete/commonDiagnoses'),
+                'options' => array(
+                    'minLength' => 2,
+                ),
+                'htmlOptions' => array(
+                    'placeholder' => 'Type to search for a diagnosis',
+                ),
+            ), true);
+            Yii::app()->clientScript->render($html);
+            echo $html;
+            ?>
+            <?php echo CHtml::error($this, "[$id]term"); ?>
+        </div>
+        <div class="large-4 column">
+          <div class="row field-row">
+            <div class="large-2 column">
+              <p>by</p>
+            </div>
+            <div class="large-10 column end">
+                <?php echo CHtml::activeDropDownList($this, "[$id]firm_id", $firms,
+                    array('empty' => 'Any ' . Firm::contextLabel())); ?>
+            </div>
+          </div>
+        </div>
+      </div>
 
         <?php
     }
@@ -108,7 +115,7 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
      */
     public function query($searchProvider)
     {
-        $query = "SELECT DISTINCT p.id
+        $query = "SELECT p.id
 FROM patient p
 JOIN patient_diagnosis_assignment paa
   ON paa.patient_id = p.id
@@ -118,7 +125,7 @@ WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)
 
 UNION
 
-SELECT DISTINCT p2.id
+SELECT p2.id
 FROM patient p2 
 JOIN patient_systemic_diagnosis psd
   ON psd.patient_id = p2.id
@@ -128,7 +135,7 @@ WHERE LOWER(d2.term) LIKE LOWER(:p_d_value_$this->id)
 
 UNION
 
-SELECT DISTINCT p3.id
+SELECT p3.id
 FROM patient p3 
 JOIN secondary_diagnosis sd
   ON sd.patient_id = p3.id
@@ -156,7 +163,7 @@ WHERE LOWER(d.term) LIKE LOWER(:p_d_value_$this->id)
   
 UNION
 
-SELECT DISTINCT p2.id
+SELECT p2.id
 FROM patient p2 
 JOIN patient_systemic_diagnosis psd
   ON psd.patient_id = p2.id
@@ -199,7 +206,6 @@ WHERE p1.id NOT IN (
      */
     public function bindValues()
     {
-        // Construct your list of bind values here. Use the format ":bind" => "value".
         if ($this->firm_id !== '' && $this->firm_id !== null) {
             return array(
                 "p_d_value_$this->id" => '%' . $this->term . '%',
@@ -219,6 +225,7 @@ WHERE p1.id NOT IN (
     {
         if ($this->firm_id !== '' && $this->firm_id !== null) {
             $firm = Firm::model()->findByPk($this->firm_id);
+
             return "$this->name: $this->operation \"$this->term\" diagnosed by {$firm->getNameAndSubspecialty()}";
         }
 

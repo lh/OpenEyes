@@ -5,6 +5,9 @@
  */
 class PatientAllergyParameter extends CaseSearchParameter implements DBProviderInterface
 {
+    /**
+     * @var string $textValue
+     */
     public $textValue;
 
     /**
@@ -15,11 +18,11 @@ class PatientAllergyParameter extends CaseSearchParameter implements DBProviderI
     {
         parent::__construct($scenario);
         $this->name = 'allergy';
+        $this->operation = '=';
     }
 
     public function getLabel()
     {
-        // This is a human-readable value, so feel free to change this as required.
         return 'Patient Allergy';
     }
 
@@ -49,38 +52,37 @@ class PatientAllergyParameter extends CaseSearchParameter implements DBProviderI
 
     public function renderParameter($id)
     {
-        // Place screen-rendering code here.
         $ops = array(
             '=' => 'Is allergic to',
             '!=' => 'Is not allergic to',
         );
         ?>
-        <div class="row field-row">
-            <div class="large-2 column">
-                <?php echo CHtml::label($this->getLabel(), false); ?>
-            </div>
-            <div class="large-3 column">
-                <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops, array('prompt' => 'Select One...')); ?>
-                <?php echo CHtml::error($this, "[$id]operation"); ?>
-            </div>
-
-            <div class="large-7 column">
-                <?php
-                $html = Yii::app()->controller->widget('zii.widgets.jui.CJuiAutoComplete', array(
-                    'name' => $this->name . $this->id,
-                    'model' => $this,
-                    'attribute' => "[$id]textValue",
-                    'source' => Yii::app()->controller->createUrl('AutoComplete/commonAllergies'),
-                    'options' => array(
-                        'minLength' => 2,
-                    ),
-                ), true);
-                Yii::app()->clientScript->render($html);
-                echo $html;
-                ?>
-                <?php echo CHtml::error($this, "[$id]textValue"); ?>
-            </div>
+      <div class="row field-row">
+        <div class="large-2 column">
+            <?php echo CHtml::label($this->getLabel(), false); ?>
         </div>
+        <div class="large-3 column">
+            <?php echo CHtml::activeDropDownList($this, "[$id]operation", $ops, array('prompt' => 'Select One...')); ?>
+            <?php echo CHtml::error($this, "[$id]operation"); ?>
+        </div>
+
+        <div class="large-7 column">
+            <?php
+            $html = Yii::app()->controller->widget('zii.widgets.jui.CJuiAutoComplete', array(
+                'name' => $this->name . $this->id,
+                'model' => $this,
+                'attribute' => "[$id]textValue",
+                'source' => Yii::app()->controller->createUrl('AutoComplete/commonAllergies'),
+                'options' => array(
+                    'minLength' => 2,
+                ),
+            ), true);
+            Yii::app()->clientScript->render($html);
+            echo $html;
+            ?>
+            <?php echo CHtml::error($this, "[$id]textValue"); ?>
+        </div>
+      </div>
         <?php
     }
 

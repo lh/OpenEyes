@@ -6,17 +6,17 @@
 abstract class CaseSearchParameter extends CFormModel
 {
     /**
-     * @var CaseSearchParameter name
+     * @var string $name
      */
     public $name;
 
     /**
-     * @var CaseSearchParameter operator.
+     * @var string $operator .
      */
     public $operation;
 
     /**
-     * @var CaseSearchParameter ID.
+     * @var integer $id .
      */
     public $id;
 
@@ -28,11 +28,11 @@ abstract class CaseSearchParameter extends CFormModel
 
     /**
      * Override this function for any new attributes added to the subclass. Ensure that you invoke the parent function first to obtain and augment the initial list of attribute names.
-     * @return array An array of attribute names.
+     * @return string[] An array of attribute names.
      */
     public function attributeNames()
     {
-        return array('name','operation', 'id');
+        return array('name', 'operation', 'id');
     }
 
     /**
@@ -42,8 +42,8 @@ abstract class CaseSearchParameter extends CFormModel
     public function rules()
     {
         return array(
-            array('operation', 'required'),
-            array('operation, id', 'safe')
+            array('operation', 'required', 'message' => 'The search operator cannot be blank'),
+            array('id', 'safe'),
         );
     }
 
