@@ -37,9 +37,6 @@
 			<tr>
 				<th>Date</th>
 				<th>Diagnosis</th>
-				<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
-					<th>Actions</th>
-				<?php } ?>
 			</tr>
 			</thead>
 			<tbody>
@@ -54,9 +51,6 @@
 					?>
 					<td><?php echo $diagnosis->dateText?></td>
 					<td><?php echo $term; ?></td>
-					<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
-						<td><a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a></td>
-					<?php } ?>
 				</tr>
 			<?php }?>
 			</tbody>

@@ -36,7 +36,6 @@
 			<tr>
 				<th>Date</th>
 				<th>Diagnosis</th>
-				<?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?><th>Actions</th><?php } ?>
 			</tr>
 			</thead>
 			<tbody>
@@ -44,9 +43,6 @@
 				<tr>
 					<td><?php echo $diagnosis->dateText?></td>
 					<td><?php echo $diagnosis->eye ? $diagnosis->eye->adjective : ''?> <?php echo $diagnosis->disorder->term?></td>
-					<?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?>
-						<td><a href="#" class="removeDiagnosis" rel="<?php echo $diagnosis->id?>">Remove</a></td>
-					<?php } ?>
 				</tr>
 			<?php }?>
 			</tbody>
