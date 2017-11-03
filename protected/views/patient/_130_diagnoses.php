@@ -63,11 +63,6 @@
 		</table>
 
 		<?php if ($this->checkAccess('OprnEditOtherOphDiagnosis')) { ?>
-			<div class="box-actions">
-				<button id='btn-add_new_ophthalmic_diagnosis' class="secondary small">
-					Add Ophthalmic Diagnosis
-				</button>
-			</div>
 
 			<div id="add_new_ophthalmic_diagnosis" style="display: none;">
 
@@ -84,7 +79,6 @@
                         'class' => 'form add-data',
                     ),
                 ))?>
-
 					<fieldset class="field-row">
 
 						<legend><strong>Add ophthalmic diagnosis</strong></legend>

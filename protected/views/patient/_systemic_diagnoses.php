@@ -53,14 +53,7 @@
 		</table>
 
 		<?php if ($this->checkAccess('OprnEditSystemicDiagnosis')) { ?>
-			<div class="box-actions">
-				<button id="btn-add_new_systemic_diagnosis" class="secondary small">
-					Add Systemic Diagnosis
-				</button>
-			</div>
-
 			<div id="add_new_systemic_diagnosis" style="display: none;">
-
 				<?php
                 $form = $this->beginWidget('FormLayout', array(
                         'id' => 'add-systemic-diagnosis',
