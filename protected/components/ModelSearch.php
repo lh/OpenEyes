@@ -9,7 +9,7 @@
 /**
  * ModelSearch class allows for generic searching of a model.
  *
- * With the ModelSearch class it is possible to specify through paramaters which attributes for a model should be
+ * With the ModelSearch class it is possible to specify through parameters which attributes for a model should be
  * searchable and how. It will then use GenericSearch widget to output a form in a view based on the same
  * configuration. To make a model attribute searchable it needs to be added to the searchItems array.
  *
@@ -356,9 +356,9 @@ class ModelSearch
     /**
      * Add a filter for active
      */
-    public function addActiveFilter()
+    public function addActiveFilter($active_label = null)
     {
-        $this->addSearchItem('active', array('type' => 'boolean'));
+        $this->addSearchItem($active_label==null?'active':$active_label, array('type' => 'boolean'));
     }
 
     /**

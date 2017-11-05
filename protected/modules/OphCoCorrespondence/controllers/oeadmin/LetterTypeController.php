@@ -45,7 +45,7 @@ class LetterTypeController extends ModuleAdminController
             'is_active',
         ));
         $admin->searchAll();
-        $admin->getSearch()->addActiveFilter();
+        $admin->getSearch()->addActiveFilter('is_active');
         $admin->getSearch()->setItemsPerPage($this->itemsPerPage);
         $admin->listModel();
     }
