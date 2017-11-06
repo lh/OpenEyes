@@ -356,9 +356,9 @@ class ModelSearch
     /**
      * Add a filter for active
      */
-    public function addActiveFilter($active_label = null)
+    public function addActiveFilter($active_label )
     {
-        $this->addSearchItem($active_label==null?'active':$active_label, array('type' => 'boolean'));
+        $this->addSearchItem($active_label?:'active', array('type' => 'boolean'));
     }
 
     /**
