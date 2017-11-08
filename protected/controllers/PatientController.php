@@ -123,7 +123,8 @@ class PatientController extends BaseController
         Yii::app()->assetManager->registerScriptFile('js/patientSummary.js');
 
         $this->patient = $this->loadModel($id);
-        
+        $patient_user_referral = isset( $this->patient->patientuserreferral[0]) ?  $this->patient->patientuserreferral[0] : new PatientUserReferral();
+
         $tabId = !empty($_GET['tabId']) ? $_GET['tabId'] : 0;
         $eventId = !empty($_GET['eventId']) ? $_GET['eventId'] : 0;
 
@@ -169,6 +170,7 @@ class PatientController extends BaseController
             'episodes_closed' => $episodes_closed,
             'firm' => $this->firm,
             'supportserviceepisodes' => $supportserviceepisodes,
+            'patientuserreferral' => $patient_user_referral,
         ));
     }
 
