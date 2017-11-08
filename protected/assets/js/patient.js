@@ -37,6 +37,8 @@ function removeSelectedReferredto(){
   $('#no_referred_to_result').hide();
   $('.selected_referred_to span.name').text('');
   $('#selected_referred_to_wrapper').hide();
+  $('#PatientUserReferral_user_id').val('-1');
+
 }
 
 $(document).ready(function(){

@@ -1527,7 +1527,9 @@ class PatientController extends BaseController
 
             if (isset($_POST['PatientUserReferral'])) {
                 $patient_user_referral = new PatientUserReferral();
-                $patient_user_referral->attributes = $_POST['PatientUserReferral'];
+                if($_POST['PatientUserReferral']['user_id']!=-1) {
+                    $patient_user_referral->attributes = $_POST['PatientUserReferral'];
+                }
             }
             switch ($patient->patient_source)
             {
@@ -1757,9 +1759,18 @@ class PatientController extends BaseController
 
             // not to be sync with PAS
             $patient->is_local = 1;
-            if (isset($_POST['PatientUserReferral']) && $_POST['PatientUserReferral']['user_id'] != $patient_user_referral->user_id) {
-                $patient_user_referral = new PatientUserReferral();
-                $patient_user_referral->attributes = $_POST['PatientUserReferral'];
+            if (isset($_POST['PatientUserReferral']) ) {
+                if ($_POST['PatientUserReferral']['user_id']==-1){
+                    if (isset($patient_user_referral->user_id)) {
+                        $patient_user_referral->delete();
+                    }
+                }elseif ($_POST['PatientUserReferral']['user_id'] != $patient_user_referral->user_id) {
+                    if (isset($patient_user_referral->user_id)) {
+                        $patient_user_referral->delete();
+                    }
+                    $patient_user_referral = new PatientUserReferral();
+                    $patient_user_referral->attributes = $_POST['PatientUserReferral'];
+                }
             }
         }
 
