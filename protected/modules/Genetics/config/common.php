@@ -17,7 +17,7 @@ return array(
         'module_partials' => array(
             'patient_summary_column1' => array(
                 'Genetics' => array(
-                    '_patient_genetics',
+                    60 => '_patient_genetics',
                 ),
             ),
         ),

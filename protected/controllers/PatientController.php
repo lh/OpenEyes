@@ -1456,19 +1456,40 @@ class PatientController extends BaseController
      */
     public function renderModulePartials($area)
     {
-        if (isset(Yii::app()->params['module_partials'][$area])) {
-            foreach (Yii::app()->params['module_partials'][$area] as $module => $partials) {
-                if ($api = Yii::app()->moduleAPI->get($module)) {
-                    foreach ($partials as $partial) {
-                        if ($viewFile = $api->findViewFile('patientSummary', $partial)) {
-                            $this->renderFile($viewFile, array(
-                                'patient' => $this->patient,
-                                'api' => $api,
-                            ));
-                        }
+        if (!isset(Yii::app()->params['module_partials'][$area])) {
+            return;
+        }
+
+        $views = array();
+
+        foreach (Yii::app()->params['module_partials'][$area] as $module => $partials) {
+            foreach ($partials as $position => $partial) {
+                if ($module === 'application') {
+                    // application partials
+                    $viewFile = Yii::getPathOfAlias('application.views.patient.' . $partial) . '.php';
+                    if (file_exists($viewFile)) {
+                        $views[] = array('file' => $viewFile, 'position' => $position);
+                    }
+                } elseif ($api = Yii::app()->moduleAPI->get($module)) {
+                    // module partials
+                    if ($viewFile = $api->findViewFile('patientSummary', $partial)) {
+                        $views[] = array('file' => $viewFile, 'api' => $api, 'position' => $position);
                     }
                 }
             }
+        }
+
+        usort($views, function ($a, $b) {
+            return $a['position'] - $b['position'];
+        });
+
+        foreach ($views as $view) {
+            $data = array('patient' => $this->patient);
+            if (array_key_exists('api', $view)) {
+                $data['api'] = $view['api'];
+            }
+
+            $this->renderFile($view['file'], $data);
         }
     }
     

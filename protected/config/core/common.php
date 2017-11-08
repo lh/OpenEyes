@@ -495,6 +495,18 @@ return array(
          * Enables the admin->Settings->Logo screen */
         'letter_logo_upload' => true,
         /* ID of the Tag that indicates "preservative free" */
-        'preservative_free_tag_id' => 1
+        'preservative_free_tag_id' => 1,
+
+        'module_partials' => array(
+            'patient_summary_column1' => array(
+                'application' => array(
+                    10 => '_patient_details',
+                    20 => '_patient_contact_details',
+                    30 => '_patient_gp',
+                    40 => '_patient_commissioningbodies',
+                    50 => '_patient_contacts',
+                ),
+            ),
+        ),
     ),
 );
