@@ -33,15 +33,7 @@
 			</div>
 		</div>
 		<?php if (Yii::app()->user->checkAccess('admin')) { ?>
-		<div class="row data-row highlight">
-			<div class="large-4 column">
-				<div class="data-label">Practitioner Address:</div>
-			</div>
-			<div class="large-8 column">
-				<div class="data-value"><?php echo ($this->patient->gp && $this->patient->gp->contact->address) ? $this->patient->gp->contact->address->letterLine : 'Unknown'; ?></div>
-			</div>
-		</div>
-		<div class="row data-row highlight">
+		<div class="row data-row ">
 			<div class="large-4 column">
 				<div class="data-label">Practitioner Telephone:</div>
 			</div>
