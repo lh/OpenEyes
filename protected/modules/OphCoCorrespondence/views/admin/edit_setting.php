@@ -21,7 +21,7 @@
 	<?php echo $this->renderPartial('//admin/_form_errors', array('errors' => $errors))?>
 	<?php
     $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-        'id' => 'settingsform',
+        'id' => 'correspondece_admin_settingsform',
         'enableAjaxValidation' => false,
         'focus' => '#username',
         'layoutColumns' => array(
@@ -29,14 +29,15 @@
             'field' => 5,
         ),
     ))?>
-        <?php if ($metadata->key == 'city_road_satellite_view') { ?>
-        <div class="row">
-            <div class="large-12 column">
-                <div class="alert-box with-icon warning">Removes the 2 check-boxes from Examination->Clinical Management->Cataract Surgical Management named "At City Road" and "At Satellite"
-		</div>
-            </div>
+    <?php if ($metadata->key == 'city_road_satellite_view') { ?>
+      <div class="row">
+        <div class="large-12 column">
+          <div class="alert-box with-icon warning">Removes the 2 check-boxes from Examination->Clinical
+            Management->Cataract Surgical Management named "At City Road" and "At Satellite"
+          </div>
         </div>
-        <?php } ?>
+      </div>
+    <?php } ?>
 		<div class="row field-row">
 			<div class="large-3 column">
 				<label for="<?php echo $metadata->key?>">
@@ -47,6 +48,9 @@
 				<?php $this->renderPartial('//admin/_admin_setting_'.strtolower(str_replace(' ', '_', $metadata->field_type->name)), array('metadata' => $metadata))?>
 			</div>
 		</div>
-		<?php echo $form->formActions()?>
+		<?php echo $form->formActions(array(
+		    'cancel' => 'Cancel',
+        'cancel-uri' =>@$cancel_uri,
+            ));?>
 	<?php $this->endWidget()?>
 </div>

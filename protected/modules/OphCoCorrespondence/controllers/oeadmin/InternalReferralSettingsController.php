@@ -49,14 +49,14 @@ class InternalReferralSettingsController extends ModuleAdminController
                     $setting->value = @$_POST[$metadata->key];
                     if (!$setting->save()) {
                         $errors = $setting->errors;
-                    } else {
+                     } else {
                         $this->redirect(array('/OphCoCorrespondence/oeadmin/internalReferralSettings/settings'));
                     }
                 }
             }
         }
 
-        $this->render('/admin/edit_setting', array('metadata' => $metadata, 'errors' => $errors));
+        $this->render('/admin/edit_setting', array('metadata' => $metadata, 'errors' => $errors, 'cancel_uri' => '/OphCoCorrespondence/oeadmin/internalReferralSettings/settings'));
     }
 
 
