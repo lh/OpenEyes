@@ -65,7 +65,7 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
             'LIKE' => 'Diagnosed with',
             'NOT LIKE' => 'Not diagnosed with',
         );
-        
+
         $firms = Firm::model()->getListWithSpecialties()
         ?>
       <div class="row field-row">
@@ -169,7 +169,7 @@ AND (:p_d_only_latest_event_$this->id = 0 OR
     AND later_event.event_date > event.event_date OR (later_event.event_date = event.event_date AND later_event.created_date > event.created_date)
   )
 )";
-        if ($this->firm_id !== '' && $this->firm_id !== null && $this->only_latest_event == 0) {
+        if (($this->firm_id === '' || $this->firm_id === null) && $this->only_latest_event == 0) {
             $query .= ' UNION ';
             $query .= "SELECT p3.id
 FROM patient p3 

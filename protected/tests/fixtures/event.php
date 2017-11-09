@@ -30,6 +30,7 @@ return array(
         'deleted' => false,
         'delete_reason' => null,
         'delete_pending' => false,
+        'firm_id' => 2,
     ),
     'event2' => array(
         'id' => 2,
@@ -44,6 +45,7 @@ return array(
         'deleted' => false,
         'delete_reason' => null,
         'delete_pending' => false,
+        'firm_id' => 2,
     ),
     'event3' => array(
         'id' => 3,
@@ -100,6 +102,7 @@ return array(
         'deleted' => false,
         'delete_reason' => null,
         'delete_pending' => false,
+        'firm_id' => 2,
     ),
     'event7' => array(
         'id' => 7,
@@ -263,6 +266,7 @@ return array(
         'deleted' => false,
         'delete_reason' => null,
         'delete_pending' => false,
+        'firm_id' => 2,
     ),
     'event19' => array(
         'episode_id' => 8,
@@ -317,6 +321,7 @@ return array(
         'deleted' => false,
         'delete_reason' => null,
         'delete_pending' => false,
+        'firm_id' => 2,
     ),
     'event23' => array(
         'episode_id' => 10,
@@ -330,6 +335,7 @@ return array(
         'deleted' => false,
         'delete_reason' => null,
         'delete_pending' => false,
+        'firm_id' => 3,
     ),
 
 );

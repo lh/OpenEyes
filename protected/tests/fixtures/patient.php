@@ -60,6 +60,7 @@ return array(
         'contact_id' => 3,
     ),
     'patient4' => array(
+        'id' => 4,
         'pas_key' => '123',
         'title' => 'Mrs.',
         'first_name' => 'Carla',
@@ -74,6 +75,7 @@ return array(
         'contact_id' => 4,
     ),
     'patient5' => array(
+        'id' => 5,
         'pas_key' => '1010',
         'title' => 'Mrs',
         'first_name' => 'Carla',
@@ -88,6 +90,7 @@ return array(
         'contact_id' => 5,
     ),
     'patient6' => array(
+        'id' => 6,
         'pas_key' => '10107',
         'title' => 'Mrs',
         'first_name' => 'Carla',
