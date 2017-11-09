@@ -244,7 +244,7 @@ class DefaultController extends BaseEventTypeController
                 ));
                 $cc['targets'][] = '<input type="hidden" name="CC_Targets[]" value="Patient'.$patient->id.'" />';
             } else {
-                $data['alert'] = "Letters to the GP should be cc'd to the patient, but this patient does not have a valid address.";
+                $data['alert'] = "Letters to the referring practitioner should be cc'd to the patient, but this patient does not have a valid address.";
             }
         }
 

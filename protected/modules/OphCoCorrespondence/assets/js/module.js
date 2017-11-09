@@ -467,7 +467,7 @@ $(document).ready(function() {
 									}
 								} else {
 									new OpenEyes.UI.Dialog.Alert({
-										content: "Warning: letters to the GP should be cc'd to the patient's, but the patient has no valid address."
+										content: "Warning: letters to the referring practitioner should be cc'd to the patient's, but the patient has no valid address."
 									}).open();
 								}
 							}

@@ -34,7 +34,7 @@ class Document //extends BaseActiveRecord
     public static function getContactTypes()
     {
         return [
-                'GP' => 'GP',
+                'GP' => 'Referring Practitioner',
                 'PATIENT' => 'Patient',
                 'DRSS' => 'DRSS',
                 'OTHER' => 'Other',

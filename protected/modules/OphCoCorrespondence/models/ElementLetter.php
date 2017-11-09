@@ -289,16 +289,16 @@ class ElementLetter extends BaseEventTypeElement
 
         if ($patient->gp) {
             if (@$patient->gp->contact) {
-                $options['Gp'.$patient->gp_id] = $patient->gp->contact->fullname.' (GP)';
+                $options['Gp'.$patient->gp_id] = $patient->gp->contact->fullname.' (Referring Practitioner)';
             } else {
-                $options['Gp'.$patient->gp_id] = Gp::UNKNOWN_NAME.' (GP)';
+                $options['Gp'.$patient->gp_id] = Gp::UNKNOWN_NAME.' (Referring Practitioner)';
             }
             if (!$patient->practice || !@$patient->practice->contact->address) {
                 $options['Gp'.$patient->gp_id] .= ' - NO ADDRESS';
             }
         } else {
             if ($patient->practice) {
-                $options['Practice'.$patient->practice_id] = Gp::UNKNOWN_NAME.' (GP)';
+                $options['Practice'.$patient->practice_id] = Gp::UNKNOWN_NAME.' (Referring Practitioner)';
                 if (@$patient->practice->contact && !@$patient->practice->contact->address) {
                     $options['Practice'.$patient->practice_id] .= ' - NO ADDRESS';
                 }
@@ -490,7 +490,7 @@ class ElementLetter extends BaseEventTypeElement
             $this->introduction = $patient->getLetterIntroduction(array(
                 'nickname' => $this->use_nickname,
             ));
-        } elseif ($this->macro->recipient && $this->macro->recipient->name == 'GP') {
+        } elseif ($this->macro->recipient && $this->macro->recipient->name == 'Referring Practitioner') {
             $this->address_target = 'gp';
             if ($patient->gp) {
                 $this->introduction = $patient->gp->getLetterIntroduction(array(

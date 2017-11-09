@@ -31,7 +31,7 @@
 class Gp extends BaseActiveRecordVersioned
 {
     const UNKNOWN_SALUTATION = 'Doctor';
-    const UNKNOWN_NAME = 'The General Practitioner';
+    const UNKNOWN_NAME = 'The Referring Practitioner';
 
     public $use_pas = true;
 
@@ -193,7 +193,7 @@ class Gp extends BaseActiveRecordVersioned
      */
     public function getPrefix()
     {
-        return 'GP';
+        return 'Referring Practitioner';
     }
 
     /**

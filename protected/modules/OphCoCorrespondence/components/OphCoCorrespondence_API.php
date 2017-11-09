@@ -270,7 +270,7 @@ class OphCoCorrespondence_API extends BaseAPI
             }
         }
 
-        if ($macro->recipient && $macro->recipient->name == 'GP' && $contact = ($patient->gp) ? $patient->gp : $patient->practice) {
+        if ($macro->recipient && $macro->recipient->name == 'Referring Practitioner' && $contact = ($patient->gp) ? $patient->gp : $patient->practice) {
             $data['to']['contact_type'] = get_class($contact);
             $data['to']['contact_id'] = $contact->contact->id;
         }
@@ -310,7 +310,7 @@ class OphCoCorrespondence_API extends BaseAPI
             } else {
                 $data['cc'][$k]['contact_name'] = $patient->getCorrespondenceName();
                 $data['cc'][$k]['contact_id'] = $patient->contact->id;
-                $data['cc'][$k]['address'] = "Letters to the GP should be cc'd to the patient, but this patient does not have a valid address.";
+                $data['cc'][$k]['address'] = "Letters to the referring practitioner should be cc'd to the patient, but this patient does not have a valid address.";
             }
             $k++;
         }
@@ -389,7 +389,7 @@ class OphCoCorrespondence_API extends BaseAPI
             }
         }
 
-        if ($macro->recipient && $macro->recipient->name == 'GP' && $contact = ($patient->gp) ? $patient->gp : $patient->practice) {
+        if ($macro->recipient && $macro->recipient->name == 'Referring Practitioner' && $contact = ($patient->gp) ? $patient->gp : $patient->practice) {
             $data['sel_address_target'] = get_class($contact).$contact->id;
         }
 
@@ -435,7 +435,7 @@ class OphCoCorrespondence_API extends BaseAPI
                     'include_prefix' => true,
                 ));
             } else {
-                $data['alert'] = "Letters to the GP should be cc'd to the patient, but this patient does not have a valid address.";
+                $data['alert'] = "Letters to the referring practitioner should be cc'd to the patient, but this patient does not have a valid address.";
             }
         }
 
