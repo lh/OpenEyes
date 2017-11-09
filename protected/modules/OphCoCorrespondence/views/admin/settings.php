@@ -72,7 +72,7 @@
                     <tr>
                         <th style="width:200px">Site</th>
                         <th >Location Code (XML)</th>
-                        <th class="text-center">Is Active</th>
+                        <th class="text-center">Add Site</th>
                     </tr>
                     </thead>
                     <tbody>
