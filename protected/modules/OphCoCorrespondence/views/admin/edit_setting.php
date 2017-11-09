@@ -21,7 +21,7 @@
 	<?php echo $this->renderPartial('//admin/_form_errors', array('errors' => $errors))?>
 	<?php
     $form = $this->beginWidget('BaseEventTypeCActiveForm', array(
-        'id' => 'correspondece_admin_settingsform',
+        'id' => 'correspondence_admin_settingsform',
         'enableAjaxValidation' => false,
         'focus' => '#username',
         'layoutColumns' => array(
