@@ -65,9 +65,8 @@ class PatientDiagnosisParameter extends CaseSearchParameter implements DBProvide
             'LIKE' => 'Diagnosed with',
             'NOT LIKE' => 'Not diagnosed with',
         );
-        $firmModel = new Firm();
-
-        $firms = $firmModel->getListWithSpecialties();
+        
+        $firms = Firm::model()->getListWithSpecialties()
         ?>
       <div class="row field-row">
         <div class="large-2 column">
@@ -138,7 +137,7 @@ JOIN event ON event.id = diagnoses.event_id
 JOIN episode ON episode.id = event.episode_id
 JOIN disorder ON diagnosis.disorder_id = disorder.id
 WHERE LOWER(disorder.term) LIKE LOWER(:p_d_value_$this->id)
-AND (:p_d_firm_$this->id IS NULL OR episode.firm_id = :p_d_firm_$this->id)
+AND (:p_d_firm_$this->id IS NULL OR event.firm_id = :p_d_firm_$this->id)
 AND (:p_d_only_latest_event_$this->id = 0 OR
   NOT EXISTS (
     SELECT true
@@ -159,7 +158,7 @@ JOIN event ON event.id = diagnoses.event_id
 JOIN episode ON episode.id = event.episode_id
 JOIN disorder ON diagnosis.disorder_id = disorder.id
 WHERE LOWER(disorder.term) LIKE LOWER(:p_d_value_$this->id)
-AND (:p_d_firm_$this->id IS NULL OR episode.firm_id = :p_d_firm_$this->id)
+AND (:p_d_firm_$this->id IS NULL OR event.firm_id = :p_d_firm_$this->id)
 AND (:p_d_only_latest_event_$this->id = 0 OR
   NOT EXISTS (
     SELECT true

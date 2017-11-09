@@ -806,6 +806,8 @@ class BaseEventTypeController extends BaseModuleController
      */
     public function actionCreate()
     {
+        $this->event->firm_id = $this->selectedFirmId;
+        
         if (!empty($_POST)) {
             // form has been submitted
             if (isset($_POST['cancel'])) {
