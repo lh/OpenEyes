@@ -62,7 +62,6 @@
 					<th>CC patient</th>
 					<th>CC doctor</th>
 					<th>CC DRSS</th>
-					<th>Use nickname</th>
 					<th>Episode status</th>
 				</tr>
 			</thead>

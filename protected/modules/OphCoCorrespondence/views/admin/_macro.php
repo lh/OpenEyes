@@ -40,7 +40,6 @@
         <?php echo $form->checkBox($macro, 'cc_patient', array('text-align' => 'right'))?>
         <?php echo $form->checkBox($macro, 'cc_doctor', array('text-align' => 'right'))?>
         <?php echo $form->checkBox($macro, 'cc_drss', array('text-align' => 'right'))?>
-        <?php echo $form->checkBox($macro, 'use_nickname', array('text-align' => 'right'))?>
         <?php echo $form->dropDownList($macro, 'episode_status_id', CHtml::listData(EpisodeStatus::model()->findAll(array('order' => 'id asc')), 'id', 'name'), array('empty' => '- None -'))?>
         <?php echo $form->textArea($macro, 'body')?>
 
@@ -66,7 +65,7 @@
         <div class="row field-row">
             <div class="large-10 large-offset-2 column">
                 <button class="button small primary event-action" name="save" type="submit" id="et_save">Save</button>
-                <button class="warning button small primary cancelEditMacro" name="cancel" type="submit">Cancel</button>
+                <button class="warning button small primary cancelEditMacro event-action" name="cancel" type="submit">Cancel</button>
             </div>
         </div>
     <?php $this->endWidget()?>
