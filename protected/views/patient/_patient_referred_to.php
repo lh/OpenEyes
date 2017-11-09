@@ -6,6 +6,7 @@
  * Time: 2:43 PM
  */
 ?>
+<?php if (isset($this->patient->patientuserreferral[0])): ?>
 <section class="box patient-info js-toggle-container">
     <h3 class="box-title">Referred to:</h3>
     <a href="#" class="toggle-trigger toggle-hide js-toggle">
@@ -20,9 +21,10 @@
             </div>
             <div class="large-8 column">
                 <div class="data-value">
-                    <?php echo $patientuserreferral->getUserName(); ?>
+                    <?php echo $this->patient->patientuserreferral[0]->getUserName(); ?>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<?php endif ?>

@@ -92,9 +92,6 @@ $warnings = $this->patient->getWarnings($clinical);
 				</section>
 			<?php endif ?>
 			<?php $this->renderModulePartials('patient_summary_column1')?>
-      <?php if (isset($patientuserreferral->user_id)){
-          $this->renderPartial('_patient_referred_to', array('patientuserreferral'=>$patientuserreferral));
-      }?>
 		</div>
 		<div class="large-6 column" id="patient-summary-form-container">
 
