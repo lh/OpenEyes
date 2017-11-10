@@ -64,7 +64,7 @@ class LetterTypeController extends ModuleAdminController
             $admin->setModelId($id);
         }
         $admin->setEditFields(array(
-            'name' => 'label',
+            'name' => 'text',
             'is_active' => 'checkbox',
         ));
         $admin->editModel();
