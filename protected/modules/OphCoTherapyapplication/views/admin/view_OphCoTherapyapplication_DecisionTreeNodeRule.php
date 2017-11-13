@@ -16,6 +16,9 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html The GNU Affero General Public License V3.0
  */
 ?>
+<?php
+$this->renderPartial('_menu_main');
+?>
 <div class="OphCoTherapyapplication_DecisionTreeNodeRule curvybox blueborder" style="width: 200px;">
 	<?php echo $model->displayParentCheck().' '.$model->displayParentCheckValue() ?>
 	<br />

@@ -410,12 +410,17 @@ class AdminController extends ModuleAdminController
 
     public function actionCreateDecisionTreeNodeRule($id)
     {
+        $this->layout = '//layouts/admin_popup';
+
         $node = OphCoTherapyapplication_DecisionTreeNode::model()->findByPk((int)$id);
 
         $model = new OphCoTherapyapplication_DecisionTreeNodeRule();
         $model->node = $node;
-
-        if (isset($_POST['OphCoTherapyapplication_DecisionTreeNodeRule'])) {
+        if (isset($_POST['cancel'])) {
+            $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
+                array('id' => $node->decisiontree_id)). '?node_id=' . $node->id);
+        }
+        if (!isset($_POST['cancel'])&&isset($_POST['OphCoTherapyapplication_DecisionTreeNodeRule'])) {
             $model->attributes = $_POST['OphCoTherapyapplication_DecisionTreeNodeRule'];
             $model->node_id = $node->id;
 
@@ -430,11 +435,12 @@ class AdminController extends ModuleAdminController
             }
         }
 
-        $this->renderPartial('create', array(
+        $this->render('create', array(
             'model' => $model,
             'node' => $node,
             'title' => 'Rule for ' . ($node->outcome ? $node->outcome->name . ' Outcome' : $node->question),
-        ));
+            'cancel_uri' => $this->createUrl('/admin/viewdecisiontree',
+                    array('id' => $node->decisiontree_id)) . '/?node_id=' . $node->id));
     }
 
     public function actionUpdateDecisionTreeNodeRule($id)

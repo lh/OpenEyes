@@ -16,10 +16,15 @@
  * @license http://www.gnu.org/licenses/agpl-3.0.html The GNU Affero General Public License V3.0
  */
 ?>
-
+<?php
+$form->layoutColumns = array(
+    'label' => 3,
+    'field' => 9,
+);
+?>
+<div class="alert-box alert">
 <p class="note">Fields with <span class="required">*</span> are required.</p>
-
-<?php echo $form->errorSummary($model); ?>
+</div>
 
 <div class="row outcomeAdmin parent_check eventDetail">
 	<div class="label"><?php echo $form->labelEx($model, 'parent_check'); ?></div>
