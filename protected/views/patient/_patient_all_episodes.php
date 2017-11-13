@@ -32,7 +32,7 @@
 			<tr>
 				<th>Start Date</th>
 				<th>End Date</th>
-				<th>Service</th>
+				<th><?php echo Firm::serviceLabel(); ?></th>
 				<th>Subspecialty</th>
 				<th>Eye</th>
 				<th>Diagnosis</th>
