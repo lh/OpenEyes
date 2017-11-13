@@ -87,7 +87,16 @@ if (!isset($uniqueid)) {
                             <input type="checkbox" name="<?php echo $admin->getModelName(); ?>[id][]" value="<?php echo $row->id ?>"/>
                         </td>
                         <?php foreach ($admin->getListFields() as $listItem):
-                            if ($listItem !== 'attribute_elements_id.id'):
+                            if ($listItem === 'is_active'):
+                                ?>
+                                <td>
+                                  <?php
+                                    $attr_val = $admin->attributeValue($row, $listItem);
+                                    echo $attr_val? 'Yes': 'No';
+                                  ?>
+                                </td>
+                               <?php
+                            elseif ($listItem !== 'attribute_elements_id.id'):
                                 ?>
                                 <td>
                                     <?php
@@ -125,7 +134,6 @@ if (!isset($uniqueid)) {
                                 <?php
                             endif;
                         endforeach; ?>
-
                     </tr>
                 <?php } ?>
                 </tbody>
