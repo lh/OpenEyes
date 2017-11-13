@@ -364,7 +364,7 @@ class AdminController extends ModuleAdminController
                 Yii::app()->user->setFlash('success', 'Decision Tree node created');
 
                 $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
-                        array('id' => $model->decisiontree_id)) . '/?node_id=' . $model->id);
+                        array('id' => $model->decisiontree_id)) . '?node_id=' . $model->id);
             }
         }
 
@@ -397,7 +397,7 @@ class AdminController extends ModuleAdminController
                 Yii::app()->user->setFlash('success', 'Decision Tree node updated');
 
                 $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
-                        array('id' => $model->decisiontree_id)) . '/?node_id=' . $model->id);
+                        array('id' => $model->decisiontree_id)) . '?node_id=' . $model->id);
             }
         }
 
@@ -431,7 +431,7 @@ class AdminController extends ModuleAdminController
                 ));
                 Yii::app()->user->setFlash('success', 'Decision Tree Node rule created');
 
-                $this->redirect(array('viewdecisiontree', 'id' => $node->decisiontree_id, 'node_id' => $node->id));
+                $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree', array('id' => $node->decisiontree_id)).'?node_id='.$node->id);
             }
         }
 
@@ -439,12 +439,14 @@ class AdminController extends ModuleAdminController
             'model' => $model,
             'node' => $node,
             'title' => 'Rule for ' . ($node->outcome ? $node->outcome->name . ' Outcome' : $node->question),
-            'cancel_uri' => $this->createUrl('/admin/viewdecisiontree',
-                    array('id' => $node->decisiontree_id)) . '/?node_id=' . $node->id));
+            'cancel_uri' => $this->createUrl('OphCoTherapyapplication/admin/viewdecisiontree',
+                    array('id' => $node->decisiontree_id)) . '?node_id=' . $node->id));
     }
 
     public function actionUpdateDecisionTreeNodeRule($id)
     {
+        $this->layout = '//layouts/admin_popup';
+
         $model = OphCoTherapyapplication_DecisionTreeNodeRule::model()->findByPk((int)$id);
 
         if (isset($_POST['OphCoTherapyapplication_DecisionTreeNodeRule'])) {
@@ -457,18 +459,14 @@ class AdminController extends ModuleAdminController
                 ));
                 Yii::app()->user->setFlash('success', 'Decision Tree Node Rule updated');
 
-                $this->redirect(array(
-                    'viewdecisiontree',
-                    'id' => $model->node->decisiontree_id,
-                    'node_id' => $model->node->id,
-                ));
+                $this->popupCloseAndRedirect(Yii::app()->createUrl('OphCoTherapyapplication/admin/viewdecisiontree', array('id' => $model->node->decisiontree_id)).'?node_id='.$model->node->id);
             }
         }
 
-        $this->renderPartial('update', array(
+        $this->render('update', array(
             'model' => $model,
             'node' => $model->node,
-            'title' => 'Rule for ' . ($model->node->outcome ? $model->node->outcome->name . ' Outcome' : $model->node->question),
+            'title' => 'Rule for ' . ($model->node->outcome ? $model->node->outcome->name . ' Outcome' : $model->node->question)
         ));
     }
 
