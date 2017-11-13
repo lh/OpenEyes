@@ -64,7 +64,7 @@ $(document).ready(function () {
 		var node_id = $(this).attr('data-node_id');
 		 var url = '/OphCoTherapyapplication/admin/createDecisionTreeNodeRule/' + node_id;
     $('<iframe style="min-width: 95%"></iframe>').attr('src', url).dialog({
-      height: 400,
+      height: 500,
 			width: 700,
       title: 'Decision Tree Node Rule',
       modal: true,
@@ -79,7 +79,7 @@ $(document).ready(function () {
 		var rule_id = $(this).attr('data-rule_id');
 		var url = '/OphCoTherapyapplication/admin/updateDecisionTreeNodeRule/' + rule_id;
     $('<iframe style="min-width: 95%"></iframe>').attr('src', url).dialog({
-      height: 400,
+      height: 500,
       width: 700,
       title: 'Decision Tree Node Rule',
       modal: true,
