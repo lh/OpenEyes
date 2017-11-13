@@ -74,6 +74,7 @@ class LetterType extends BaseActiveRecordVersioned
     {
         return array(
             'name' => 'Letter Type',
+            'id' => 'ID',
         );
     }
 
