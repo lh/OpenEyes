@@ -350,7 +350,8 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
                   </span>
           <a href="javascript:void(0)" class="remove right">remove</a>
         </div>
-          <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id, array('class' => 'hidden_id')); ?>
+          <?php echo CHtml::hiddenField('Patient[gp_id]', $patient->gp_id
+              , array('class' => 'hidden_id')); ?>
       </div>
       <div id="no_gp_result" class="row field-row hide">
         <div class="large-offset-4 large-8 column selected_gp end">No result
@@ -527,36 +528,7 @@ $ethnic_groups = CHtml::listData(EthnicGroup::model()->findAll(), 'id', 'name');
         ),
     ));
     $gpcontact = new Contact('manage_gp');
-    echo CHtml::beginForm(Yii::app()->controller->createUrl('gp/create'), 'post', array('id' => 'gp_form'));
-    echo CHtml::activeLabelEx($gpcontact, 'title');
-    echo CHtml::activeTextField($gpcontact, 'title', array('size' => 30, 'maxlength' => 30));
-    echo CHtml::activeLabelEx($gpcontact, 'first_name');
-    echo CHtml::activeTextField($gpcontact, 'first_name', array('size' => 30, 'maxlength' => 30));
-    echo CHtml::activeLabelEx($gpcontact, 'last_name');
-    echo CHtml::activeTextField($gpcontact, 'last_name', array('size' => 30, 'maxlength' => 30));
-    echo CHtml::activeLabelEx($gpcontact, 'primary_phone');
-    echo CHtml::activeTelField($gpcontact, 'primary_phone', array('size' => 15, 'maxlength' => 20));
-    echo CHtml::ajaxButton('Add',
-        Yii::app()->controller->createUrl('gp/create', array('context' => 'AJAX')),
-        array(
-            'type' => 'POST',
-            'error' => 'js:function(){
-               new OpenEyes.UI.Dialog.Alert({
-               content: "First name and Last name cannot be blank."
-              }).open();
-            }',
-            'success' => 'js:function(event){
-               removeSelectedGP();
-               addGpItem("selected_gp_wrapper",event);
-               $("#gpdialog").closest(".ui-dialog-content").dialog("close");
-            }',
-            'complete' => 'js:function(){
-                $("#gp_form")[0].reset(); 
-          }',
-        )
-    );
-
-    echo CHtml::endForm();
+    $this->renderPartial('../gp/_form', array('model' => $gpcontact, 'context' => 'AJAX'));
     $this->endWidget('zii.widgets.jui.CJuiDialog');
     ?>
 

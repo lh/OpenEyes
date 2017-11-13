@@ -35,6 +35,7 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
         <tr>
           <th>Name</th>
           <th>Telephone</th>
+          <th>Role</th>
         </tr>
         </thead>
         <tbody>
@@ -42,6 +43,7 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
           <tr id="r<?php echo $gp->id; ?>" class="clickable">
             <td><?php echo CHtml::encode($gp->getCorrespondenceName()); ?></td>
             <td><?php echo CHtml::encode($gp->contact->primary_phone); ?></td>
+            <td><?php echo Chtml::encode(isset($gp->contact->label)?$gp->contact->label->name:'')?></td>
           </tr>
         <?php endforeach; ?>
         </tbody>

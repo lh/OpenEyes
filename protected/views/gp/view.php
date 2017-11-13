@@ -33,6 +33,14 @@ $this->pageTitle = 'View Practitioner';
                 class="data-value"><?php echo isset($model->contact->primary_phone) ? CHtml::encode($model->contact->primary_phone) : 'Unknown'; ?></div>
           </div>
         </div>
+        <div class="row data-row">
+          <div class="large-3 column">
+            <div class="data-label">Role:</div>
+          </div>
+          <div class="large-4 column end">
+            <div class="data-value"><?php echo CHtml::encode(isset($model->contact->label)?$model->contact->label->name:''); ?></div>
+          </div>
+        </div>
         <!--Add the address row here when GPs get tied directly to practices rather than through patient records.-->
       </div>
     </section>
