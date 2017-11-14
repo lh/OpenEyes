@@ -566,8 +566,8 @@ class OphCoCorrespondence_API extends BaseAPI
         if (!$text_ElementLetter_address) {
             $text_ElementLetter_address = '';
         }
-        $address = ($contact->contact->label?$contact->contact->label->name:'')."\n".$address;
-        $text_ElementLetter_address =  ($contact->contact->label?$contact->contact->label->name:'')."\n".$text_ElementLetter_address;
+        $address = ($contact->contact->label?$contact->contact->label->name."\n":'').$address;
+        $text_ElementLetter_address =  ($contact->contact->label?$contact->contact->label->name."\n":'').$text_ElementLetter_address;
         if (method_exists($contact, 'getCorrespondenceName')) {
             $correspondence_name = $contact->correspondenceName;
         } else {
