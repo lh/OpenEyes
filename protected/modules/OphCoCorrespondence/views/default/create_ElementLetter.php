@@ -183,7 +183,6 @@ $element->letter_type_id = ($element->letter_type_id ? $element->letter_type_id 
             $contact_id = isset($address_data['contact_id']) ? $address_data['contact_id'] : null;
             $contact_name = isset($address_data['contact_name']) ? $address_data['contact_name'] : null;
             $address = isset($address_data['address']) ? $address_data['address'] : null;
-
             $internal_referral = LetterType::model()->findByAttributes(['name' => 'Internal Referral']);
 
             $this->renderPartial('//docman/_create', array(

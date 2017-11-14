@@ -41,7 +41,6 @@
                 <td> To <?php echo CHtml::hiddenField("DocumentTarget[" . $row_index . "][attributes][ToCc]", 'To'); ?> </td>
                 <td>
                     <?php
-
                         $contact_type = isset($macro_data["to"]["contact_type"]) ? $macro_data["to"]["contact_type"] : null;
 
                         $this->renderPartial('//docman/table/contact_name_address', array(
@@ -57,8 +56,6 @@
                                     'is_editable_address' => (ucfirst(strtolower($contact_type)) != 'Gp') && ($contact_type != 'INTERNALREFERRAL') && ($contact_type != 'Practice'),
                                 ));
                     ?>
-
-
                 </td>
                 <td>
                     <?php
