@@ -42,6 +42,14 @@
 			</div>
 		</div>
 		<?php } ?>
+    <div class="row data-row">
+      <div class="large-4 column">
+        <div class="data-label">Practice Role:</div>
+      </div>
+      <div class="large-8 column">
+        <div class="data-value"><?php echo ($this->patient->gp && $this->patient->gp->contact->label) ? $this->patient->gp->contact->label->name : 'Unknown'; ?></div>
+      </div>
+    </div>
 		<div class="row data-row">
 			<div class="large-4 column">
 				<div class="data-label">Practice Address:</div>
@@ -58,6 +66,7 @@
 				<div class="data-value"><?php echo ($this->patient->practice && $this->patient->practice->phone) ? $this->patient->practice->phone : 'Unknown'; ?></div>
 			</div>
 		</div>
+
     <?php if (isset($this->patient->referral)):?>
         <div class="row data-row">
           <div class="large-4 column">
