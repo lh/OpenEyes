@@ -47,6 +47,7 @@ class LetterTypeController extends ModuleAdminController
         $admin->searchAll();
         $admin->getSearch()->addActiveFilter('is_active');
         $admin->getSearch()->setItemsPerPage($this->itemsPerPage);
+        $admin->setModelDisplayName("Letter Type");
         $admin->listModel();
     }
 
@@ -67,6 +68,7 @@ class LetterTypeController extends ModuleAdminController
             'name' => 'text',
             'is_active' => 'checkbox',
         ));
+        $admin->setModelDisplayName("Letter Type");
         $admin->editModel();
     }
 
@@ -76,6 +78,7 @@ class LetterTypeController extends ModuleAdminController
     public function actionDelete()
     {
         $admin = new Admin(LetterType::model(), $this);
+        $admin->setModelDisplayName("Letter Type");
         $admin->deleteModel();
     }
 }
