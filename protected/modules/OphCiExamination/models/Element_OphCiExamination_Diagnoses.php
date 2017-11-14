@@ -164,7 +164,7 @@ class Element_OphCiExamination_Diagnoses extends \BaseEventTypeElement
                 };
             }
             if ($u_disorder['principal']) {
-                $this->event->episode->setPrincipalDiagnosis($u_disorder['disorder_id'], $u_disorder['eye_id']);
+                $this->event->episode->setPrincipalDiagnosis($u_disorder['disorder_id'], $u_disorder['eye_id'], $this->event->firm_id);
             } else {
                 //add a secondary diagnosis
                 // Note that this may be creating duplicate diagnoses, but that is okay as the dates on them will differ

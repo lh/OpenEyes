@@ -462,10 +462,14 @@ class Episode extends BaseActiveRecordVersioned
         }
     }
 
-    public function setPrincipalDiagnosis($disorder_id, $eye_id)
+    public function setPrincipalDiagnosis($disorder_id, $eye_id, $firm_id = null)
     {
         $this->disorder_id = $disorder_id;
         $this->eye_id = $eye_id;
+        if ($firm_id !== null) {
+            $this->firm_id = $firm_id;
+        }
+
         if (!$this->save()) {
             throw new Exception('Unable to set episode principal diagnosis/eye: '.print_r($this->getErrors(), true));
         }
