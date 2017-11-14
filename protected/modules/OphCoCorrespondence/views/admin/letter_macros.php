@@ -30,7 +30,7 @@
 	<form id="admin_sessions_filters" class="panel">
 		<div class="row field-row">
 			<div class="large-2 column">
-				<?php echo CHtml::dropDownList('type', '', array('site' => 'Site', 'subspecialty' => 'Subspecialty', 'firm' => 'Firm'), array('empty' => '- Type -'))?>
+				<?php echo CHtml::dropDownList('type', '', array('site' => 'Site', 'subspecialty' => 'Subspecialty', 'firm' => Firm::contextLabel()), array('empty' => '- Type -'))?>
 			</div>
 			<div class="large-2 column typeSite" style="display: none">
 				<?php echo CHtml::dropDownList('site_id', @$_GET['site_id'], Site::model()->getListForCurrentInstitution(), array('empty' => '- Site -'))?>
