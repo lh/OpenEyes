@@ -60,12 +60,14 @@ class LetterTypeController extends ModuleAdminController
      */
     public function actionEdit($id = false)
     {
+
         $admin = new Admin(LetterType::model(), $this);
         if ($id) {
+            $letter_type = LetterType::model()->findByPk($id)->name;
             $admin->setModelId($id);
         }
         $admin->setEditFields(array(
-            'name' => 'text',
+            'name' => isset($letter_type)&&$letter_type === 'Internal Referral' ?'label':'text',
             'is_active' => 'checkbox',
         ));
         $admin->setModelDisplayName("Letter Type");
