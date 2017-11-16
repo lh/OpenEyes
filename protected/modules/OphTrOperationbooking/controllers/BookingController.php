@@ -147,7 +147,6 @@ class BookingController extends OphTrOperationbookingEventController
                         if ($operation->canChangeReferral()) {
                             $operation->referral_id = $_POST['Operation']['referral_id'];
                         }
-
                         if (($result = $operation->schedule(
                                 $booking,
                                 $_POST['Operation']['comments'],

@@ -25,7 +25,7 @@ $warnings = $this->patient->getWarnings($clinical);
 
 <div class="schedule">
 
-    <?php $this->title = ($operation->booking ? 'Re-schedule' : 'Schedule') . ' Operation'; ?>
+    <?php $this->title = ($operation->booking ? 'Reschedule' : 'Schedule') . ' Operation'; ?>
 
     <div class="alert-box alert with-icon<?php if (!is_array($errors)) { ?> hide<?php } ?>">
         <p>Please fix the following input errors:</p>

@@ -400,7 +400,6 @@ class Element_OphTrOperationbooking_Operation extends BaseEventTypeElement
 
             foreach($this->anaesthetic_type as $anaesthetic_type){
                 if ($anaesthetic = AnaestheticType::model()->findByPk($anaesthetic_type->id) ) {
-
                     if (in_array($anaesthetic->id, $this->anaesthetist_required_ids) && !$this->booking->session->anaesthetist) {
                         $this->addError('anaesthetist', 'The booked session does not have an anaesthetist present, you must change the session or cancel the booking before making this change');
                     }
@@ -414,7 +413,6 @@ class Element_OphTrOperationbooking_Operation extends BaseEventTypeElement
         if( !count($this->anaesthetic_type_assignments)){;
             $this->addError('anaesthetic_type', 'Type cannot be empty.');
         }
-
         return parent::afterValidate();
     }
 
@@ -1199,7 +1197,7 @@ class Element_OphTrOperationbooking_Operation extends BaseEventTypeElement
                 }
             }
         }
-
+        $this->booking->session = $session;
         if (!$this->save()) {
             throw new Exception('Unable to update operation data: '.print_r($this->getErrors(), true));
         }
@@ -1207,7 +1205,7 @@ class Element_OphTrOperationbooking_Operation extends BaseEventTypeElement
         $session->comments = $session_comments;
 
         if (!$session->save()) {
-            throw new Exception('Unable to save session comments: '.print_r($session->getErrors(), true));
+            throw new Exception('Unable to save session comments: ' . print_r($session->getErrors(), true));
         }
 
         // if the session has no firm, this implies it's an emergency booking so there is no need to calculate EROD
