@@ -56,7 +56,7 @@
         'id',
         CHtml::listData(Firm::model()->findAll(), 'id', 'name'),
         array(),
-        array('label' => 'Firms', 'empty' => '-- Add --')
+        array('label' => Firm::contextLabel() . 's', 'empty' => '-- Add --')
     ); ?>
 
 

@@ -236,7 +236,7 @@ class User extends BaseActiveRecordVersioned
             'password_old' => 'Current password',
             'password_new' => 'New password',
             'password_confirm' => 'Confirm password',
-            'global_firm_rights' => 'Global firm rights',
+            'global_firm_rights' => 'Global ' . strtolower(Firm::contextLabel()) . ' rights',
             'is_doctor' => 'Doctor',
             'is_consultant' => 'Consultant',
             'is_clinical' => 'Clinically trained',
