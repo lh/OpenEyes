@@ -232,6 +232,7 @@ class User extends BaseActiveRecordVersioned
             'email' => 'Email',
             'active' => 'Active',
             'password' => 'Password',
+            'role' => 'Position',
             'password_old' => 'Current password',
             'password_new' => 'New password',
             'password_confirm' => 'Confirm password',
