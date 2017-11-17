@@ -1309,7 +1309,7 @@ class AdminController extends BaseAdminController
         } else {
             $cb = new CommissioningBody();
             $address = new Address();
-            $address->country_id = 1;
+            $address->country_id = Country::model()->findByAttributes(array('name'=>'Australia'))->id;
         }
 
         $errors = array();
@@ -1518,7 +1518,7 @@ class AdminController extends BaseAdminController
     {
         $address = new Address();
         $contact = new Contact();
-        $address->country_id = 1;
+        $address->country_id = Country::model()->findByAttributes(array('name'=>'Australia'))->id;
         // to allow the commissioning body type list to be filtered
         $commissioning_bt = null;
         $commissioning_bst = null;
@@ -1568,22 +1568,21 @@ class AdminController extends BaseAdminController
 
             $address->attributes = $_POST['Address'];
 
-            if (!$address->validate()) {
-                $errors = array_merge($errors, $address->getErrors());
-            }
 
             if (empty($errors)) {
+
                 $transaction = Yii::app()->db->beginInternalTransaction();
                 try {
                     if (!$contact->save()) {
                         throw new Exception('Unable to save contact: ' . print_r($contact->getErrors(), true));
                     }
-
                     if (!$address->id) {
                         $cbs->contact_id = $contact->id;
                         $address->contact_id = $contact->id;
                     }
-
+                    if (!$address->validate()) {
+                        $errors = array_merge($errors, $address->getErrors());
+                    }
                     $method = $cbs->id ? 'edit' : 'add';
 
                     if (!$cbs->save()) {
@@ -1602,16 +1601,23 @@ class AdminController extends BaseAdminController
                     $transaction->rollback();
                     throw $e;
                 }
-
-
                 $this->redirect($return_url);
             }
         }
-
+        $criteria = new CDbCriteria();
+        $criteria->order = 't.name asc';
+        if ($commissioning_bt) {
+            $criteria->addColumnCondition(array('commissioning_body_type_id' => $commissioning_bt->id));
+        }
+        $data = CHtml::listData(CommissioningBody::model()->findAll($criteria), 'id', 'name');
+        if (empty($data)) {
+          array_push($errors, array('No Local Authorities type commissioning body is defined, please contact admin user to fix this problem.'));
+        }
         $this->render('//admin/editCommissioningBodyService', array(
             'commissioning_bt' => $commissioning_bt,
             'commissioning_bst' => $commissioning_bst,
             'cbs' => $cbs,
+            'data' => $data,
             'address' => $address,
             'errors' => $errors,
             'return_url' => $return_url

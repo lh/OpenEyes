@@ -30,12 +30,7 @@
 		)
 	));
 
-	$criteria = new CDbCriteria();
-	$criteria->order = 't.name asc';
-	if ($commissioning_bt) {
-		$criteria->addColumnCondition(array('commissioning_body_type_id' => $commissioning_bt->id));
-	}
-	echo $form->dropDownList($cbs, 'commissioning_body_id', CHtml::listData(CommissioningBody::model()->findAll($criteria), 'id', 'name'), array('style' => 'margin-bottom:6px;'));
+  echo $form->dropDownList($cbs, 'commissioning_body_id', $data, array('style' => 'margin-bottom:6px;'));
 
 	if ($commissioning_bst) { ?>
 		<div id="div_CommissioningBodyService_commissioning_body_service_type_id" class="row field-row">
