@@ -30,7 +30,7 @@
 		)
 	));
 
-  echo $form->dropDownList($cbs, 'commissioning_body_id', $data, array('style' => 'margin-bottom:6px;'));
+  echo $form->dropDownList($cbs, 'commissioning_body_id', $db_list, array('style' => 'margin-bottom:6px;'));
 
 	if ($commissioning_bst) { ?>
 		<div id="div_CommissioningBodyService_commissioning_body_service_type_id" class="row field-row">

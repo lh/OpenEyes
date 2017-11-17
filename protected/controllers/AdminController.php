@@ -1609,15 +1609,15 @@ class AdminController extends BaseAdminController
         if ($commissioning_bt) {
             $criteria->addColumnCondition(array('commissioning_body_type_id' => $commissioning_bt->id));
         }
-        $data = CHtml::listData(CommissioningBody::model()->findAll($criteria), 'id', 'name');
-        if (empty($data)) {
-          array_push($errors, array('No Local Authorities type commissioning body is defined, please contact admin user to fix this problem.'));
+        $db_list = CHtml::listData(CommissioningBody::model()->findAll($criteria), 'id', 'name');
+        if (empty($db_list)) {
+          array_push($errors, array('No commissioning body exists.'));
         }
         $this->render('//admin/editCommissioningBodyService', array(
             'commissioning_bt' => $commissioning_bt,
             'commissioning_bst' => $commissioning_bst,
             'cbs' => $cbs,
-            'data' => $data,
+            'db_list' => $db_list,
             'address' => $address,
             'errors' => $errors,
             'return_url' => $return_url
