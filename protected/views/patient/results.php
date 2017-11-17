@@ -74,7 +74,7 @@ $based_on = implode(', ', $based_on);
                 </thead>
                 <tbody>
                 <?php foreach ($dataProvided as $i => $result) { ?>
-                    <tr id="r<?php echo $result->id ?>" class="clickable" data-link="<?php echo $core_api->generateEpisodeLink($result); ?>"
+                    <tr id="r<?php echo $result->id ?>" class="clickable" data-link="<?php echo $this->createUrl('patient/view', array('id' => $result->id)) ?>"
                         <?php
                             echo "data-hos_num='{$result->hos_num}'";
                             if($result->isNewRecord){
