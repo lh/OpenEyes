@@ -1,6 +1,7 @@
 <?php
 /* @var DisorderController $this */
 /* @var CActiveDataProvider $dataProvider */
+/* @var string $search_term */
 $this->pageTitle = 'Disorders';
 
 $dataProvided = $dataProvider->getData();
@@ -25,8 +26,10 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
         <div class="large-4 column">
             <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'disorder-search-form',
+                'method' => 'get',
+                'action' => Yii::app()->createUrl('/disorder'),
             )); ?>
-            <?php echo CHtml::textField('search-term', @$_POST['search-term'],
+            <?php echo CHtml::textField('search_term', $search_term,
                 array('placeholder' => 'Enter search query...')); ?>
             <?php $this->endWidget(); ?>
         </div>

@@ -146,21 +146,23 @@ class DisorderController extends BaseController
 
     /**
      * Lists all models.
+     * @param string $search_term
      */
-    public function actionIndex()
+    public function actionIndex($search_term = null)
     {
         $criteria = new CDbCriteria();
         $criteria->order = 'term';
 
-        if (isset($_POST['search-term'])) {
-            $criteria->addSearchCondition('LOWER(term)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(fully_specified_name)', strtolower($_POST['search-term']), true, 'OR');
+        if ($search_term !== null) {
+            $criteria->addSearchCondition('LOWER(term)', strtolower($search_term), true, 'OR');
+            $criteria->addSearchCondition('LOWER(fully_specified_name)', strtolower($search_term), true, 'OR');
         }
 
         $dataProvider = new CActiveDataProvider('Disorder', array('criteria' => $criteria));
 
         $this->render('index', array(
             'dataProvider' => $dataProvider,
+            'search_term' => $search_term,
         ));
     }
 
