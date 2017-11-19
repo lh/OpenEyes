@@ -194,24 +194,27 @@ class GpController extends BaseController
 
     /**
      * Lists all models.
+     *
+     * @param string $search_term
      */
-    public function actionIndex()
+    public function actionIndex($search_term = null)
     {
         $criteria = new CDbCriteria();
         $criteria->together = true;
         $criteria->with = array('contact');
         $criteria->order = 'last_name';
 
-        if (isset($_POST['search-term'])) {
-            $criteria->addSearchCondition('LOWER(last_name)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(first_name)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(primary_phone)', strtolower($_POST['search-term']), true, 'OR');
+        if ($search_term !== null) {
+            $criteria->addSearchCondition('LOWER(last_name)', strtolower($search_term), true, 'OR');
+            $criteria->addSearchCondition('LOWER(first_name)', strtolower($search_term), true, 'OR');
+            $criteria->addSearchCondition('LOWER(primary_phone)', strtolower($search_term), true, 'OR');
         }
         $dataProvider = new CActiveDataProvider('Gp', array(
             'criteria' => $criteria
         ));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
+            'search_term' => $search_term,
         ));
     }
 

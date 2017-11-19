@@ -1,6 +1,7 @@
 <?php
-/* @var $this GpController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var GpController $this */
+/* @var CActiveDataProvider $dataProvider */
+/* @var string $search_term */
 $dataProvided = $dataProvider->getData();
 $this->pageTitle = 'Practitioners';
 $items_per_page = $dataProvider->getPagination()->getPageSize();
@@ -24,8 +25,10 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
         <div class="large-4 column">
             <?php $form = $this->beginWidget('CActiveForm', array(
                 'id' => 'practitioner-search-form',
+                'method' => 'get',
+                'action' => Yii::app()->createUrl('/gp'),
             )); ?>
-            <?php echo CHtml::textField('search-term', @$_POST['search-term'],
+            <?php echo CHtml::textField('search_term', $search_term,
                 array('placeholder' => 'Enter search query...')); ?>
             <?php $this->endWidget(); ?>
         </div>
@@ -43,27 +46,27 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
           <tr id="r<?php echo $gp->id; ?>" class="clickable">
             <td><?php echo CHtml::encode($gp->getCorrespondenceName()); ?></td>
             <td><?php echo CHtml::encode($gp->contact->primary_phone); ?></td>
-            <td><?php echo Chtml::encode(isset($gp->contact->label)?$gp->contact->label->name:'')?></td>
+            <td><?php echo CHtml::encode(isset($gp->contact->label) ? $gp->contact->label->name : '') ?></td>
           </tr>
         <?php endforeach; ?>
         </tbody>
         <tfoot class="pagination-container">
-          <tr>
-            <td colspan="7">
-                <?php
-                $this->widget('LinkPager', array(
-                    'pages' => $dataProvider->getPagination(),
-                    'maxButtonCount' => 15,
-                    'cssFile' => false,
-                    'selectedPageCssClass' => 'current',
-                    'hiddenPageCssClass' => 'unavailable',
-                    'htmlOptions' => array(
-                        'class' => 'pagination',
-                    ),
-                ));
-                ?>
-            </td>
-          </tr>
+        <tr>
+          <td colspan="7">
+              <?php
+              $this->widget('LinkPager', array(
+                  'pages' => $dataProvider->getPagination(),
+                  'maxButtonCount' => 15,
+                  'cssFile' => false,
+                  'selectedPageCssClass' => 'current',
+                  'hiddenPageCssClass' => 'unavailable',
+                  'htmlOptions' => array(
+                      'class' => 'pagination',
+                  ),
+              ));
+              ?>
+          </td>
+        </tr>
         </tfoot>
       </table>
     </div>
