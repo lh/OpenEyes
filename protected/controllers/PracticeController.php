@@ -78,7 +78,7 @@ class PracticeController extends BaseController
             echo CJSON::encode(array(
                 'label' => $displayText,
                 'value' => $displayText,
-                'id'    => $practice->getPrimaryKey(),
+                'id' => $practice->getPrimaryKey(),
             ));
         } else {
             $this->render('create', array(
@@ -112,7 +112,8 @@ class PracticeController extends BaseController
                     if (isset($address)) {
                         if ($address->save()) {
                             $transaction->commit();
-                            Audit::add('Practice', $action . '-practice', "Practice manually [id: $practice->id] {$action}ed.");
+                            Audit::add('Practice', $action . '-practice',
+                                "Practice manually [id: $practice->id] {$action}ed.");
                             if (!$isAjax) {
                                 $this->redirect(array('view', 'id' => $practice->id));
                             }
@@ -125,7 +126,8 @@ class PracticeController extends BaseController
                         }
                     } else {
                         $transaction->commit();
-                        Audit::add('Practice', $action . '-practice', "Practice manually [id: $practice->id] {$action}ed.");
+                        Audit::add('Practice', $action . '-practice',
+                            "Practice manually [id: $practice->id] {$action}ed.");
                         if (!$isAjax) {
                             $this->redirect(array('view', 'id' => $practice->id));
                         }
@@ -186,30 +188,34 @@ class PracticeController extends BaseController
 
     /**
      * Lists all models.
+     *
+     * @param string $search_term
      */
-    public function actionIndex()
+    public function actionIndex($search_term = null)
     {
         $criteria = new CDbCriteria();
         $criteria->together = true;
-        $criteria->with = array('contact','contact.address');
+        $criteria->with = array('contact', 'contact.address');
         $criteria->order = 'last_name';
 
-        if (isset($_POST['search-term'])) {
-            $criteria->addSearchCondition('LOWER(last_name)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(first_name)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(phone)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(code)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(address1)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(address2)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(city)', strtolower($_POST['search-term']), true, 'OR');
-            $criteria->addSearchCondition('LOWER(postcode)', strtolower($_POST['search-term']), true, 'OR');
+        if ($search_term !== null) {
+            $search_term = strtolower($search_term);
+            $criteria->addSearchCondition('LOWER(last_name)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(first_name)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(phone)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(code)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(address1)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(address2)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(city)', $search_term, true, 'OR');
+            $criteria->addSearchCondition('LOWER(postcode)', $search_term, true, 'OR');
 
         }
         $dataProvider = new CActiveDataProvider('Practice', array(
-              'criteria' => $criteria
+            'criteria' => $criteria,
         ));
         $this->render('index', array(
             'dataProvider' => $dataProvider,
+            'search_term' => $search_term,
         ));
     }
 

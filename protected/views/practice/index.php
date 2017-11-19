@@ -1,6 +1,8 @@
 <?php
-/* @var $this PracticeController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var PracticeController $this */
+/* @var CActiveDataProvider $dataProvider */
+/* @var string $search_term */
+
 $dataProvided = $dataProvider->getData();
 $this->pageTitle = 'Practices';
 $items_per_page = $dataProvider->getPagination()->getPageSize();
@@ -22,12 +24,14 @@ $to = min(($page_num + 1) * $items_per_page, $dataProvider->totalItemCount);
           </h2>
         </div>
         <div class="large-4 column">
-          <?php $form = $this->beginWidget('CActiveForm', array(
-              'id' => 'practice-search-form',
-          )); ?>
-          <?php echo CHtml::textField('search-term', @$_POST['search-term'],
-              array('placeholder' => 'Enter search query...')); ?>
-          <?php $this->endWidget(); ?>
+            <?php $form = $this->beginWidget('CActiveForm', array(
+                'id' => 'practice-search-form',
+                'method' => 'get',
+                'action' => Yii::app()->createUrl('/practice'),
+            )); ?>
+            <?php echo CHtml::textField('search_term', $search_term,
+                array('placeholder' => 'Enter search query...')); ?>
+            <?php $this->endWidget(); ?>
         </div>
       </div>
       <table id="practice-grid" class="grid">
