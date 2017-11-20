@@ -127,7 +127,6 @@ class OphCiExamination_Workflow_Rule extends \BaseActiveRecordVersioned
         $criteria->params = array($firm_id);
 
         $workflows = self::model()->findAll($criteria);
-
         if (!$workflows) {
             throw new \CException('Cannot find any workflow rules');
         }
