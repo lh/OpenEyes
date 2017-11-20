@@ -287,7 +287,7 @@ class BaseEventTypeController extends BaseModuleController
                 }
             }
             foreach ($parent_element_ids as $key=>$p_id){
-                $parent_ele = ElementType::model()->findAllByPk($p_id)[0];
+                $parent_ele = ElementType::model()->findByPk($p_id);
                 $new_parent = $parent_ele->getInstance();
                 if (!in_array($new_parent, $elements)){
                     $elements[] = $new_parent;
