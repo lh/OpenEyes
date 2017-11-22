@@ -1556,9 +1556,16 @@ class PatientController extends BaseController
             }
             // not to be sync with PAS
             $patient->is_local = 1;
-            if ($_POST["changePatientSource"]==0){
+
+            // Don't save if the user just changed the "Patient Source"
+            if ($_POST["changePatientSource"] == 0) {
                 list($contact, $patient, $address, $referral, $patient_user_referral) =
                     $this->performPatientSave($contact, $patient, $address, $referral, $patient_user_referral);
+            } else {
+                // Return the same page to the user without saving
+                // However the date of birth is usually reformatted before being displayed to the user, so we need to emulate that here.
+                $patient->beforeValidate();
+                $patient->beforeSave();
             }
         }else { // When the user first enters the screen
             $command = Yii::app()->db->createCommand('SELECT nextval("patient_cera_number")');
