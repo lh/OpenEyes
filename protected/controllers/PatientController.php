@@ -1500,7 +1500,7 @@ class PatientController extends BaseController
         Yii::app()->assetManager->registerScriptFile('js/patient.js');
         //Don't render patient summary box on top as we have no selected patient
         $this->renderPatientPanel = false;
-        $patient_source ='referral';
+        $patient_source = 'referral';
         $patient = new Patient($patient_source);
         $patient->noPas();
         $contact = new Contact('manualAddPatient');
@@ -1513,8 +1513,7 @@ class PatientController extends BaseController
         $practice = new Practice('manage_practice');
         $patient_user_referral = null;
         $this->performAjaxValidation(array($patient, $contact, $address));
-        if( isset($_POST['Contact'], $_POST['Address'], $_POST['Patient']) )
-        {
+        if (isset($_POST['Contact'], $_POST['Address'], $_POST['Patient'])) {
             $contact->attributes = $_POST['Contact'];
             $patient->attributes = $_POST['Patient'];
             $address->attributes = $_POST['Address'];
@@ -1526,12 +1525,11 @@ class PatientController extends BaseController
 
             if (isset($_POST['PatientUserReferral'])) {
                 $patient_user_referral = new PatientUserReferral();
-                if($_POST['PatientUserReferral']['user_id']!=-1) {
+                if ($_POST['PatientUserReferral']['user_id'] != -1) {
                     $patient_user_referral->attributes = $_POST['PatientUserReferral'];
                 }
             }
-            switch ($patient->patient_source)
-            {
+            switch ($patient->patient_source) {
                 case Patient::PATIENT_SOURCE_OTHER:
                     $contact->setScenario('other_register');
                     $patient->setScenario('other_register');
@@ -1567,28 +1565,28 @@ class PatientController extends BaseController
                 $patient->beforeValidate();
                 $patient->beforeSave();
             }
-        }else { // When the user first enters the screen
+        } else { // When the user first enters the screen
             $command = Yii::app()->db->createCommand('SELECT nextval("patient_cera_number")');
             $patient->hos_num = $command->queryScalar();
         }
 
-        if (isset($patient->gp_id)){
+        if (isset($patient->gp_id)) {
             $gp = Gp::model()->findByPk($patient->gp_id);
         }
 
-        $this->render('crud/create',array(
-                        'patient' => $patient,
-                        'contact' => $contact,
-                        'address' => $address,
-                        'referral' => isset($referral) ? $referral : new PatientReferral($patient_source),
-                        'gp' => $gp,
-                        'gpcontact' => $gp_contact,
-                        'practicecontact' => $practice_contact,
-                        'practiceaddress' => $practice_address,
-                        'practice' => $practice,
-                        'patientuserreferral' => isset($patient_user_referral) ? $patient_user_referral : new PatientUserReferral(),
+        $this->render('crud/create', array(
+            'patient' => $patient,
+            'contact' => $contact,
+            'address' => $address,
+            'referral' => isset($referral) ? $referral : new PatientReferral($patient_source),
+            'gp' => $gp,
+            'gpcontact' => $gp_contact,
+            'practicecontact' => $practice_contact,
+            'practiceaddress' => $practice_address,
+            'practice' => $practice,
+            'patientuserreferral' => isset($patient_user_referral) ? $patient_user_referral : new PatientUserReferral(),
         ));
-   }
+    }
    
    /**
     * Saving the Contact, Patient and Address object
@@ -1599,12 +1597,17 @@ class PatientController extends BaseController
     * @param PatientReferral $referral
     * @return array on validation error returns the 5 objects otherwise redirects to the patient view page
     */
-   private function performPatientSave(Contact $contact, Patient $patient, Address $address, PatientReferral $referral, PatientUserReferral $patient_user_referral)
-   {
+    private function performPatientSave(
+        Contact $contact,
+        Patient $patient,
+        Address $address,
+        PatientReferral $referral,
+        PatientUserReferral $patient_user_referral
+    ) {
         $patientScenario = $patient->getScenario();
         $transaction = Yii::app()->db->beginTransaction();
-        try{
-            if( $contact->save() ){
+        try {
+            if ($contact->save()) {
                 $patient->contact_id = $contact->id;
                 $address->contact_id = $contact->id;
                 $action = $patient->isNewRecord ? 'add' : 'edit';
@@ -1613,49 +1616,46 @@ class PatientController extends BaseController
                 $issetGeneticsModule = isset(Yii::app()->modules["Genetics"]);
                 $issetGeneticsClinical = Yii::app()->user->checkAccess('Genetics Clinical');
 
-                if($patient->save() && $address->save()){
+                if ($patient->save() && $address->save()) {
                     if (isset($referral)) {
                         if (!isset($referral->patient_id)) {
                             $referral->patient_id = $patient->id;
                         }
 
                         if ($referral->save()) {
-                            if (isset($patient_user_referral) && $patient_user_referral->user_id !='') {
+                            if (isset($patient_user_referral) && $patient_user_referral->user_id != '') {
                                 if (!isset($patient_user_referral->patient_id)) {
                                     $patient_user_referral->patient_id = $patient->id;
                                 }
 
                                 if ($patient_user_referral->save()) {
                                     $transaction->commit();
-                                    Audit::add('Referred to', 'saved', $patient_user_referral->id );
-                                    if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
-                                        $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
+                                    Audit::add('Referred to', 'saved', $patient_user_referral->id);
+                                    if (($issetGeneticsModule !== false) && ($issetGeneticsClinical !== false) && ($isNewPatient)) {
+                                        $this->redirect(array('Genetics/subject/edit?patient=' . $patient->id));
                                     } else {
-                                        Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                                        Audit::add('Patient', $action . '-patient',
+                                            "Patient manually [id: $patient->id] {$action}ed.");
                                         $this->redirect(array('view', 'id' => $patient->id));
                                     }
-                                }
-                                else {
+                                } else {
                                     $transaction->rollback();
                                 }
-                            }
-                            else {
+                            } else {
                                 $transaction->commit();
-                                if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
-                                    $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
+                                if (($issetGeneticsModule !== false) && ($issetGeneticsClinical !== false) && ($isNewPatient)) {
+                                    $this->redirect(array('Genetics/subject/edit?patient=' . $patient->id));
                                 } else {
-                                    Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                                    Audit::add('Patient', $action . '-patient',
+                                        "Patient manually [id: $patient->id] {$action}ed.");
                                     $this->redirect(array('view', 'id' => $patient->id));
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             $transaction->rollback();
                         }
-                    }
-                    else {
-                        if (isset($patient_user_referral) && $patient_user_referral->user_id !='')
-                        {
+                    } else {
+                        if (isset($patient_user_referral) && $patient_user_referral->user_id != '') {
                             if (!isset($patient_user_referral->patient_id)) {
                                 $patient_user_referral->patient_id = $patient->id;
                             }
@@ -1663,24 +1663,24 @@ class PatientController extends BaseController
                             if ($patient_user_referral->save()) {
 
                                 $transaction->commit();
-                                Audit::add('Referred to', 'saved', $patient_user_referral->id );
-                                if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
-                                    $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
-                } else {
-                                    Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                                Audit::add('Referred to', 'saved', $patient_user_referral->id);
+                                if (($issetGeneticsModule !== false) && ($issetGeneticsClinical !== false) && ($isNewPatient)) {
+                                    $this->redirect(array('Genetics/subject/edit?patient=' . $patient->id));
+                                } else {
+                                    Audit::add('Patient', $action . '-patient',
+                                        "Patient manually [id: $patient->id] {$action}ed.");
                                     $this->redirect(array('view', 'id' => $patient->id));
                                 }
-                            }
-                            else {
+                            } else {
                                 $transaction->rollback();
                             }
-                        }
-                        else {
+                        } else {
                             $transaction->commit();
-                            if(($issetGeneticsModule !== FALSE ) && ($issetGeneticsClinical !== FALSE) && ($isNewPatient)){
-                                $this->redirect(array('Genetics/subject/edit?patient='.$patient->id));
+                            if (($issetGeneticsModule !== false) && ($issetGeneticsClinical !== false) && ($isNewPatient)) {
+                                $this->redirect(array('Genetics/subject/edit?patient=' . $patient->id));
                             } else {
-                                Audit::add('Patient', $action . '-patient', "Patient manually [id: $patient->id] {$action}ed.");
+                                Audit::add('Patient', $action . '-patient',
+                                    "Patient manually [id: $patient->id] {$action}ed.");
                                 $this->redirect(array('view', 'id' => $patient->id));
                             }
                         }
@@ -1711,10 +1711,11 @@ class PatientController extends BaseController
             OELog::logException($ex);
             $transaction->rollback();
         }
-        
+
         $patient->setScenario($patientScenario);
+
         return array($contact, $patient, $address, $referral, $patient_user_referral);
-   }
+    }
    
     /**
      * Updates a particular model.
