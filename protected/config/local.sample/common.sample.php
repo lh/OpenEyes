@@ -190,11 +190,6 @@ $config = array(
         'docman_filename_format' => 'format1',
         // set this to none if you want to suppress XML output
         'docman_xml_format' => 'none',
-        'contact_labels' => array(
-                        'Staff',
-                        'Consultant Ophthalmologist',
-                        'Other specialist',
-                ),
     ),
 );
 
