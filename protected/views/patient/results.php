@@ -22,7 +22,7 @@ if ($search_terms['patient_name']) {
     $based_on[] = 'Name: <strong>' . $search_terms['patient_name'] . '</strong>';
 }
 if ($search_terms['hos_num']) {
-    $based_on[] = 'CERA Number and Medicare Number: <strong>' . $search_terms['hos_num'] . '</strong>';
+    $based_on[] = 'CERA Number and ' . Yii::app()->params['nhs_label'] . ' Number: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
 if ($search_terms['nhs_num']) {
     $based_on[] = 'Medicare Number: <strong>' . $search_terms['nhs_num'] . '</strong>';
@@ -62,7 +62,15 @@ $based_on = implode(', ', $based_on);
             <table id="patient-grid" class="grid">
                 <thead>
                 <tr>
-                    <?php foreach (array('CERA Number', 'Title', 'First name', 'Last name', 'Date of birth', 'Gender', 'Medicare number') as $i => $field) { ?>
+                    <?php foreach (array(
+                                       'CERA Number',
+                                       'Title',
+                                       'First name',
+                                       'Last name',
+                                       'Date of birth',
+                                       'Gender',
+                                       Yii::app()->params['nhs_label'] . ' number',
+                                   ) as $i => $field) { ?>
                         <th id="patient-grid_c<?php echo $i; ?>">
                             <?php
                             $new_sort_dir = ($i == $sort_by) ? 1 - $sort_dir : 0;

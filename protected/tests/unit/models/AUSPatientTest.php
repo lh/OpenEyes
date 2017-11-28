@@ -59,7 +59,7 @@ class AUSPatientTest extends CDbTestCase
 
         //fail to save with duplication
         $this->assertFalse($patient_dup->save());
-        $this->assertSame('Medicare Number "" has already been taken.' //remove the actual number
+        $this->assertSame(Yii::app()->params['nhs_label'] . ' Number "" has already been taken.' //remove the actual number
             , preg_replace('/\d+/', '' , $patient_dup->getErrors('nhs_num')[0]));
 
         //remove duplication and save successfully

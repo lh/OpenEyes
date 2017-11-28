@@ -41,7 +41,7 @@
 			<td><?php echo $this->patient->hos_num?></td>
 		</tr>
 		<tr>
-			<th>Medicare number</th>
+			<th><?php echo Yii::app()->params['nhs_label'] ?> number</th>
 			<td><?php echo $this->patient->nhs_num?></td>
 		</tr>
 		<tr>

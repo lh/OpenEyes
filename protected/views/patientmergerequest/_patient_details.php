@@ -39,14 +39,14 @@
             </div>
             <div class="row data-row">
                 <div class="large-4 column">
-                        <div class="data-label">Medicare Number:</div>
+                        <div class="data-label"><?php echo Yii::app()->params['nhs_label'] ?> Number:</div>
                 </div>
                 <div class="large-8 column">
                     <div class="">
                         <!-- NHS number -->
                         <div class="nhs-number">
                                 <span class="hide-text print-only">
-                                    Medicare number:
+                                    <?php echo Yii::app()->params['nhs_label'] ?> number:
                                 </span>
                                 <span data-default="000 000 0000" class="data-value nhsnum"><?php echo $model->isNewRecord ? '000 000 0000' : $model->{"{$type}_nhsnum"}; ?></span>
                                 <?php echo CHtml::activeHiddenField($model, "{$type}_nhsnum", array('class' => 'nhsnum-input')); ?>

@@ -198,7 +198,7 @@ class PatientController extends BaseController
                     $message = 'CERA Number <strong>'.$search_terms['hos_num'].'</strong> was merged into <strong>'.$patientMergeRequest->primary_hos_num.'</strong>';
                 }
             } elseif ($search_terms['nhs_num']) {
-                $message .= 'for Medicare Number <strong>"'.$search_terms['nhs_num'].'"</strong>';
+                $message .= 'for ' . Yii::app()->params['nhs_label'] . ' Number <strong>"' . $search_terms['nhs_num'] . '"</strong>';
             } elseif ($search_terms['patient_name']) {
                 $message .= 'for Patient Name <strong>"'.$search_terms['patient_name'].'"</strong>';
             } else {
