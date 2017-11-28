@@ -26,6 +26,12 @@ class m170803_144416_anaesthetic_types_multiselect extends OEMigration
             $dataProvider = new CActiveDataProvider('Element_OphTrOperationbooking_Operation');
             $iterator = new CDataProviderIterator($dataProvider);
 
+            $anaesthetic_topical_id = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'Topical'))->queryScalar();
+            $anaesthetic_LA_id = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'LA'))->queryScalar();
+            $anaesthetic_LAC_id = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'LAC'))->queryScalar();
+            $anaesthetic_LAS_id = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'LAS'))->queryScalar();
+            $anaesthetic_sedation_id = $this->dbConnection->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'Sedation'))->queryScalar();
+
             foreach ($iterator as $element) {
 
                 // if event was deleted
@@ -41,11 +47,6 @@ class m170803_144416_anaesthetic_types_multiselect extends OEMigration
                     $episode = $event->episode;
                 }
 
-                $anaesthetic_topical_id = Yii::app()->db->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'Topical'))->queryScalar();
-                $anaesthetic_LA_id = Yii::app()->db->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'LA'))->queryScalar();
-                $anaesthetic_LAC_id = Yii::app()->db->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'LAC'))->queryScalar();
-                $anaesthetic_LAS_id = Yii::app()->db->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'LAS'))->queryScalar();
-                $anaesthetic_sedation_id = Yii::app()->db->createCommand()->select('id')->from('anaesthetic_type')->where('name=:name', array(':name' => 'Sedation'))->queryScalar();
 
                 //Topical or LAC -> LA
                 if( $element->anaesthetic_type_id == $anaesthetic_topical_id || $element->anaesthetic_type_id == $anaesthetic_LAC_id){
@@ -143,7 +144,13 @@ class m170803_144416_anaesthetic_types_multiselect extends OEMigration
                             'episode_id' => $event->episode_id, 'patient_id' => $episode->patient_id));
                 }
             }
-
+            $this->delete('et_ophtrintravitinjection_anaesthetic', 'left_anaesthetictype_id = ' . $anaesthetic_topical_id);
+            $this->delete('et_ophtrintravitinjection_anaesthetic', 'right_anaesthetictype_id = ' . $anaesthetic_topical_id);
+            $this->delete('et_ophtrintravitinjection_anaesthetic', 'left_anaesthetictype_id = ' . $anaesthetic_LAC_id);
+            $this->delete('et_ophtrintravitinjection_anaesthetic', 'right_anaesthetictype_id = ' . $anaesthetic_LAC_id);
+            $this->delete('et_ophtrintravitinjection_anaesthetic', 'left_anaesthetictype_id = ' . $anaesthetic_LAS_id);
+            $this->delete('et_ophtrintravitinjection_anaesthetic', 'right_anaesthetictype_id = ' . $anaesthetic_LAS_id);
+            
             $this->delete("anaesthetic_type", "name = 'Topical'");
             $this->delete("anaesthetic_type", "name = 'LAC'");
             $this->delete("anaesthetic_type", "name = 'LAS'");
