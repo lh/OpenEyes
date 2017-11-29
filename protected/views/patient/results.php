@@ -24,6 +24,9 @@ if ($search_terms['patient_name']) {
 if ($search_terms['hos_num']) {
     $based_on[] = 'CERA Number and Medicare Number: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
+if ($search_terms['nhs_num']) {
+    $based_on[] = 'Medicare Number: <strong>' . $search_terms['nhs_num'] . '</strong>';
+}
 $core_api = new CoreAPI();
 
 $based_on = implode(', ', $based_on);
