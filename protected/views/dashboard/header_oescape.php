@@ -28,7 +28,7 @@
         <span class="nhs-number">
             <?php echo $this->patient->getNhsnum(); ?>
         </span>
-        <span>CERA No:
+        <span><?php echo Yii::app()->params['hos_label_long'] ?> No:
             <b><?php echo $this->patient->hos_num; ?></b>
         </span>
         <span>

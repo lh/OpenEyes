@@ -14,7 +14,7 @@
     <div class="row">
         <div class="search-examples">
             Find a patient by
-            <strong>CERA Number</strong>,
+            <strong><?php echo Yii::app()->params['hos_label_long'] ?> Number</strong>,
             <strong><?php echo Yii::app()->params['nhs_label'] ?> Number</strong>,
             <strong>Firstname Surname</strong> or
             <strong>Surname, Firstname</strong>.

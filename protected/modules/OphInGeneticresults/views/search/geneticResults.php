@@ -170,7 +170,7 @@
           <tr>
             <th><?php echo CHtml::link('Result date', $this->getUri(array('sortby' => 'date'))) ?></th>
 <!--            <th>--><?php //echo CHtml::link('Subject Id', $this->getUri(array('sortby' => 'genetics-patient-id'))) ?><!--</th>-->
-            <th><?php echo CHtml::link('CERA no', $this->getUri(array('sortby' => 'hos_num'))) ?></th>
+            <th><?php echo CHtml::link(Yii::app()->params['hos_label_long'] . ' no', $this->getUri(array('sortby' => 'hos_num'))) ?></th>
             <th><?php echo CHtml::link('Family Id', $this->getUri(array('sortby' => 'genetics-pedigree-id'))) ?></th>
             <th><?php echo CHtml::link('Patient name', $this->getUri(array('sortby' => 'patient_name'))) ?></th>
             <th>Maiden Name</th>

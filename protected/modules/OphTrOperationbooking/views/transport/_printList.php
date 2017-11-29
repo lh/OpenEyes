@@ -20,7 +20,7 @@
 	<table>
 		<thead>
 			<tr>
-				<th>CERA number</th>
+				<th><?php echo Yii::app()->params['hos_label_long'] ?> number</th>
 				<th>Patient</th>
 				<th>TCI date</th>
 				<th>Admission time</th>

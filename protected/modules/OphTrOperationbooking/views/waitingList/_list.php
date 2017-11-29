@@ -34,7 +34,7 @@
 		<tr>
 			<th>Letters sent</th>
 			<th>Patient</th>
-			<th>CERA number</th>
+			<th><?php echo Yii::app()->params['hos_label_long'] ?> number</th>
 			<th>Location</th>
 			<th>Procedure</th>
 			<th>Eye</th>

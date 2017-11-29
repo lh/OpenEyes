@@ -22,7 +22,7 @@ if ($search_terms['patient_name']) {
     $based_on[] = 'Name: <strong>' . $search_terms['patient_name'] . '</strong>';
 }
 if ($search_terms['hos_num']) {
-    $based_on[] = 'CERA Number and ' . Yii::app()->params['nhs_label'] . ' Number: <strong>' . $search_terms['hos_num'] . '</strong>';
+    $based_on[] = Yii::app()->params['hos_label_long'] .' Number and ' . Yii::app()->params['nhs_label'] . ' Number: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
 if ($search_terms['nhs_num']) {
     $based_on[] = 'Medicare Number: <strong>' . $search_terms['nhs_num'] . '</strong>';
@@ -63,7 +63,7 @@ $based_on = implode(', ', $based_on);
                 <thead>
                 <tr>
                     <?php foreach (array(
-                                       'CERA Number',
+                                       Yii::app()->params['hos_label_long'] . ' Number',
                                        'Title',
                                        'First name',
                                        'Last name',

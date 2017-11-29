@@ -43,7 +43,7 @@ $logoHelper = new LogoHelper();
 			<p><strong><?php echo $consultant->contact->getFullName() ?></strong></p>
 			<?php }?>
 			<p>Service: <strong><?php echo $this->event->episode->firm->getSubspecialtyText() ?></strong></p>
-			<p>CERA No: <strong><?php echo $this->patient->hos_num ?></strong>
+			<p><?php echo Yii::app()->params['hos_label_long'] ?> No: <strong><?php echo $this->patient->hos_num ?></strong>
 			<br />
 			<?php echo Yii::app()->params['nhs_label'] ?> No: <strong><?php echo $this->patient->nhsnum ?></strong>
 			<br />

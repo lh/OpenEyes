@@ -43,7 +43,7 @@
                                 <tr>
                                     <th>Sample Id</th>
                                     <th>Subject Id</th>
-                                    <th>CERA Num:</th>
+                                    <th><?php echo Yii::app()->params['hos_label_long'] ?> Num:</th>
                                     <th>First Name:</th>
                                     <th>Last Name:</th>
                                 </tr>
@@ -61,7 +61,7 @@
             </div>
             <div></div>
             <div>
-                                        <?php echo CHtml::textField('hos_num', @$_GET['hos_num'], array('placeholder' => 'CERA Number'))?>
+                                        <?php echo CHtml::textField('hos_num', @$_GET['hos_num'], array('placeholder' => Yii::app()->params['hos_label_long'] . ' Number'))?>
             </div>
             <div>
                 <?php echo CHtml::textField('first_name', @$_GET['first_name'], array('placeholder' => 'First Name'))?>
@@ -165,7 +165,7 @@
                         <th><?php echo CHtml::link('Sample Id', $this->getUri(array('sortby' => 'sample_id')))?></th>
                         <th><?php echo CHtml::link('Subject Id', $this->getUri(array('sortby' => 'genetics_patient_id')))?></th>
                         <th><?php echo CHtml::link('Family Id', $this->getUri(array('sortby' => 'genetics_pedigree_id')))?></th>
-						<th><?php echo CHtml::link('CERA No', $this->getUri(array('sortby' => 'hos_num')))?></th>
+						<th><?php echo CHtml::link(Yii::app()->params['hos_label_long'] . ' No', $this->getUri(array('sortby' => 'hos_num')))?></th>
 						<th><?php echo CHtml::link('Patient Name', $this->getUri(array('sortby' => 'patient_name')))?></th>
 						<th><?php echo CHtml::link('Maiden Name', $this->getUri(array('sortby' => 'maiden_name')))?></th>
 						<th><?php echo CHtml::link('Date Taken', $this->getUri(array('sortby' => 'date_taken')))?></th>

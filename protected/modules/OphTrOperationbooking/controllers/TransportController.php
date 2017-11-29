@@ -301,7 +301,7 @@ class TransportController extends BaseModuleController
         header('Pragma: no-cache');
         header('Expires: 0');
 
-        echo "Hospital number,First name,Last name,TCI date,Admission time,Site,Ward,Method,Firm,Specialty,DTA,Priority\n";
+        echo Yii::app()->params['hos_label_long'] . " number,First name,Last name,TCI date,Admission time,Site,Ward,Method,Firm,Specialty,DTA,Priority\n";
 
         $operations = $this->getTransportList($_POST, true);
 

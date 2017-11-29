@@ -30,7 +30,7 @@ $logoHelper = new LogoHelper();
 	<table>
 		<tr>
 			<th>
-				CERA Number
+				<?php echo Yii::app()->params['hos_label_long'] ?> Number
 			</th>
 			<td>
 				<?php echo $patient->hos_num?>

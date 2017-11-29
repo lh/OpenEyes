@@ -225,6 +225,8 @@ class BaseController extends Controller
         $this->jsVars['OE_event_print_method'] = Yii::app()->params['event_print_method'];
         $this->jsVars['OE_module_class'] = $this->module ? $this->module->id : null;
         $this->jsVars['nhs_label'] = Yii::app()->params['nhs_label'];
+        $this->jsVars['hos_label_short'] = Yii::app()->params['hos_label_short'];
+        $this->jsVars['hos_label_long'] = Yii::app()->params['hos_label_long'];
 
         foreach ($this->jsVars as $key => $value) {
             $value = CJavaScript::encode($value);

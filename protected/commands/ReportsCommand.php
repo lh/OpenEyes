@@ -402,9 +402,9 @@ class ReportsCommand extends CConsoleCommand
 
         $operations->addListItem(array(
                 'data_type_id' => $rimt_string->id,
-                'name' => 'CERA no',
+                'name' => Yii::app()->params['hos_label_long'] . ' no',
                 'data_field' => 'hos_num',
-                'subtitle' => 'Patient CERA number',
+                'subtitle' => 'Patient ' . Yii::app()->params['hos_label_long'] . ' number',
                 'display_order' => 2,
                 'link' => '/patient/episodes/{patient_id}',
             ));
@@ -603,9 +603,9 @@ class ReportsCommand extends CConsoleCommand
 
         $patients->addListItem(array(
                     'data_type_id' => $rimt_string->id,
-                    'name' => 'CERA no',
+                    'name' => Yii::app()->params['hos_label_long'] . ' no',
                     'data_field' => 'hos_num',
-                    'subtitle' => 'Patient CERA number',
+                    'subtitle' => 'Patient ' . Yii::app()->params['hos_label_long'] .' number',
                     'display_order' => 2,
                     'link' => '/patient/episodes/{patient_id}',
                 ));

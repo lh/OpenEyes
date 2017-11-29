@@ -40,7 +40,7 @@
 
 		var y = document.getElementsByClassName('patient_hosnum');
 		for (var j=0; j<y.length; j++) {
-			y[j].innerHTML = "Hosp No: " + patient_hosnums[document_no];
+			y[j].innerHTML = hos_label_short + " No: " + patient_hosnums[document_no];
 		}
 
 		var y = document.getElementsByClassName('patient_nhsnum');

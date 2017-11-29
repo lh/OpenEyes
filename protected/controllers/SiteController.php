@@ -49,7 +49,7 @@ class SiteController extends BaseController
 
                 //empty string
                 if (strlen($query) == 0) {
-                    Yii::app()->user->setFlash('warning.search_error', 'Please enter either a CERA number or a firstname and lastname.');
+                    Yii::app()->user->setFlash('warning.search_error', 'Please enter either a ' . Yii::app()->params['hos_label_long'] . ' number or a firstname and lastname.');
                 } else {
 
                     // Event ID

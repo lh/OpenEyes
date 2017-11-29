@@ -18,7 +18,7 @@ class Api_PatientTest extends FhirTestCase
     {
         $this->get('Patient/17885');
         $this->assertXPathEquals('Patient', 'local-name()');
-        $this->assertXPathEquals('1007913', 'string(./fhir:identifier/fhir:label[@value="Hospital Number"]/../fhir:value/@value)');
+        $this->assertXPathEquals('1007913', 'string(./fhir:identifier/fhir:label[@value="' . Yii::app()->params['hos_label_long'] . ' Number"]/../fhir:value/@value)');
         $this->assertXPathEquals(
             '1053991374',
             'string(./fhir:identifier/fhir:system[@value="http://example.com/nhs_num"]/../fhir:value/@value)'

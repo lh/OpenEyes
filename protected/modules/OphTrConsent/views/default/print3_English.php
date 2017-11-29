@@ -20,7 +20,7 @@
 	<?php $this->renderPartial('_consent_header')?>
 	<div class="form-title1">
 		<h2>Consent form 3</h2>
-		<h2><?php echo $this->patient->fullName?>, CERA no: <?php echo $this->patient->hos_num?></h2>
+		<h2><?php echo $this->patient->fullName?>, <?php echo Yii::app()->params['hos_label_long'] ?> no: <?php echo $this->patient->hos_num?></h2>
 	</div>
 	<h3>Patient/parental agreement to investigation or treatment (procedures where consciousness not impaired)</h3>
 	<p>

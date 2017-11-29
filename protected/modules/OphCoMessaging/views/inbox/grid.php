@@ -66,7 +66,7 @@ $cols = array(
     ),
     array(
         'id' => 'hos_num',
-        'header' => $dp->getSort()->link('hos_num', 'CERA No.', array('class' => 'sort-link')),
+        'header' => $dp->getSort()->link('hos_num', Yii::app()->params['hos_label_long '] . ' No.', array('class' => 'sort-link')),
         'value' => '$data->event->episode->patient->hos_num',
     ),
     array(

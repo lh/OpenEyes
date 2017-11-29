@@ -37,7 +37,7 @@
 			<td><?php echo $this->patient->NHSDate('dob')?></td>
 		</tr>
 		<tr>
-			<th>CERA no</th>
+			<th><?php echo Yii::app()->params['hos_label_long'] ?> no</th>
 			<td><?php echo $this->patient->hos_num?></td>
 		</tr>
 		<tr>

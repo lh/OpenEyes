@@ -32,7 +32,7 @@
 
         <div>
             <?php // echo $form->label($model, 'contact.first_name'); ?>
-            <?php echo $form->textField($model, 'patient_hos_num', ['placeholder' => 'CERA number']); ?>
+            <?php echo $form->textField($model, 'patient_hos_num', ['placeholder' => Yii::app()->params['hos_label_long'] . ' number']); ?>
         </div>
 
         <div>

@@ -59,8 +59,7 @@ class AUSPatientTest extends CDbTestCase
 
         //fail to save with duplication
         $this->assertFalse($patient_dup->save());
-        $this->assertSame(Yii::app()->params['nhs_label'] . ' Number "" has already been taken.' //remove the actual number
-            , preg_replace('/\d+/', '' , $patient_dup->getErrors('nhs_num')[0]));
+        $this->assertStringEndsWith(' has already been taken.', $patient_dup->getErrors('nhs_num')[0]);
 
         //remove duplication and save successfully
         $patient_dup->nhs_num = $this->getNDigitRand();
@@ -74,8 +73,7 @@ class AUSPatientTest extends CDbTestCase
 
         //fail to save with duplication
         $this->assertFalse($patient_dup->save());
-        $this->assertSame('CERA Number "" has already been taken.'
-            , preg_replace('/\d+/', '' , $patient_dup->getErrors('hos_num')[0]));
+        $this->assertStringEndsWith(' has already been taken.', $patient_dup->getErrors('hos_num')[0]);
 
         //remove duplication and save successfully
         $patient_dup->hos_num = $this->getNDigitRand();
@@ -91,7 +89,7 @@ class AUSPatientTest extends CDbTestCase
 
         //Check that this fails and in the right manner
         $this->assertFalse($new_pat->save());
-        $this->assertSame('CERA Number cannot be blank.', $new_pat->getError('hos_num'));
+        $this->assertSame(Yii::app()->params['hos_label_long'] . ' Number cannot be blank.', $new_pat->getError('hos_num'));
 
         //Fix the problem, check it works
         $new_pat->hos_num = $this->getNDigitRand();

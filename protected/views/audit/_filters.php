@@ -109,7 +109,7 @@
                                         'class' => 'small fixed-width',
                                     ),
                                 ))?>
-								<label class="inline" for="hos_num">Hos num:</label>
+								<label class="inline" for="hos_num"><?php echo Yii::app()->params['hos_label_short'] ?> num:</label>
 								<?php echo CHtml::textField('hos_num', @$_POST['hos_num'], array('autocomplete' => Yii::app()->params['html_autocomplete'], 'class' => 'small fixed-width'))?>
 								<?php echo CHtml::link('View all', array('audit/'), array('class' => 'inline'))?>
 								<?php echo CHtml::link('Auto update on', '#', array('class' => 'inline', 'id' => 'auto_update_toggle'))?>

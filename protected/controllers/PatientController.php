@@ -185,7 +185,7 @@ class PatientController extends BaseController
 
             $message = 'Sorry, no results ';
             if ($search_terms['hos_num']) {
-                $message .= 'for CERA Number <strong>"'.$search_terms['hos_num'].'"</strong>';
+                $message .= 'for ' . Yii::app()->params['hos_label_long'] . ' Number <strong>"'.$search_terms['hos_num'].'"</strong>';
 
                 // check if the record was merged into another record
                 $criteria = new CDbCriteria();
@@ -195,7 +195,7 @@ class PatientController extends BaseController
                 $patientMergeRequest = PatientMergeRequest::model()->find($criteria);
 
                 if ($patientMergeRequest) {
-                    $message = 'CERA Number <strong>'.$search_terms['hos_num'].'</strong> was merged into <strong>'.$patientMergeRequest->primary_hos_num.'</strong>';
+                    $message = Yii::app()->params['hos_label_long'] . ' Number <strong>'.$search_terms['hos_num'].'</strong> was merged into <strong>'.$patientMergeRequest->primary_hos_num.'</strong>';
                 }
             } elseif ($search_terms['nhs_num']) {
                 $message .= 'for ' . Yii::app()->params['nhs_label'] . ' Number <strong>"' . $search_terms['nhs_num'] . '"</strong>';

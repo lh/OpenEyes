@@ -21,7 +21,7 @@ class PatientNumberParameter extends CaseSearchParameter implements DBProviderIn
     public function getLabel()
     {
         // This is a human-readable value, so feel free to change this as required.
-        return 'CERA Number';
+        return Yii::app()->params['hos_label_long'] . ' Number';
     }
 
     /**

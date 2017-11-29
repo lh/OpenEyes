@@ -263,7 +263,7 @@ $(document).ready(function(){
             
             return $( "<li></li>" )
                 .data( "item.autocomplete", item )
-                .append( "<a><strong>" + item.first_name + " " + item.last_name + "</strong>" + " (" + item.age + ")" + "<span class='icon icon-alert icon-alert-" + item.gender.toLowerCase() +"_trans'>Male</span>" + "<div class='nhs-number'>" + item.nhsnum +"</div><br>CERA No.: " + item.hos_num + "<br>Date of birth: " + item.dob + warningHTML + "</a>" )
+                .append( "<a><strong>" + item.first_name + " " + item.last_name + "</strong>" + " (" + item.age + ")" + "<span class='icon icon-alert icon-alert-" + item.gender.toLowerCase() +"_trans'>Male</span>" + "<div class='nhs-number'>" + item.nhsnum +"</div><br>" + hos_label_long + " No.: " + item.hos_num + "<br>Date of birth: " + item.dob + warningHTML + "</a>" )
                 .appendTo( ul );
         };
     }

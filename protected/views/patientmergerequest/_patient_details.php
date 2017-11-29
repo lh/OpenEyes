@@ -26,7 +26,7 @@
             
             <div class="row data-row">
                 <div class="large-4 column">
-                        <div class="data-label">CERA No.</div>
+                        <div class="data-label"><?php echo Yii::app()->params['hos_label_long'] ?> No.</div>
                 </div>
                 <div class="large-8 column">
                     <div style="line-height:1.3">

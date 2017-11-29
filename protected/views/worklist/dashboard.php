@@ -32,7 +32,7 @@
                 array(
                     'id' => 'hos_num',
                     'class' => 'CDataColumn',
-                    'header' => 'CERA No.',
+                    'header' => Yii::app()->params['hos_label_long'] . ' No.',
                     'value' => '$data->patient->hos_num',
                 ),
                 array(

@@ -60,7 +60,7 @@ $gp_cb = $patient->gp ? $patient->practice->getCommissioningBodyOfType($cbody_ty
 </tr>
 
 <tr>
-<td>Patient CERA Number:</td>
+<td>Patient <?php echo Yii::app()->params['hos_label_long'] ?> Number:</td>
 <td><?php echo $patient->hos_num ?></td>
 <td>Consultant Making Request:</td>
 <td><?php echo $service_info->consultant->getConsultantName() ?></td>

@@ -35,7 +35,7 @@ Yii::app()->assetManager->registerCssFile('components/font-awesome/css/font-awes
     </div>
     <div class="hospital-number">
 		<span>
-			CERA No.
+			<?php echo Yii::app()->params['hos_label_long'] ?> No.
 		</span>
         <?php echo $this->patient->hos_num?>
     </div>

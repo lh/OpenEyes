@@ -94,7 +94,7 @@ class PatientTest extends CDbTestCase
             'date_of_death' => 'Date of Death',
             'gender' => 'Gender',
             'ethnic_group_id' => 'Ethnic Group',
-            'hos_num' => 'Hospital Number',
+            'hos_num' => Yii::app()->params['hos_label_long'] . ' Number',
             'nhs_num' => Yii::app()->params['nhs_label'] . ' Number',
             'deleted' => 'Is Deleted',
         );

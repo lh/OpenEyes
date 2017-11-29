@@ -21,8 +21,8 @@
 	<?php if (@$patient_ref) {
     echo $patient->fullname.', ';
 }?>
-	<strong>Hospital Reference Number: <?php echo $patient->hos_num; ?>
-	<?php if ($patient->nhsnum) {?><br/> <?php echo Yii::app()->param['nhs_label'] ?> Number: <?php echo $patient->nhsnum; }?>
+	<strong><?php echo Yii::app()->params['hos_label_long'] ?> Reference Number: <?php echo $patient->hos_num; ?>
+	<?php if ($patient->nhsnum) {?><br/> <?php echo Yii::app()->params['nhs_label'] ?> Number: <?php echo $patient->nhsnum; }?>
 	<?php if (@$patient_ref) {?>
 	<br /><?php echo $patient->getLetterAddress(array('delimiter' => ', '))?>
 	<br />DOB: <?php echo $patient->NHSDate('dob') ?>, <?php echo ($patient->gender == 'M') ? 'Male' : 'Female'; ?>

@@ -44,7 +44,7 @@
 		<table class="grid">
 			<thead>
 				<tr>
-					<th>Hos num</th>
+					<th><?php echo Yii::app()->params['hos_label_short'] ?> num</th>
 					<th>Title</th>
 					<th>First name</th>
 					<th>Last name</th>

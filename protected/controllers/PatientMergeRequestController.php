@@ -172,7 +172,7 @@ class PatientMergeRequestController extends BaseController
             } elseif ($personal_details_conflict_confirm['is_conflict'] && !isset($patient_merge_request['personal_details_conflict_confirm'])) {
                 Yii::app()->user->setFlash('warning.user_error', 'Please tick the checkboxes.');
             } elseif ($numbers_not_unique) {
-                Yii::app()->user->setFlash('warning.merge_error_duplicate', 'One of the CERA Numbers are already in the Patient Merge Request list, please merge them first.');
+                Yii::app()->user->setFlash('warning.merge_error_duplicate', 'One of the ' . Yii::app()->params['hos_label_long'] . ' Numbers are already in the Patient Merge Request list, please merge them first.');
                 $this->redirect(array('index'));
             }
         }

@@ -31,7 +31,7 @@ $subspecialty = $firm->serviceSubspecialtyAssignment->subspecialty;
 	<tr>
 		<th>Patient Name</th>
 		<td><?php echo $this->patient->fullname ?> (<?php echo $this->patient->gender ?>)</td>
-		<th>CERA Number</th>
+		<th><?php echo Yii::app()->params['hos_label_long'] ?> Number</th>
 		<td><?php echo $this->patient->hos_num ?></td>
 	</tr>
 	<tr>
