@@ -9,8 +9,8 @@ install:
   - npm install
 
   # Git Clone OE Dependencies. Sample module contains the MySQL data dump necessary for the unit tests to run.
-  - git clone https://github.com/openeyes/eyedraw.git protected/modules/eyedraw
-  - git clone https://github.com/openeyes/sample.git protected/modules/sample
+  - git clone https://github.com/FiviumAustralia/eyedraw.git -b feature/v2-cera protected/modules/eyedraw
+  - git clone https://github.com/FiviumAustralia/sample.git -b feature/v2-cera protected/modules/sample
 before_script:
   - echo 'date.timezone = "Australia/Melbourne"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini # Set the PHP timezone to UTC +10:00:00
   - sudo chmod a+x mysql-ci.sh # Make the shell script to populate the databases executable.
