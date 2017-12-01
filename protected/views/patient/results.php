@@ -25,7 +25,7 @@ if ($search_terms['hos_num']) {
     $based_on[] = Yii::app()->params['hos_label_long'] .' Number and ' . Yii::app()->params['nhs_label'] . ' Number: <strong>' . $search_terms['hos_num'] . '</strong>';
 }
 if ($search_terms['nhs_num']) {
-    $based_on[] = 'Medicare Number: <strong>' . $search_terms['nhs_num'] . '</strong>';
+    $based_on[] = Yii::app()->params['nhs_label'].' Number: <strong>' . $search_terms['nhs_num'] . '</strong>';
 }
 $core_api = new CoreAPI();
 
