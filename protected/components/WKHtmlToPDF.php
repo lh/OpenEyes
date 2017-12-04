@@ -306,6 +306,94 @@ class WKHtmlToPDF
 
         $res = $this->execute($nice.escapeshellarg($this->wkhtmltopdf).' --footer-html '.escapeshellarg($footer_file)." --print-media-type $top_margin $bottom_margin $left_margin $right_margin ".escapeshellarg($html_file).' '.escapeshellarg($pdf_file).' 2>&1');
 
+
+
+        if (!$this->fileExists($pdf_file) || $this->fileSize($pdf_file) == 0) {
+            if ($this->fileSize($pdf_file) == 0) {
+                $this->deleteFile($pdf_file);
+            }
+
+            throw new Exception("Unable to generate $pdf_file: $res");
+        }
+
+        $this->deleteFile($html_file);
+        $this->deleteFile($footer_file);
+
+        if ($pdf = $this->getPDFOptions($pdf_file)) {
+            if ($inject_autoprint_js) {
+                $pdf->injectJS('print(true);');
+            }
+
+            $pdf->disablePrintScaling();
+            $pdf->write();
+        }
+
+        return true;
+    }
+
+    public function generatePDF_FPDF($imageDirectory, $prefix, $suffix, $html, $output_html = false, $inject_autoprint_js = true){
+        !$output_html && $html = $this->remapAssetPaths($html);
+        !$output_html && $html = $this->remapCanvasImagePaths($html);
+
+        $this->findOrCreateDirectory($imageDirectory);
+
+        $html_file = $suffix ? "$imageDirectory".DIRECTORY_SEPARATOR."{$prefix}_$suffix.html" : "$imageDirectory".DIRECTORY_SEPARATOR."$prefix.html";
+        $pdf_file = $suffix ? "$imageDirectory".DIRECTORY_SEPARATOR."{$prefix}_$suffix.pdf" : "$imageDirectory".DIRECTORY_SEPARATOR."$prefix.pdf";
+        $footer_file = $suffix ? "$imageDirectory".DIRECTORY_SEPARATOR."footer_$suffix.html" : "$imageDirectory".DIRECTORY_SEPARATOR.'footer.html';
+
+        $this->writeFile($html_file, $html);
+
+        $footer = $this->formatFooter(
+            $this->readFile(Yii::app()->basePath.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'print'.DIRECTORY_SEPARATOR.'pdf_footer.php'),
+            $this->left,
+            $this->middle,
+            $this->right,
+            $this->patients,
+            $this->barcodes,
+            $this->docrefs
+        );
+
+        $mpdf = new mPDF('','A4', 0, '', $this->left_margin, $this->right_margin,
+            $this->top_margin, $this->bottom_margin, 'P');
+        $mpdf->SetHTMLHeader('
+<div style="text-align: center; font-weight: bold;">Examination</div>
+<table width="100%" style="vertical-align: bottom; font-family: serif; 
+    font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;">
+    <tr>
+        <td width="33%">Zhaolian Zhou</td>
+        <td width="33%" align="center"><div class="column">
+        <div>Service: Vitreoretinal</div>
+        <div>CERA No: 17052</div>
+        <div>NHS No: not known</div>
+        <div>DOB: 6 Dec 1992(24)</div>
+        </div></td>
+        <td width="33%" style="text-align: left;">
+        <div>Examination Created: 22 Nov 2017</div>
+        <div>Examination Printed: {DATE j-m-Y}</div>
+</td>
+    </tr>
+</table>');
+        $mpdf->SetHTMLFooter('
+<table width="100%" style="vertical-align: bottom; font-family: serif; 
+    font-size: 8pt; color: #000000; font-weight: bold; font-style: italic;">
+    <tr>
+        <td width="33%">DOB: {}</td>
+        <td width="33%" align="center">Page {PAGENO} of {nbpg}</td>
+        <td width="33%" style="text-align: right;">OpenEyes</td>
+    </tr>
+</table>');
+        $mpdf->WriteHTML( $html);
+        $mpdf->Output($suffix."openeyes.pdf",I);
+
+        $top_margin = $this->top_margin ? '-T '.$this->top_margin : '';
+        $bottom_margin = $this->bottom_margin ? '-B '.$this->bottom_margin : '';
+        $left_margin = $this->left_margin ? '-L '.$this->left_margin : '';
+        $right_margin = $this->right_margin ? '-R '.$this->right_margin : '';
+
+        $nice = Yii::app()->params['wkhtmltopdf_nice_level'] ? 'nice -n'.Yii::app()->params['wkhtmltopdf_nice_level'].' ' : '';
+
+        $res = $this->execute($nice.escapeshellarg($this->wkhtmltopdf).' --footer-html '.escapeshellarg($footer_file)." --print-media-type $top_margin $bottom_margin $left_margin $right_margin ".escapeshellarg($html_file).' '.escapeshellarg($pdf_file).' 2>&1');
+
         if (!$this->fileExists($pdf_file) || $this->fileSize($pdf_file) == 0) {
             if ($this->fileSize($pdf_file) == 0) {
                 $this->deleteFile($pdf_file);
