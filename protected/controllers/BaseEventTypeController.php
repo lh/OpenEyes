@@ -1773,10 +1773,7 @@ class BaseEventTypeController extends BaseModuleController
                 }
             }
 
-
-//            $wk->generatePDF($event->imageDirectory, 'event', $this->pdf_print_suffix, $this->pdf_print_html, (boolean) @$_GET['html'], $inject_autoprint_js);
-            $wk->generatePDF_FPDF($event->imageDirectory, 'event', $this->pdf_print_suffix, $this->pdf_print_html, (boolean) @$_GET['html'], $inject_autoprint_js);
-
+            $wk->generatePDF($event->imageDirectory, 'event', $this->pdf_print_suffix, $this->pdf_print_html, (boolean) @$_GET['html'], $inject_autoprint_js);
         }
 
         $event->unlock();
@@ -1788,6 +1785,7 @@ class BaseEventTypeController extends BaseModuleController
         $pdf = $event->getPDF($this->pdf_print_suffix);
 
         header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment; filename="'.$this->pdf_print_suffix.'.pdf"');
         header('Content-Length: '.filesize($pdf));
 
         readfile($pdf);
