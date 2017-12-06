@@ -283,6 +283,15 @@ class Patient extends BaseActiveRecordVersioned
     }
 
     /**
+     * Gets the next CERA number
+     * @return int The next number
+     */
+    public static function getNextCeraNumber()
+    {
+        return Yii::app()->db->createCommand('SELECT nextval("patient_cera_number")')->queryScalar();
+    }
+
+    /**
      * @return array List of sources for display in a drop-down list.
      */
     public function getSourcesList()

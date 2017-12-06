@@ -348,6 +348,12 @@ return array(
                 'position' => 46,
                 'restricted' => array('TaskAddPatient'),
             ),
+            'patient_import' => array(
+                'title' => 'Import Patients',
+                'uri' => 'csv/upload?context=patients',
+                'position' => 47,
+                'restricted' => array('TaskAddPatient'),
+            ),
             'gps' => array(
                 'title' => 'Practitioners',
                 'uri' => 'gp/index',

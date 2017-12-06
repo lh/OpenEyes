@@ -95,3 +95,7 @@ build/logs
 protected/widgets/views/IndexSearch_Examination.php
 !/protected/modules/OECaseSearch/assets/css/QueryBuilder.css
 protected/tests/coverage/
+
+protected/controllers/ScratchController\.php
+
+protected/views/scratch/
