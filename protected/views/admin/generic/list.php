@@ -82,7 +82,7 @@ if (!isset($uniqueid)) {
                 $retrieveResults = $admin->getSearch()->retrieveResults();
                 foreach ($retrieveResults as $i => $row) { ?>
                     <?php if ($admin->getModelName()=="LetterType" && $admin->attributeValue($row, 'name')=="Internal Referral"):?>
-                        <tr class="" data-id="<?php echo $row->id ?>" onclick="<?php Yii::app()->user->setFlash('notice', "Internal Referral Type can not be changed.");?>" >
+                        <tr class="" data-id="<?php echo $row->id ?>" onclick="new OpenEyes.UI.Dialog.Alert({content: 'Internal Referral type can not be changed.'  }).open();" >
                         <td></td>
                     <?php else: ?>
                     <tr class="clickable" data-id="<?php echo $row->id ?>"
