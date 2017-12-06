@@ -81,17 +81,16 @@ if (!isset($uniqueid)) {
                 <?php
                 $retrieveResults = $admin->getSearch()->retrieveResults();
                 foreach ($retrieveResults as $i => $row) { ?>
-                    <?php if ($admin->getModelName()=="LetterType" && $admin->attributeValue($row, 'name')=="Internal Referral"):
-                        $this->renderPartial('/oeadmin/letter_type_internal', array(
-                            'row'=>$row,
-                            'admin'=>$admin,
-                        ));
-                    else: ?>
+                    <?php if ($admin->getModelName()=="LetterType" && $admin->attributeValue($row, 'name')=="Internal Referral"):?>
+                        <tr class="" data-id="<?php echo $row->id ?>" onclick="<?php Yii::app()->user->setFlash('notice', "Internal Referral Type can not be changed.");?>" >
+                        <td></td>
+                    <?php else: ?>
                     <tr class="clickable" data-id="<?php echo $row->id ?>"
                         data-uri="<?php echo $uniqueid ?>/<?php echo $admin->getListFieldsAction() ?>/<?php echo $row->id ?>?returnUri=<?= $returnUri ?>">
                         <td>
-                            <input type="checkbox" name="<?php echo $admin->getModelName(); ?>[id][]" value="<?php echo $row->id ?>" />
+                            <input type="checkbox" name="<?php echo $admin->getModelName(); ?>[id][]" value="<?php echo $row->id ?>"/>
                         </td>
+                    <?php endif; ?>
                         <?php foreach ($admin->getListFields() as $listItem):
                             if ($listItem === 'is_active'):
                                 ?>
@@ -141,7 +140,6 @@ if (!isset($uniqueid)) {
                             endif;
                         endforeach; ?>
                     </tr>
-                    <?php endif;?>
                 <?php } ?>
                 </tbody>
                 <tfoot class="pagination-container">
