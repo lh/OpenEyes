@@ -185,8 +185,7 @@ class PatientController extends BaseController
 
             $message = 'Sorry, no results ';
             if ($search_terms['hos_num']) {
-                $message .= 'for ' . Yii::app()->params['hos_label_long'] . ' Number <strong>"'.$search_terms['hos_num'].'"</strong>';
-
+                $message .= 'for ' . Yii::app()->params['hos_label_long'] . ' Number or '. Yii::app()->params['nhs_label']. ' Number <strong>"'.$search_terms['hos_num'].'"</strong>';
                 // check if the record was merged into another record
                 $criteria = new CDbCriteria();
                 $criteria->compare('secondary_hos_num', $search_terms['hos_num']);

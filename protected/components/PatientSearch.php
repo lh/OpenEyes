@@ -62,13 +62,13 @@ class PatientSearch
             'patient_name' => null,
         );
 
-        // NHS number
-        if ($nhs = $this->getNHSnumber($term)) {
-            $search_terms['nhs_num'] = $nhs;
         // Hospital number
-        } elseif ($hos_num = $this->getHospitalNumber($term)) {
+        if($hos_num = $this->getHospitalNumber($term)) {
             $search_terms['hos_num'] = $hos_num;
-        // Patient name
+            // Medicare number
+        }  elseif ($nhs = $this->getNHSnumber($term)) {
+            $search_terms['nhs_num'] = $nhs;
+            // Patient name
         } elseif ($name = $this->getPatientName($term)) {
             $search_terms['patient_name'] = trim($name['patient_name']);
         }
@@ -163,7 +163,6 @@ class PatientSearch
             $nhs = str_replace(array('-', ' '), '', $nhs);
             $result = $nhs;
         }
-
         return $result;
     }
 
@@ -179,7 +178,6 @@ class PatientSearch
             $hosnum = (isset($matches[2])) ? $matches[2] : $matches[1];
             $result = $hosnum;
         }
-
         return $result;
     }
 
