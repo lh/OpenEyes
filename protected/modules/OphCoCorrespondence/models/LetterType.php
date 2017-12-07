@@ -54,6 +54,7 @@ class LetterType extends BaseActiveRecordVersioned
         return array(
             array('name, is_active', 'safe'),
             array('name', 'required'),
+            array('name', 'unique', 'caseSensitive' => false),
         );
     }
 
