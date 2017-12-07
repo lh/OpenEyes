@@ -4,11 +4,11 @@
         <tr>
             <th class="checkbox"><input type="checkbox" name="selectall" id="selectall" /></th>
             <th class="secondary">
-                <?php echo $data_provider->getSort()->link('secondary_hos_num', 'Secondary<br><span class="hos_num">hospital num</span>', array('class' => 'sort-link')) ?>
+                <?php echo $data_provider->getSort()->link('secondary_hos_num', 'Secondary<br><span class="hos_num">' . Yii::app()->params['hos_label_long'] . ' num</span>', array('class' => 'sort-link')) ?>
             </th>
             <th></th>
             <th class="primary">
-                <?php echo $data_provider->getSort()->link('primary_hos_num', 'Primary<br><span class="hos_num">hospital num</span>', array('class' => 'sort-link')) ?>
+                <?php echo $data_provider->getSort()->link('primary_hos_num', 'Primary<br><span class="hos_num">' . Yii::app()->params['hos_label_long'] . ' num</span>', array('class' => 'sort-link')) ?>
             </th>
             <th class="status"><?php echo $data_provider->getSort()->link('status', 'Status', array('class' => 'sort-link')); ?></th>
             <th class="created"><?php echo $data_provider->getSort()->link('created_date', 'Created', array('class' => 'sort-link')); ?></th>
