@@ -63,10 +63,9 @@ class PatientSearch
         );
 
         // Hospital number
-        if($hos_num = $this->getHospitalNumber($term)) {
-            $search_terms['hos_num'] = $hos_num;
-            // Medicare number
-        }  elseif ($nhs = $this->getNHSnumber($term)) {
+        if ($hos_num = $this->getHospitalNumber($term)) {
+            $search_terms['hos_num'] = $hos_num;// Medicare number
+        } elseif ($nhs = $this->getNHSnumber($term)) {
             $search_terms['nhs_num'] = $nhs;
             // Patient name
         } elseif ($name = $this->getPatientName($term)) {
