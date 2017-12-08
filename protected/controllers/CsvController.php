@@ -10,6 +10,24 @@
 
 class CsvController extends BaseController
 {
+    static $contexts = array(
+        'trials' => array(
+            'successAction' => 'OETrial/trial',
+            'createAction' => 'createNewTrial',
+            'errorMsg' => 'Errors with trial on line ',
+        ),
+        'patients' => array(
+            'successAction' => 'site/index',
+            'createAction' => 'createNewPatient',
+            'errorMsg' => 'Errors with patient on line ',
+        ),
+        'trialPatients' => array(
+            'successAction' => 'OETrial/trial',
+            'createAction' => 'createNewTrialPatient',
+            'errorMsg' => 'Errors with trial patient on line ',
+        ),
+    );
+
     public function accessRules()
     {
         return array(
@@ -56,38 +74,32 @@ class CsvController extends BaseController
 
     public function actionImport($context)
     {
-        if ($context === 'trials')$this->importTrials();
-        if ($context === 'patients')$this->importPatients();
-    }
-
-    private function importTrials()
-    {
         $transaction = Yii::app()->db->beginTransaction();
         $errors = null;
         $row_num = 0;
-        foreach ($_SESSION['table_data'] as $trial) {
+        $createAction = self::$contexts[$context]['createAction'];
+        foreach ($_SESSION['table_data'] as $row) {
             $row_num++;
-            $errors = $this->createNewTrial($trial);
+            $errors = $this->$createAction($row);
             if(!empty($errors))break;
         }
         if (empty($errors)){
             $transaction->commit();
-            $this->redirect(Yii::app()->createURL('OETrial/trial'));
+            $this->redirect(Yii::app()->createURL(self::$contexts[$context]['successAction']));
         } else {
             $transaction->rollback();
-            array_unshift($errors, 'Errors with trial on line '.$row_num);
+            array_unshift($errors, self::$contexts[$context]['errorMsg'].$row_num);
             $this->render(
                 'upload',
                 array(
                     'errors' => $errors,
-                    'context' => 'trials',
+                    'context' => $context,
                 )
             );
         }
-
     }
 
-    public function createNewTrial($trial)
+    private function createNewTrial($trial)
     {
         $errors = array();
         \Yii::log('createNewTrial called on '.var_export($trial,true));
@@ -122,35 +134,7 @@ class CsvController extends BaseController
         return $errors;
     }
 
-    public function importPatients()
-    {
-        $errors = array();
-        $transaction = Yii::app()->db->beginTransaction();
-        $row_num = 0;
-
-        foreach ($_SESSION['table_data'] as $patient) {
-            $row_num++;
-            $errors = $this->createNewPatient($patient);
-            if(!empty($errors))break;
-        }
-
-        if (empty($errors)){
-            $transaction->commit();
-            $this->redirect(Yii::app()->createURL('site/index'));
-        } else {
-            $transaction->rollback();
-            array_unshift($errors, 'Errors with patient on line '.$row_num);
-            $this->render(
-                'upload',
-                array(
-                    'errors' => $errors,
-                    'context' => 'patients',
-                )
-            );
-        }
-    }
-
-    public function createNewPatient($patient)
+    private function createNewPatient($patient)
     {
         $errors = array();
 
@@ -235,6 +219,48 @@ class CsvController extends BaseController
         }
 
         return $errors;
+    }
+
+    private function createNewTrialPatient($trial_patient)
+    {
+        $errors = array();
+        //trial
+        $trial = null;
+        if(isset($trial_patient['trial_name'])){
+            $trial = Trial::model()->findByAttributes(array('name' => $trial_patient['trial_name']));
+        }
+        if ($trial === null){
+            $errors[] = 'trial not found, please check the trial name';
+        }
+
+        //patient
+        $patient = null;
+        if(isset($trial_patient['CERA_number'])){
+            $patient = Patient::model()->findByAttributes(array('hos_num' => $trial_patient['CERA_number']));
+        }
+        if ($patient === null){
+            $errors[] = 'patient not found, please check the CERA number';
+        }
+
+        $new_trial_pat = new TrialPatient();
+        $trial_pat_cols = array(
+            array('var_name' => 'external_trial_identifier', 'default' => null,),
+            array('var_name' => 'patient_status'           , 'default' => TrialPatient::STATUS_ACCEPTED,),
+            array('var_name' => 'treatment_type'           , 'default' => null,),
+            array('var_name' => 'created_date'             , 'default' => null,),
+        );
+
+        foreach ($trial_pat_cols as $col){
+            $new_trial_pat->$col['var_name'] =
+                isset($new_trial_pat[$col['var_name']]) ? $new_trial_pat[$col['var_name']] : $col['default'];
+        }
+
+        $new_trial_pat->patient_id = $patient->id;
+        $new_trial_pat->trial_id = $trial->id;
+
+        if(!$new_trial_pat->save()){
+            return $new_trial_pat->getErrors();
+        }
     }
 
 }
