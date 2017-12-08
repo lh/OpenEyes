@@ -1,21 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fivium-isaac
- * Date: 12/5/17
- * Time: 10:03 AM
- */
-?>
-    <!--render table-->
-<?php
 $form = $this->beginWidget(
-        'CActiveForm',
-        array(
-            'id' => 'import-form',
-            'action' => Yii::app()->createURL('csv/import', array('context' => $context)),
-            'enableAjaxValidation' => false,
-            'htmlOptions' => array('enctype' => 'multipart/form-data'),
-        )
+    'CActiveForm',
+    array(
+        'id' => 'import-form',
+        'action' => Yii::app()->createURL('csv/import', array('context' => $context)),
+        'enableAjaxValidation' => false,
+        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+    )
 );
 if (!empty($table)): ?>
     <table>

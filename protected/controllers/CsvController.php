@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fivium-isaac
- * Date: 12/1/17
- * Time: 3:18 PM
- */
-
 \Yii::import('application.modules.OETrial.models.*');
 
 class CsvController extends BaseController

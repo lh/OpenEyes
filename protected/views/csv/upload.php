@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: fivium-isaac
- * Date: 12/4/17
- * Time: 7:58 AM
- */
-
 $form = $this->beginWidget(
     'CActiveForm',
     array(
@@ -17,7 +10,7 @@ $form = $this->beginWidget(
 );
 
 echo $form->fileField(new Csv(), 'csvFile');
-if(isset($errors) and $errors !== null) {
+if (isset($errors) and $errors !== null) {
     echo '<pre>';
     var_dump($errors);
     echo '</pre>';
