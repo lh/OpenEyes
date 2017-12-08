@@ -109,7 +109,7 @@ class CsvController extends BaseController
         $new_trial = new Trial();
         $new_trial->name = $trial['name'];
         if (!isset($trial['trial_type'])) {
-            $trial['trial_type'] = 'INTERVENTION';
+            $trial['trial_type'] = Trial::TRIAL_TYPE_INTERVENTION;
         }
         $new_trial->trial_type = $trial['trial_type'];
         $new_trial->description = isset($trial['description']) ? $trial['description'] : null;
@@ -197,7 +197,7 @@ class CsvController extends BaseController
             array('var_name' => 'deleted'                       , 'default' => null,),
             array('var_name' => 'nhs_num_status_id'             , 'default' => null,),
             array('var_name' => 'is_deceased'                   , 'default' => null,),
-            array('var_name' => 'is_local'                      , 'default' => null,),
+            array('var_name' => 'is_local'                      , 'default' => 1,),
             array('var_name' => 'patient_source'                , 'default' => 0,),
         );
 
@@ -224,6 +224,7 @@ class CsvController extends BaseController
         }
         if ($trial === null){
             $errors[] = 'trial not found, please check the trial name';
+            return $errors;
         }
 
         //patient
@@ -233,6 +234,7 @@ class CsvController extends BaseController
         }
         if ($patient === null){
             $errors[] = 'patient not found, please check the CERA number';
+            return $errors;
         }
 
         $new_trial_pat = new TrialPatient();
