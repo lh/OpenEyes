@@ -76,7 +76,7 @@ class CsvController extends BaseController
             $errors = $this->$createAction($row);
             if(!empty($errors))break;
         }
-        if (empty($errors)){
+        if (!empty($errors)){
             $transaction->commit();
             $this->redirect(Yii::app()->createURL(self::$contexts[$context]['successAction']));
         } else {
@@ -96,7 +96,7 @@ class CsvController extends BaseController
     {
         $errors = array();
         \Yii::log('createNewTrial called on '.var_export($trial,true));
-        if (!isset($trial['name']) or $trial['name'] === '') {
+        if (empty($trial['name'])) {
             $errors[] = 'Trial has no name';
             return $errors;
         }
@@ -108,16 +108,16 @@ class CsvController extends BaseController
         //create new trial
         $new_trial = new Trial();
         $new_trial->name = $trial['name'];
-        if (!isset($trial['trial_type'])) {
+        if (empty($trial['trial_type'])) {
             $trial['trial_type'] = Trial::TRIAL_TYPE_INTERVENTION;
         }
         $new_trial->trial_type = $trial['trial_type'];
-        $new_trial->description = isset($trial['description']) ? $trial['description'] : null;
+        $new_trial->description = !empty($trial['description']) ? $trial['description'] : null;
         $new_trial->owner_user_id = Yii::app()->user->id;
-        $new_trial->is_open = isset($trial['is_open']) ? $trial['is_open'] : false;
-        $new_trial->started_date = isset($trial['started_date']) ? $trial['started_date'] : null;
-        $new_trial->closed_date = isset($trial['closed_date']) ? $trial['closed_date'] : null;
-        $new_trial->external_data_link = isset($trial['external_data_link']) ? $trial['external_data_link'] : null;
+        $new_trial->is_open = isset($trial['is_open']) and $trial['is_open'] !== '' ? $trial['is_open'] : false;
+        $new_trial->started_date = !empty($trial['started_date']) ? $trial['started_date'] : null;
+        $new_trial->closed_date = !empty($trial['closed_date']) ? $trial['closed_date'] : null;
+        $new_trial->external_data_link = !empty($trial['external_data_link']) ? $trial['external_data_link'] : null;
         $new_trial->pi_user_id = Yii::app()->user->id;
 
         if (!$new_trial->save()) {
@@ -131,7 +131,7 @@ class CsvController extends BaseController
     {
         $errors = array();
 
-        if(isset($patient['CERA_number'])){
+        if(!empty($patient['CERA_number'])){
             $new_patient = Patient::model()->findByAttributes(array('hos_num' => $patient['CERA_number']));
             if ($new_patient !== null){
                 return $errors;
@@ -151,7 +151,7 @@ class CsvController extends BaseController
         );
 
         foreach ($contact_cols as $col){
-            $contact->$col['var_name'] = isset($patient[$col['var_name']]) ? $patient[$col['var_name']] : $col['default'];
+            $contact->$col['var_name'] = !empty($patient[$col['var_name']]) ? $patient[$col['var_name']] : $col['default'];
         }
 
         if(!$contact->save()){
@@ -173,7 +173,7 @@ class CsvController extends BaseController
         );
 
         foreach ($address_cols as $col){
-            $address->$col['var_name'] = isset($patient[$col['var_name']]) ? $patient[$col['var_name']] : $col['default'];
+            $address->$col['var_name'] = !empty($patient[$col['var_name']]) ? $patient[$col['var_name']] : $col['default'];
         }
         $address->contact_id = $contact->id;
 
@@ -201,10 +201,12 @@ class CsvController extends BaseController
         );
 
         foreach ($patient_cols as $col){
-            $new_patient->$col['var_name'] = isset($patient[$col['var_name']]) ? $patient[$col['var_name']] : $col['default'];
+            $new_patient->$col['var_name'] = isset($patient[$col['var_name']]) and $patient[$col['var_name']] !== ''
+                ? $patient[$col['var_name']] : $col['default'];
         }
+
         $new_patient->contact_id = $contact->id;
-        $new_patient->hos_num = isset($patient['CERA_number']) ? $patient['CERA_number'] : Patient::getNextCeraNumber();
+        $new_patient->hos_num = !empty($patient['CERA_number']) ? $patient['CERA_number'] : Patient::getNextCeraNumber();
 
         if(!$new_patient->save()){
             return $new_patient->getErrors();
@@ -212,8 +214,8 @@ class CsvController extends BaseController
         //patient contact assignments
 
         //referred to
-        if(isset($patient['referred_to_first_name']) or isset($patient['referred_to_last_name'])){
-            if(isset($patient['referred_to_first_name']) and isset($patient['referred_to_last_name'])) {
+        if(!empty($patient['referred_to_first_name']) or !empty($patient['referred_to_last_name'])){
+            if(!empty($patient['referred_to_first_name']) and !empty($patient['referred_to_last_name'])) {
                 $referred_to = null;
                 //Find if exists
                 $referred_to = User::model()->findByAttributes(array(
@@ -239,8 +241,8 @@ class CsvController extends BaseController
         }
 
         //optom
-        if(isset($patient['optom_first_name']) or isset($patient['optom_last_name'])){
-            if(isset($patient['optom_first_name']) and isset($patient['optom_last_name'])) {
+        if(!empty($patient['optom_first_name']) or !empty($patient['optom_last_name'])){
+            if(!empty($patient['optom_first_name']) and !empty($patient['optom_last_name'])) {
                 $optom_label = ContactLabel::model()->findByAttributes(array('name' => 'Optometrist'));
                 $optom_contact = Contact::model()->findByAttributes(array(
                     'contact_label_id' => $optom_label->id,
@@ -281,8 +283,8 @@ class CsvController extends BaseController
         }
 
         //opthal
-        if(isset($patient['opthal_first_name']) or isset($patient['opthal_last_name'])){
-            if(isset($patient['opthal_first_name']) and isset($patient['opthal_last_name'])) {
+        if(!empty($patient['opthal_first_name']) or !empty($patient['opthal_last_name'])){
+            if(!empty($patient['opthal_first_name']) and !empty($patient['opthal_last_name'])) {
                 $opthal_label = ContactLabel::model()->findByAttributes(array('name' => 'Ophthalmologist'));
                 $opthal_contact = Contact::model()->findByAttributes(array(
                     'contact_label_id' => $opthal_label->id,
@@ -323,8 +325,8 @@ class CsvController extends BaseController
         }
 
         //Gp
-        if(isset($patient['gp_first_name']) or isset($patient['gp_last_name'])){
-            if(isset($patient['gp_first_name']) and isset($patient['gp_last_name'])) {
+        if(!empty($patient['gp_first_name']) or !empty($patient['gp_last_name'])){
+            if(!empty($patient['gp_first_name']) and !empty($patient['gp_last_name'])) {
                 $gp_label = ContactLabel::model()->findByAttributes(array('name' => 'General Practitioner'));
                 $gp_contact = Contact::model()->findByAttributes(array(
                     'contact_label_id' => $gp_label->id,
@@ -365,9 +367,9 @@ class CsvController extends BaseController
         }
         
         //diagnoses
-        if(isset($patient['LE_diagnosis']) || isset($patient['RE_diagnosis'])){
+        if(!empty($patient['LE_diagnosis']) || !empty($patient['RE_diagnosis'])){
             $context = Firm::model()->findByAttributes(array(
-                'name' => isset($patient['context']) ? $patient['context'] :  'Medical Retinal firm'
+                'name' => !empty($patient['context']) ? $patient['context'] :  'Medical Retinal firm'
             ));
             $episode = new Episode();
             $episode->firm = $context;
@@ -397,7 +399,7 @@ class CsvController extends BaseController
                 array_unshift($errors, $element->getErrors());
             }
 
-            if(isset($patient['LE_diagnosis'])){
+            if(!empty($patient['LE_diagnosis'])){
                 $disorder = Disorder::model()->findByAttributes(array(
                     'fully_specified_name' => $patient['LE_diagnosis']
                 ));
@@ -415,7 +417,7 @@ class CsvController extends BaseController
                     return $errors;
                 }
             }
-            if(isset($patient['RE_diagnosis'])){
+            if(!empty($patient['RE_diagnosis'])){
                 $disorder = Disorder::model()->findByAttributes(array(
                     'fully_specified_name' => $patient['LE_diagnosis']
                 ));
@@ -443,7 +445,7 @@ class CsvController extends BaseController
         $errors = array();
         //trial
         $trial = null;
-        if(isset($trial_patient['trial_name'])){
+        if(!empty($trial_patient['trial_name'])){
             $trial = Trial::model()->findByAttributes(array('name' => $trial_patient['trial_name']));
         }
         if ($trial === null){
@@ -453,7 +455,7 @@ class CsvController extends BaseController
 
         //patient
         $patient = null;
-        if(isset($trial_patient['CERA_number'])){
+        if(!empty($trial_patient['CERA_number'])){
             $patient = Patient::model()->findByAttributes(array('hos_num' => $trial_patient['CERA_number']));
         }
         if ($patient === null){
@@ -471,7 +473,7 @@ class CsvController extends BaseController
 
         foreach ($trial_pat_cols as $col){
             $new_trial_pat->$col['var_name'] =
-                isset($new_trial_pat[$col['var_name']]) ? $new_trial_pat[$col['var_name']] : $col['default'];
+                !empty($new_trial_pat[$col['var_name']]) ? $new_trial_pat[$col['var_name']] : $col['default'];
         }
 
         $new_trial_pat->patient_id = $patient->id;
