@@ -218,7 +218,7 @@ class CsvController extends BaseController
                 //Find if exists
                 $referred_to = User::model()->findByAttributes(array(
                     'first_name' => $patient['referred_to_first_name'],
-                    'last_name' => $patient['reffered_to_last_name'],
+                    'last_name' => $patient['referred_to_last_name'],
                 ));
                 if ($referred_to === null) {
                     $errors[] = 'Cannot find referred to user';
@@ -226,8 +226,9 @@ class CsvController extends BaseController
                 }
                 $pat_ref = new PatientUserReferral();
                 $pat_ref->user = $referred_to;
+                $pat_ref->patient = $new_patient;
                 if (!$pat_ref->save()) {
-                    $errors[] = 'Count not save referred to user';
+                    $errors[] = 'Could not save referred to user';
                     array_unshift($errors, $pat_ref->getErrors());
                     return $errors;
                 }
