@@ -41,7 +41,7 @@ class CsvController extends BaseController
     {
         $table = array();
         $headers = array();
-        if (isset($_FILES['Csv']['tmp_name']['csvFile']) and $_FILES['Csv']['tmp_name']['csvFile'] !== "") {
+        if (isset($_FILES['Csv']['tmp_name']['csvFile']) && $_FILES['Csv']['tmp_name']['csvFile'] !== "") {
             if (($handle = fopen($_FILES['Csv']['tmp_name']['csvFile'], "r")) !== false) {
                 if (($line = fgetcsv($handle, 0, ",")) !== FALSE) {
                     foreach ($line as $header) {
@@ -114,7 +114,7 @@ class CsvController extends BaseController
         $new_trial->trial_type = $trial['trial_type'];
         $new_trial->description = !empty($trial['description']) ? $trial['description'] : null;
         $new_trial->owner_user_id = Yii::app()->user->id;
-        $new_trial->is_open = isset($trial['is_open']) and $trial['is_open'] !== '' ? $trial['is_open'] : false;
+        $new_trial->is_open = isset($trial['is_open']) && $trial['is_open'] !== '' ? $trial['is_open'] : false;
         $new_trial->started_date = !empty($trial['started_date']) ? $trial['started_date'] : null;
         $new_trial->closed_date = !empty($trial['closed_date']) ? $trial['closed_date'] : null;
         $new_trial->external_data_link = !empty($trial['external_data_link']) ? $trial['external_data_link'] : null;
@@ -201,7 +201,7 @@ class CsvController extends BaseController
         );
 
         foreach ($patient_cols as $col){
-            $new_patient->$col['var_name'] = isset($patient[$col['var_name']]) and $patient[$col['var_name']] !== ''
+            $new_patient->$col['var_name'] = isset($patient[$col['var_name']]) && $patient[$col['var_name']] !== ''
                 ? $patient[$col['var_name']] : $col['default'];
         }
 
@@ -214,8 +214,8 @@ class CsvController extends BaseController
         //patient contact assignments
 
         //referred to
-        if(!empty($patient['referred_to_first_name']) or !empty($patient['referred_to_last_name'])){
-            if(!empty($patient['referred_to_first_name']) and !empty($patient['referred_to_last_name'])) {
+        if(!empty($patient['referred_to_first_name']) || !empty($patient['referred_to_last_name'])){
+            if(!empty($patient['referred_to_first_name']) && !empty($patient['referred_to_last_name'])) {
                 $referred_to = null;
                 //Find if exists
                 $referred_to = User::model()->findByAttributes(array(
@@ -241,8 +241,8 @@ class CsvController extends BaseController
         }
 
         //optom
-        if(!empty($patient['optom_first_name']) or !empty($patient['optom_last_name'])){
-            if(!empty($patient['optom_first_name']) and !empty($patient['optom_last_name'])) {
+        if(!empty($patient['optom_first_name']) || !empty($patient['optom_last_name'])){
+            if(!empty($patient['optom_first_name']) && !empty($patient['optom_last_name'])) {
                 $optom_label = ContactLabel::model()->findByAttributes(array('name' => 'Optometrist'));
                 $optom_contact = Contact::model()->findByAttributes(array(
                     'contact_label_id' => $optom_label->id,
@@ -283,8 +283,8 @@ class CsvController extends BaseController
         }
 
         //opthal
-        if(!empty($patient['opthal_first_name']) or !empty($patient['opthal_last_name'])){
-            if(!empty($patient['opthal_first_name']) and !empty($patient['opthal_last_name'])) {
+        if(!empty($patient['opthal_first_name']) || !empty($patient['opthal_last_name'])){
+            if(!empty($patient['opthal_first_name']) && !empty($patient['opthal_last_name'])) {
                 $opthal_label = ContactLabel::model()->findByAttributes(array('name' => 'Ophthalmologist'));
                 $opthal_contact = Contact::model()->findByAttributes(array(
                     'contact_label_id' => $opthal_label->id,
@@ -325,8 +325,8 @@ class CsvController extends BaseController
         }
 
         //Gp
-        if(!empty($patient['gp_first_name']) or !empty($patient['gp_last_name'])){
-            if(!empty($patient['gp_first_name']) and !empty($patient['gp_last_name'])) {
+        if(!empty($patient['gp_first_name']) || !empty($patient['gp_last_name'])){
+            if(!empty($patient['gp_first_name']) && !empty($patient['gp_last_name'])) {
                 $gp_label = ContactLabel::model()->findByAttributes(array('name' => 'General Practitioner'));
                 $gp_contact = Contact::model()->findByAttributes(array(
                     'contact_label_id' => $gp_label->id,
