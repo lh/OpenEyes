@@ -1197,7 +1197,9 @@ class Element_OphTrOperationbooking_Operation extends BaseEventTypeElement
                 }
             }
         }
-        $this->booking->session = $session;
+        if ($this->booking){
+            $this->booking->session = $session;
+        }
         if (!$this->save()) {
             throw new Exception('Unable to update operation data: '.print_r($this->getErrors(), true));
         }
