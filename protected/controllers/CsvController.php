@@ -76,7 +76,7 @@ class CsvController extends BaseController
             $errors = $this->$createAction($row);
             if(!empty($errors))break;
         }
-        if (!empty($errors)){
+        if (empty($errors)){
             $transaction->commit();
             $this->redirect(Yii::app()->createURL(self::$contexts[$context]['successAction']));
         } else {

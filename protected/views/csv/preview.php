@@ -28,6 +28,6 @@ if (!empty($table)): ?>
         <?php endforeach; ?>
     </table>
 <?php endif;
-echo CHtml::submitButton('Import Trials');
+echo CHtml::submitButton('Import');
 $this->endWidget();
 ?>
