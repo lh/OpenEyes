@@ -227,8 +227,8 @@ class CsvController extends BaseController
                     return $errors;
                 }
                 $pat_ref = new PatientUserReferral();
-                $pat_ref->user = $referred_to;
-                $pat_ref->patient = $new_patient;
+                $pat_ref->user_id = $referred_to->id;
+                $pat_ref->patient_id = $new_patient->id;
                 if (!$pat_ref->save()) {
                     $errors[] = 'Could not save referred to user';
                     array_unshift($errors, $pat_ref->getErrors());
@@ -261,7 +261,8 @@ class CsvController extends BaseController
                     }
                 }
                 $pat_con = new PatientContactAssignment();
-                $pat_con->contact = $optom_contact;
+                $pat_con->contact_id = $optom_contact->id;
+                $pat_con->patient_id = $new_patient->id;
                 if (!$pat_con->save()) {
                     $errors[] = 'Could not save optometrist contact assignment';
                     array_unshift($errors, $pat_con->getErrors());
@@ -304,6 +305,7 @@ class CsvController extends BaseController
                 }
                 $pat_con = new PatientContactAssignment();
                 $pat_con->contact = $opthal_contact;
+                $pat_con->patient_id = $new_patient->id;
                 if (!$pat_con->save()) {
                     $errors[] = 'Could not save ophthalmologist contact assignment';
                     array_unshift($errors, $pat_con->getErrors());
@@ -355,6 +357,7 @@ class CsvController extends BaseController
                 }
                 $pat_con = new PatientContactAssignment();
                 $pat_con->contact = $gp_contact;
+                $pat_con->patient_id = $new_patient->id;
                 if (!$pat_con->save()) {
                     $errors[] = 'Could not save general practitioner contact';
                     array_unshift($errors, $pat_con->getErrors());
@@ -373,6 +376,7 @@ class CsvController extends BaseController
             ));
             $episode = new Episode();
             $episode->firm = $context;
+            $episode->patient_id = $new_patient->id;
             if(!$episode->save()){
                 $errors[] = 'Could not save new episode';
                 array_unshift($errors, $episode->getErrors());
@@ -392,7 +396,7 @@ class CsvController extends BaseController
             }
 
             $element = new \OEModule\OphCiExamination\models\Element_OphCiExamination_Diagnoses();
-            $element->event = $event;
+            $element->event_id = $event->id;
 
             if(!$element->save()){
                 $errors[] = 'could not save diagnoses element';
