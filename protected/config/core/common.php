@@ -352,7 +352,7 @@ return array(
                 'title' => 'Import Patients',
                 'uri' => 'csv/upload?context=patients',
                 'position' => 47,
-                'restricted' => array('TaskAddPatient'),
+                'restricted' => array('admin'),
             ),
             'gps' => array(
                 'title' => 'Practitioners',

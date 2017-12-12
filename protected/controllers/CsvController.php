@@ -21,12 +21,20 @@ class CsvController extends BaseController
         ),
     );
 
+    public static function uploadAccess()
+    {
+        return Yii::app()->user->checkAccess('admin')
+            && Yii::app()->user->checkAccess('TaskAddPatient')
+            && Yii::app()->user->checkAccess('TaskCreateTrial');
+    }
+
     public function accessRules()
     {
         return array(
             array(
                 'allow',
                 'actions' => array('upload', 'preview', 'import'),
+                'expression' => 'CsvController::uploadAccess()',
                 'users' => array('@'),
             )
         );
