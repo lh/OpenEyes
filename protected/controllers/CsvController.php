@@ -313,7 +313,7 @@ class CsvController extends BaseController
                 $new_gp = new Gp();
                 $new_gp->obj_prof = 0;
                 $new_gp->nat_id = 0;
-                $new_gp->contact_id = $pat_con->id;
+                $new_gp->contact_id = $opthal_contact->id;
                 if (!$new_gp->save()) {
                     $errors[] = 'Could not save new opthal contact';
                     array_unshift($errors, $new_gp->getErrors());
