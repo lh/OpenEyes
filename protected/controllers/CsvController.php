@@ -216,7 +216,6 @@ class CsvController extends BaseController
         //referred to
         if(!empty($patient['referred_to_first_name']) || !empty($patient['referred_to_last_name'])){
             if(!empty($patient['referred_to_first_name']) && !empty($patient['referred_to_last_name'])) {
-                $referred_to = null;
                 //Find if exists
                 $referred_to = User::model()->findByAttributes(array(
                     'first_name' => $patient['referred_to_first_name'],
@@ -253,7 +252,7 @@ class CsvController extends BaseController
                     $optom_contact = new Contact();
                     $optom_contact->first_name = $patient['optom_first_name'];
                     $optom_contact->last_name = $patient['optom_last_name'];
-                    $optom_contact->label = $optom_label;
+                    $optom_contact->contact_label_id = $optom_label->id;
                     if (!$optom_contact->save()) {
                         $errors[] = 'Could not save new optometrist contact';
                         array_unshift($errors, $optom_contact->getErrors());
@@ -296,7 +295,7 @@ class CsvController extends BaseController
                     $opthal_contact = new Contact();
                     $opthal_contact->first_name = $patient['opthal_first_name'];
                     $opthal_contact->last_name = $patient['opthal_last_name'];
-                    $opthal_contact->label = $opthal_label;
+                    $opthal_contact->contact_label_id = $opthal_label->id;
                     if (!$opthal_contact->save()) {
                         $errors[] = 'Could not save new ophthalmologist contact';
                         array_unshift($errors, $opthal_contact->getErrors());
@@ -304,7 +303,7 @@ class CsvController extends BaseController
                     }
                 }
                 $pat_con = new PatientContactAssignment();
-                $pat_con->contact = $opthal_contact;
+                $pat_con->contact_id = $opthal_contact->id;
                 $pat_con->patient_id = $new_patient->id;
                 if (!$pat_con->save()) {
                     $errors[] = 'Could not save ophthalmologist contact assignment';
@@ -314,7 +313,7 @@ class CsvController extends BaseController
                 $new_gp = new Gp();
                 $new_gp->obj_prof = 0;
                 $new_gp->nat_id = 0;
-                $new_gp->contact = $pat_con;
+                $new_gp->contact_id = $pat_con->id;
                 if (!$new_gp->save()) {
                     $errors[] = 'Could not save new opthal contact';
                     array_unshift($errors, $new_gp->getErrors());
@@ -339,7 +338,7 @@ class CsvController extends BaseController
                     $gp_contact = new Contact();
                     $gp_contact->first_name = $patient['gp_first_name'];
                     $gp_contact->last_name = $patient['gp_last_name'];
-                    $gp_contact->label = $gp_label;
+                    $gp_contact->contact_label_id = $gp_label->id;
                     if (!$gp_contact->save()) {
                         $errors[] = 'Could not save new GP contact';
                         array_unshift($errors, $gp_contact->getErrors());
@@ -348,7 +347,7 @@ class CsvController extends BaseController
                     $new_gp = new Gp();
                     $new_gp->obj_prof = 0;
                     $new_gp->nat_id = 0;
-                    $new_gp->contact = $gp_contact;
+                    $new_gp->contact_id = $gp_contact->id;
                     if (!$new_gp->save()) {
                         $errors[] = 'Could not save new practitioner contact';
                         array_unshift($errors, $new_gp->getErrors());
@@ -356,7 +355,7 @@ class CsvController extends BaseController
                     }
                 }
                 $pat_con = new PatientContactAssignment();
-                $pat_con->contact = $gp_contact;
+                $pat_con->contact_id = $gp_contact->id;
                 $pat_con->patient_id = $new_patient->id;
                 if (!$pat_con->save()) {
                     $errors[] = 'Could not save general practitioner contact';
@@ -387,7 +386,7 @@ class CsvController extends BaseController
             $event->event_type_id = EventType::model()->findByAttributes(array(
                 'name' => 'Examination'
             ))->id;
-            $event->episode = $episode;
+            $event->episode_id = $episode->id;
 
             if(!$event->save()){
                 $errors[] = 'Could not save new event';
