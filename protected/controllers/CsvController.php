@@ -422,7 +422,7 @@ class CsvController extends BaseController
             }
             if(!empty($patient['RE_diagnosis'])){
                 $disorder = Disorder::model()->findByAttributes(array(
-                    'term' => $patient['LE_diagnosis']
+                    'term' => $patient['RE_diagnosis']
                 ));
                 if($disorder === null){
                     $errors[] = 'Could not find right eye diagnosis '.$patient['RE_diagnosis'];
