@@ -216,6 +216,7 @@ class CsvController extends BaseController
         $new_patient->contact_id = $contact->id;
         $new_patient->hos_num = !empty($patient['CERA_number']) ? $patient['CERA_number'] : Patient::getNextCeraNumber();
 
+        $new_patient->setScenario('other_register');
         if(!$new_patient->save()){
             return $new_patient->getErrors();
         }
