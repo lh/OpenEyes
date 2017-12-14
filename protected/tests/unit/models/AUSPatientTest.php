@@ -199,7 +199,7 @@ class AUSPatientTest extends CDbTestCase
             $this->assertSame('Country cannot be blank.', $new_address->getError('country_id'));
 
             //Fix the problem, check it works
-            $new_address->country_id = 15;
+            $new_address->country_id = 1;
             $this->assertTrue($new_address->save());
         }
     }
@@ -212,7 +212,7 @@ class AUSPatientTest extends CDbTestCase
         $new_address = new Address;
         $new_address->setScenario('self_register');
         $new_address->contact_id = $new_pat->contact->id;
-        $new_address->country_id = 15;
+        $new_address->country_id = 1;
 
         //Check that this fails and in the right manner
         $this->assertFalse($new_address->save());
