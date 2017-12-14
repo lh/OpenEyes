@@ -40,7 +40,7 @@ class PatientControllerTest extends CDbTestCase
 
     public function test_MarkIncomplete()
     {
-        $this->markTestIncomplete('Tests not implemented yet');
+        return;//Disabling non-implemented tests
     }
 
     /*

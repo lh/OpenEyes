@@ -4,26 +4,26 @@ class Element_OphTrOperationnote_TrabectomeTest extends PHPUnit_Framework_TestCa
 {
     public function testGetComplicationIDs()
     {
-        $this->markTestIncomplete('TODO');
+        return;//Disabling non-implemented tests
     }
 
     public function testrequiredIfComplicationOther()
     {
-        $this->markTestIncomplete('TODO');
+        return;//Disabling non-implemented tests
     }
 
     public function testhasOtherComplication()
     {
-        $this->markTestIncomplete('TODO');
+        return;//Disabling non-implemented tests
     }
 
     public function getComplicationsString()
     {
-        $this->markTestIncomplete('TODO');
+        return;//Disabling non-implemented tests
     }
 
     public function testUpdateComplications()
     {
-        $this->markTestIncomplete('TODO');
+        return;//Disabling non-implemented tests
     }
 }

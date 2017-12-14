@@ -47,9 +47,7 @@ class FirmTest extends CDbTestCase
     public function testTableName()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -60,9 +58,7 @@ class FirmTest extends CDbTestCase
     public function testSearch()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -82,9 +78,7 @@ class FirmTest extends CDbTestCase
     public function testGetSubspecialtyText()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -95,9 +89,7 @@ class FirmTest extends CDbTestCase
     public function testGetList()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -108,9 +100,7 @@ class FirmTest extends CDbTestCase
     public function testGetListWithoutDupes()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -121,9 +111,7 @@ class FirmTest extends CDbTestCase
     public function testGetListWithSpecialties()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -134,9 +122,7 @@ class FirmTest extends CDbTestCase
     public function testGetCataractList()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -177,9 +163,7 @@ class FirmTest extends CDbTestCase
     public function testGetSpecialty()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -190,9 +174,7 @@ class FirmTest extends CDbTestCase
     public function testBeforeSave()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     public function testIsSupportServicesFirm_False()

@@ -117,7 +117,7 @@ class ProcessHscicDataCommand extends CConsoleCommand
             mkdir($this->tempPath, 0777, true);
         }
 
-        echo "Identifying dynamic file URLs...\n";
+        //echo "Identifying dynamic file URLs...\n";
         $error_message = null;
 
         $curl = curl_init(static::$base_url . '/organisation-data-service/data-downloads/gp-data');
@@ -180,7 +180,7 @@ class ProcessHscicDataCommand extends CConsoleCommand
                 switch ((string) $k) {
                     case 'url':
                         if (preg_match('~href="(.*?\/media\/.*?\/' . $v . '.*?)"~', $output, $match) ) {
-                            echo "Found match for $v: $match[1]\n";
+                            //echo "Found match for $v: $match[1]\n";
                             $struct[$k] = $match[1] . '.zip';
                         } else {
                             throw new Exception("Could not find match for $v", static::$DOWNLOAD_FAILED);

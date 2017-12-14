@@ -34,9 +34,7 @@ class SiteSubspecialtyAnaestheticAgentDefaultTest extends PHPUnit_Framework_Test
     public function testModel()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -47,9 +45,7 @@ class SiteSubspecialtyAnaestheticAgentDefaultTest extends PHPUnit_Framework_Test
     public function testTableName()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -60,9 +56,7 @@ class SiteSubspecialtyAnaestheticAgentDefaultTest extends PHPUnit_Framework_Test
     public function testRules()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -73,8 +67,6 @@ class SiteSubspecialtyAnaestheticAgentDefaultTest extends PHPUnit_Framework_Test
     public function testRelations()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 }

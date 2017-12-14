@@ -34,9 +34,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testCreateFromFile()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -47,9 +45,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testModel()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -60,9 +56,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testTableName()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -73,9 +67,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testRules()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -86,9 +78,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testRelations()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -99,9 +89,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testGetBasePath()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -112,9 +100,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testGetPath()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -125,9 +111,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testSetSource()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -138,9 +122,7 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testHasThumbnail()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -151,8 +133,6 @@ class ProtectedFileTest extends PHPUnit_Framework_TestCase
     public function testGetThumbnail()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 }

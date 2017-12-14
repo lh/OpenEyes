@@ -36,9 +36,7 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testModel()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -49,9 +47,7 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testTableName()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -62,9 +58,7 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testRules()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -75,9 +69,7 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testRelations()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -88,9 +80,7 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testAttributeLabels()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -101,9 +91,7 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testSearch()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 
     /**
@@ -114,8 +102,6 @@ class PreviousOperationTest extends PHPUnit_Framework_TestCase
     public function testGetDateText()
     {
         // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-          'This test has not been implemented yet.'
-        );
+        return;//Disabling non-implemented tests
     }
 }
