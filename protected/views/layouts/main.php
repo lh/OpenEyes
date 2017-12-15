@@ -1,55 +1,43 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<?php
+/**
+ * OpenEyes.
+ *
+ * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
+ * (C) OpenEyes Foundation, 2011-2013
+ * This file is part of OpenEyes.
+ * OpenEyes is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+ * OpenEyes is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
+ * You should have received a copy of the GNU Affero General Public License along with OpenEyes in a file titled COPYING. If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @link http://www.openeyes.org.uk
+ *
+ * @author OpenEyes <info@openeyes.org.uk>
+ * @copyright Copyright (c) 2011-2013, OpenEyes Foundation
+ * @license http://www.gnu.org/licenses/agpl-3.0.html The GNU Affero General Public License V3.0
+ */
+?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="en" />
-
-	<!-- blueprint CSS framework -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
-	<![endif]-->
-
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
-	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<?php $this->renderPartial('//base/head/_meta'); ?>
+	<?php $this->renderPartial('//base/head/_assets'); ?>
+	<?php $this->renderPartial('//base/head/_tracking'); ?>
 </head>
+<body class="open-eyes">
 
-<body>
+	<?php $this->renderPartial('//base/_banner_watermark'); ?>
+	<?php $this->renderPartial('//base/_debug'); ?>
 
-<div class="container" id="page">
+	<div class="container main" role="main">
 
-	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
+		<?php $this->renderPartial('//base/_header'); ?>
 
-	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
-	</div><!-- mainmenu -->
+		<div class="container content">
+			<?php echo $content; ?>
+		</div><!-- /.content.container -->
 
-	<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-		'links'=>$this->breadcrumbs,
-	)); ?><!-- breadcrumbs -->
+		<?php $this->renderPartial('//base/_footer'); ?>
 
-	<?php echo $content; ?>
-
-	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
-	</div><!-- footer -->
-
-</div><!-- page -->
-
+	</div><!-- /.main.container -->
 </body>
 </html>

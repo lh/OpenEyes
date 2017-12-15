@@ -1,0 +1,280 @@
+Release History
+===============
+
+This document is intended to summarise the changes made for each release. It should be noted that this document was only introduced with version 1.4, and therefore doesn't cover earlier releases.
+
+1.12.2
+------
++ added Messaging module to core
++ enhancements to HSCIC integration for GP/Practice/CCG data
+
+1.12.0
+-----
++ DICOM integration for Zeiss IOL Master 500
++ Improved biometry event to work with DICOM integration
+
+1.11.2
+-----
++ Maintenance to 1.11.0
++ safety warning when adding 2 prescriptions for the same patient on the same day
+
+1.11.0
+-----
++ MAnual Biometry event
+
+1.10.0
+-----
++ Enhanced admin interface
+
+1.9.0
+-----
++ virtual clinic support
+
+1.8.6
+-----
++ reporting improvements
+
+1.8.5
+-----
++ fix family history client side validation
+
+1.8.4
+-----
++ minor fix for field label wrapping
+
+1.8.3
+-----
++ added configurable nice level for wkhtmltopdf
+
+1.8.2
+-----
++ bugfix for autorelations behaviour with edits
+
+1.8.1
+-----
++ pdf print race condition fix
+
+1.8.0
+-----
++ enhancements and bugfixes to several of the patient summary widgets
++ added support for protected/files being a mounted share
++ various bugfixes and enhancements
++ enhanced wkhtmltopdf support and related bugfixes
+
+1.7.5
++ added support for additional characters in usernames
+
+1.7.4
+-----
++ added support for PDF printing using wkhtmltopdf
++ removed tcpdf
+
+1.7.3
+-----
+
++ additional support fields for RTT
++ additional roles for operation scheduling
++ made eyedraw reset function work properly
+
+1.7.2
+-----
++ style update for word wrapping on data items
+
+1.7.1
+-----
++ minor tweak to letter layout to ensure reply-to address does not collide with date
+
+1.7
+---
++ additional patient level data elements:
+	- social history
+	- operation history
+	- medication history
+	- family history
++ beta implementation of FHIR API - core infrastructure and patient demographics
++ support for patient measurements
++ backdated events
++ table versioning
++ support for module namespacing
++ support for automatically handling HAS_MANY and MANY_MANY relations in BaseActiveRecord
++ implemented the patient_summary_id_widgets config parameter to support modules adding additional links
++ generic admin widgets
++ print layout enhancements
+
+1.6.5
+-----
++ Add reports auth role
+
+1.6.4
+-----
++ Exclude deleted events when fetching elements
+
+1.6.3
+-----
++ Don't delete child elements when copying data from previous events
+
+1.6.2
+-----
++ Remove login form password from $_POST when logging error details
+
+1.5.8
+-----
++ Remove login form password from $_POST when logging error details
+
+1.6.1
+-----
++ remove attachments from emails to unallowed domains, and check the bcc recipient list as well
+
+1.6.0
+-----
++ Rearchitect rendering/validation for event type controller
++ Flash messages are not displaying on some pages
++ Catch return in forms to supress submit
++ Administration of drugs
++ Base Controller asset path is set in the wrong place
++ Asset refactoring
++ Fix the cancel button styling
++ Episode summary enhancements
++ Rationalise db character set and collation
++ Shortcut for disabling transactions
++ Fix scrolling to elements
++ Latest event link behaviour is inconsistent
++ Page flickers when scrolling up
++ Cancelling the creation of a new Commissioning Body Type moves user back to the wrong table/page
++ User has the ability to save a CVI Status with a future date
++ Orphaned address entries
+
+1.5.7
+-----
++ Add systemic diagnoses shortcode
+
+1.5.6
+-----
++ Adapt multiselect widget to work without elements
+
+1.5.5
+-----
++ Added configurable time locking to all events by default
++ Changed common firm list to show up to 6 entries rather than 5
++ Fixed bug that allowed attachment of non Person contacts to patients
++ Fixed link hover decoration
++ Changed subspecialty sort order
++ Fixed bug in previous element lookup to exclude deleted events
+
+1.5.4
+-----
++ Filter deleted events from previous elements popup
+
+1.5.3
+-----
++ added facility to have custom second line in correspondence address for Commissioning Body Services.
+
+1.5.2
+-----
++ Fixed ambiguous discontinued scope in Drug model
+
+1.5.1
+-----
++ disambiguate Patient relations
+
+1.5.0
+-----
++ Consolidated migrations
++ Removed Moorfields specific data
++ Refactored views
+	- Semantic HTML
+	- Rationalised layouts and templates
++ Converted CSS to use SASS (Compass)
++ Updated dialog styling
++ Added Click away protection
++ Cleaned up unit tests
++ Improved functional (behat) tests
++ Fixed pagination in admin screens
++ Added searchable procedure aliases
+
+1.4.7
+-----
++ return a generic diabetes term for diabetic patients with no type set
+
+1.4.6
+-----
++ fixed bad parent call in ProtectedFile afterDelete method
++ added missing js to remove patient medications
+
+1.4.5
+-----
++ patient contact editing tweak
++ update to yii 1.1.14
+
+1.4.4
+-----
++ allergy enhancements - display warnings for allergies, and support flag to indicate patient has no allergies
++ helper function for file size config parsing
+
+1.4.3
+-----
++ introduce softdelete support for event elements
+
+1.4.2
+-----
++ bugfixes - migrations
++ bugfix - csrf token check on login
+ 
+1.4.1
+-----
++ bugfixes/optimisations
+
+1.4
+---
+
++ Added Yii as submodule
++ Updated Yii to 1.1.13
++ Enabled CSRF protection
++ Introduced and made changes to adhere to coding standards (nominally PSR2):
+	https://github.com/openeyes/OpenEyes/wiki/Coding-Guidelines
+
++ refactored Contacts behaviour for various models (Patient, Gp etc)
+
++ Added ProtectedFile model for application file storage:
+	https://github.com/openeyes/OpenEyes/wiki/File-Management
+
++ Patient Summary changes:
+	- previous operations widget
+	- medications widget
+	- family hitory widget
+	- CVI status widget
+	- changes to latest event link from patient summary to reflect user access and firm selection
+	- patient warnings display to highlight specific disorders/conditions. Shown in summary and patient header. Currently only supports diabetes (and requires disorder tree setup) 
+
++ changes to style and UI for patient sidebar
++ Confirm Site and Firm on login
++ Changed event/episode creation buttons to encourage more accurate association of events with firms/subspecialties
++ Various enhancements to dialog behaviour and css styling
+
++ Introduced Disorder Tree functionality
+	https://github.com/openeyes/OpenEyes/wiki/Disorders
+
++ Added surgeon flag to User model (and getter method for list of surgeons)
++ Custom sort ordering for multiple select dropdowns
++ Migrated Specialty data to support the nhs data dictionary of specialties
++ institution_specialty code is a required configuration parameter (130 for Ophthamology)
++ Introduced firm-less episodes for Support Services
++ Refactored theatre/waiting list search to OphTrOperationbooking module
++ Refactored correspondence shortcodes out of patient model into OphCoCorrespondence module
++ Normalised audit tables to reduce db size
+
++ Added configuration to restrict the domains that automated emails will be sent to (restrict_email_domains)
++ Added configuration flags to determine what user values are automatically updated from LDAP (ldap_update_name, ldap_update_email)
++ Introduced access level for printing
+
++ Improved cache buster code
++ Query enhancements for performance
++ Bugfixes for running openeyes in subdirectory
++ Respect the allowOverride flag in BaseActiveRecord::save()
++ Introduction of Eye constants for stronger reference checking
++ Enhance Helper functionality for parsing NHS dates from form submission
+
++ Introduced CommissioningBody and CommissioningBodyService models (for CCG support)
++ Behat functional tests added. Note that these are currently both core and modules, and as such will fail without the necessary modules having been installed, this will be refactored in the next release (and potentially in a point release)
++ User profile page
++ Admin functions added. Note that these are still very much in beta and should be used with caution.

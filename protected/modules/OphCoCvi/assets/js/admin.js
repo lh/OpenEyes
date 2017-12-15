@@ -1,0 +1,43 @@
+$(document).ready(function () {
+
+    $('#et_admin-save').on('click', function (e) {
+        var check = true;
+        /**
+         * Comments label validation if comments allowed in Clinical disorder section
+         */
+        $("input[name^='comments_allowed']").each(function (key, value) {
+
+            if (key <= ($("input[name^='comments_allowed']").length - 1) && $(this).is(':checked')&&value['name']!='comments_allowed[{{key}}]') {
+
+                var textbox_value = $("input[name^='comments_label']").eq(key).val();
+
+                var text_length = (textbox_value).length;
+                if (text_length == 0) {
+                    alert("Please enter comments label");
+                    check = false;
+                }
+            }
+        });
+
+        /**
+         * Maximum one child as to select for employment status
+         */
+        var chk = 0;
+        $("input[name^='child_default']").each(function () {
+            if ($(this).is(':visible') && $(this).is(':checked')) {
+                chk++;
+            }
+        });
+
+        if (chk > 1) {
+            alert('Must be one child as default');
+            check = false;
+        }
+
+        if (!check) {
+            e.preventDefault();
+        }
+        return check;
+
+    });
+});

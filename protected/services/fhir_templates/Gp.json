@@ -1,0 +1,22 @@
+{
+	"identifier": [
+		{
+			"label": "General National Code",
+			"system": {":match": "{{system_uri_gp_code}}"},
+			"value": {":subst": "gnc"}
+		}
+	],
+	"name": {
+		"family": [{":subst": "family_name"}],
+		"given": [{":subst": "given_name"}],
+		"prefix": [{":subst": "title"}]
+	},
+	"telecom": [
+		{
+			"system": {":match": "phone"},
+			"value": {":subst": "primary_phone"},
+			"use": "work"
+		}
+	],
+	"address": {":subst": "address"}
+}

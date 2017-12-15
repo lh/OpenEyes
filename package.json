@@ -1,0 +1,35 @@
+{
+  "name": "openeyes",
+  "version": "1.7.0",
+  "description": "An Open Source electronic patient record system.",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/openeyes/OpenEyes.git"
+  },
+  "author": "OpenEyes",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/openeyes/OpenEyes/issues"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "compass": "^0.1.1",
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-compass": "^1.1.1",
+    "grunt-contrib-connect": "^1.0.2",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-hub": "^0.7.0",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-mocha": "^1.0.2",
+    "grunt-modernizr": "^1.0.2",
+    "jshint-stylish": "^2.2.0",
+    "load-grunt-tasks": "^3.5.0",
+    "grunt-contrib-uglify": "~0.10.0"
+  }
+}

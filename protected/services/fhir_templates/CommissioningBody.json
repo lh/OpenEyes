@@ -1,0 +1,12 @@
+{
+	"identifier": [
+		{
+			"use": "official",
+			"label": "Organisation Code",
+			"system": {":match": "{{system_uri_cb_code}}"},
+			"value": {":subst": "code"}
+		}
+	],
+	"name": {":subst": "name"},
+	"address": [ {":subst": "address"} ]
+}

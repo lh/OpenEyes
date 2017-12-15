@@ -1,13 +1,52 @@
 <phpunit bootstrap="bootstrap.php"
-		colors="false"
-		convertErrorsToExceptions="true"
-		convertNoticesToExceptions="true"
-		convertWarningsToExceptions="true"
-		stopOnFailure="false">
+         colors="false"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         verbose="true">
+    <directory suffix="Test.php">../modules/*/tests/unit/models</directory>
+    <testsuites>
+        <testsuite name="all">
+            <directory suffix="Test.php">../modules/*/tests/unit/models</directory>
+            <directory suffix="Test.php">./unit</directory>
+        </testsuite>
+        <testsuite name="Modules">
+            <exclude>./</exclude>
+            <directory suffix="Test.php">../modules/*/tests/unit/models</directory>
+        </testsuite>
+        <testsuite name="core">
+            <directory suffix="Test.php">./unit</directory>
+        </testsuite>
+    </testsuites>
+    <groups>
+        <exclude>
+            <group>functional</group>
+            <group>undefined</group>
+            <group>elements</group>
+            <group>services</group>
+            <group>components</group>
+        </exclude>
+    </groups>
 
-	<selenium>
-		<browser name="Internet Explorer" browser="*iexplore" />
-		<browser name="Firefox" browser="*firefox" />
-	</selenium>
-
+    <filter>
+        <blacklist>
+            <directory suffix=".php">../../../yii/</directory>
+        </blacklist>
+        <whitelist>
+            <directory suffix=".php">../models</directory>
+            <directory suffix=".php">../components</directory>
+            <directory suffix=".php">../controllers</directory>
+            <directory suffix=".php">../modules/*/controllers</directory>
+            <directory suffix=".php">../modules/*/models</directory>
+            <directory suffix=".php">../modules/*/components</directory>
+            <exclude>
+                <directory suffix=".php">../components/summaryWidgets/views</directory>
+                <directory suffix=".php">../components/views</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <php>
+        <ini name="output_buffering" value="On" />
+    </php>
 </phpunit>
